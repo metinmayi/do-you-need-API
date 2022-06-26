@@ -14,39 +14,14 @@ const addPlayerData = async (reportId: string) => {
 
   // Gets a player with default values.
   const player = getDefaultPlayer(playerData);
+  
+  // Maps out all the bosses with their upgrades.
   const playerDps = playerData.sim.players[0].collected_data.dps.mean;
+  const bossesWithUpgrades = new Map();
+  const simResults = playerData.sim.profilesets.results;
+mapUpgradesToBoss(simResults, bossesWithUpgrades, playerDps);
 
-  // BRYT NER DET HÄR TILL FLERA FUNKTIONER !!!!!!!!!!!!!!!!!!!!!!
-  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-  const bossUpgrades = new Map();
-  for (const result of playerData.sim.profilesets.results) {
-    // If the upgrade is negative in DPS increase, skip it.
-    const rawDps = result.mean - playerDps;
-    if (rawDps < 0) continue;
-
-    const itemSlot: IItemType = result.name.split("/")[5];
-    const bossId: IBossId = result.name.split("/")[1];
-    const bossName = IdToBoss[bossId];
-    if (!bossName) continue;
-
-    const dpsPercentage = Math.round((rawDps / playerDps) * 1000) / 10;
-    const dpsNumber = Math.round(rawDps);
-    // const percentageDps = Math.round(percentageDecimal * 10) / 10;
-    const upgrade = {
-      [itemSlot]: { dpsPercentage, dpsNumber },
-    };
-
-    if (!bossUpgrades.get(bossName)) {
-      bossUpgrades.set(bossName, [upgrade]);
-      continue;
-    }
-    const currentBossUpgrades = bossUpgrades.get(bossName);
-
-    checkIfUpgrade(currentBossUpgrades, upgrade, itemSlot);
-  }
-  const bajs = 1233;
-  return player;
+  return bossesWithUpgrades;
 };
 
 /**
@@ -98,7 +73,7 @@ const validateInstanceAndDifficulty = (playerData: any) => {
 };
 
 /**
- * Returns a player with default information. Not including playerUpgrades
+ * Returns a player object with default information: Name, Role, className and upgradeCount = 0.
  */
 const getDefaultPlayer = (playerData: any) => {
   const name = playerData.simbot.meta.player;
@@ -108,5 +83,46 @@ const getDefaultPlayer = (playerData: any) => {
   player.upgradeCount = 0;
   return player;
 };
+
+const mapUpgradesToBoss = (simResults: any, bossesWithUpgrades: any, playerDps: number) => {
+  for (const result of simResults) {
+    // If the upgrade is negative in DPS increase, skip it.
+    let dpsUpgrade = result.mean - playerDps;
+    if (dpsUpgrade < 0) continue;
+
+    // If the bossname is undefined (Not included in constant of current bosses) skip.
+    const itemSlot: IItemType = result.name.split("/")[5];
+    const bossId: IBossId = result.name.split("/")[1];
+    const bossName = IdToBoss[bossId];
+    if (!bossName) continue;
+
+    // Rounds the upgrade values and sets the potential upgrade object.
+    const dpsPercentage = Math.round((dpsUpgrade / playerDps) * 1000) / 10;
+    dpsUpgrade = Math.round(dpsUpgrade);
+    const potentialUpgrade = {
+      [itemSlot]: { dpsPercentage, dpsUpgrade },
+    };
+
+    // If a boss with bossName has no registered upgrades, put in this upgrade as it's guaranteed to be an actual upgrade.
+    if (!bossesWithUpgrades.get(bossName)) {
+      bossesWithUpgrades.set(bossName, [potentialUpgrade]);
+      continue;
+    }
+
+    // At this point we know the boss we're looking at has an array of upgrades with atleast one element.
+    const currentBossUpgrades = bossesWithUpgrades.get(bossName);
+
+    // Check if the item slot we're evaluating exists in that array. If not, it's guaranteed to be an upgrade.
+    const itemSlotExist = currentBossUpgrades.some((bossUpgrades: any) => bossUpgrades[itemSlot]);
+    if (!itemSlotExist) {
+      currentBossUpgrades.push(potentialUpgrade);
+      continue;
+    }
+
+    // At this point we know there's an item in the array with the same item type. Compare the upgrades and keep the best upgrade.
+    checkIfUpgrade(currentBossUpgrades, potentialUpgrade, itemSlot);
+  }
+
+}
 
 export { addPlayerData };

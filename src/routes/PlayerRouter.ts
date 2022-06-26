@@ -14,15 +14,18 @@ PlayerRouter.get("/", (req: Request, res: Response) => {
 
 PlayerRouter.post("/addBossData", async (req: Request, res: Response) => {
   // Validation
-  const URLobject = new URL(req.body.url);
-  const url = URLobject.origin + "/simbot/report/";
-  if (url !== reportURL) {
-    res.sendStatus(400);
+  try{
+    const URLobject = new URL(req.body.url);
+    const url = URLobject.origin + "/simbot/report/";
+    if (url !== reportURL) {
+      throw new Error('Invalid URL')
+    }
+
+  } catch(err) {
+    return res.sendStatus(400);
   }
   // Execution
   const reportId = req.body.url.split("/")[5];
-  // const player = new addBossData();
-  // await player.init(reportID);
   const player = await addPlayerData(reportId);
   res.send(player);
 });

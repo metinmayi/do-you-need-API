@@ -5,7 +5,7 @@ import cors from "cors";
 import { connection } from "./database";
 dotenv.config();
 
-connection.query("SELECT playerName FROM vigilant_guardian", (err, res) => {
+connection.query("SELECT player_name FROM vigilant_guardian", (err, res) => {
   if (err) return console.log(err);
   console.log(res);
 });

@@ -16,7 +16,8 @@ export class IPlayer {
       | "druid"
       | "demonHunter"
       | "deathKnight",
-    public playerUpgrades: []
+    public playerUpgrades: [],
+    public guildName: string
   ) {}
   upgradeCount?: number;
 }

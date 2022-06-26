@@ -1,5 +1,6 @@
 import axios from "axios";
 import { IBossId, IdToBoss, RaidDifficulty, RaidId } from "../constants";
+import { connection } from "../database";
 import { IPlayer, IItemType } from "../models/Player";
 
 /**
@@ -12,41 +13,19 @@ const addPlayerData = async (reportId: string) => {
   // Checks if the log is for the correct raid;
   validateInstanceAndDifficulty(playerData);
 
-  // Gets a player with default values.
+  // Gets a player object with default values.
   const player = getDefaultPlayer(playerData);
-  
+
   // Maps out all the bosses with their upgrades.
   const playerDps = playerData.sim.players[0].collected_data.dps.mean;
   const bossesWithUpgrades = new Map();
   const simResults = playerData.sim.profilesets.results;
-mapUpgradesToBoss(simResults, bossesWithUpgrades, playerDps);
+  mapUpgradesToBoss(simResults, bossesWithUpgrades, playerDps);
+  queryUpgrades(bossesWithUpgrades, player);
 
-  return bossesWithUpgrades;
+  return true;
 };
 
-/**
- *
- */
-
-const checkIfUpgrade = (
-  currentBossUpgrades: any,
-  upgrade: any,
-  itemSlot: string
-) => {
-  for (const existingUpgrades of currentBossUpgrades) {
-    if (itemSlot !== Object.keys(existingUpgrades)[0]) {
-      currentBossUpgrades.push(upgrade);
-      return;
-    } else {
-      if (upgrade[itemSlot].dpsNumber > existingUpgrades[itemSlot].dpsNumber) {
-        console.log("New is better, should replace");
-        existingUpgrades[itemSlot] = upgrade;
-      } else {
-        console.log("Old is better, Dont replace");
-      }
-    }
-  }
-};
 /**
  * Fetches playerdata from the JSON url
  */
@@ -79,12 +58,22 @@ const getDefaultPlayer = (playerData: any) => {
   const name = playerData.simbot.meta.player;
   const role = playerData.simbot.meta.role;
   const className = playerData.simbot.meta.charClass;
-  const player = new IPlayer(name, false, role, className, []);
-  player.upgradeCount = 0;
+  const player = new IPlayer(
+    name,
+    false,
+    role,
+    className,
+    [],
+    "Project_Questionmark-Kazzak"
+  );
   return player;
 };
 
-const mapUpgradesToBoss = (simResults: any, bossesWithUpgrades: any, playerDps: number) => {
+const mapUpgradesToBoss = (
+  simResults: any,
+  bossesWithUpgrades: any,
+  playerDps: number
+) => {
   for (const result of simResults) {
     // If the upgrade is negative in DPS increase, skip it.
     let dpsUpgrade = result.mean - playerDps;
@@ -113,16 +102,54 @@ const mapUpgradesToBoss = (simResults: any, bossesWithUpgrades: any, playerDps: 
     const currentBossUpgrades = bossesWithUpgrades.get(bossName);
 
     // Check if the item slot we're evaluating exists in that array. If not, it's guaranteed to be an upgrade.
-    const itemSlotExist = currentBossUpgrades.some((bossUpgrades: any) => bossUpgrades[itemSlot]);
+    let indexOfExistingItem: number = -1;
+    const itemSlotExist = currentBossUpgrades.some(
+      (bossUpgrades: any, index: number) => {
+        if (bossUpgrades[itemSlot]) {
+          indexOfExistingItem = index;
+          return true;
+        }
+      }
+    );
     if (!itemSlotExist) {
       currentBossUpgrades.push(potentialUpgrade);
       continue;
     }
 
     // At this point we know there's an item in the array with the same item type. Compare the upgrades and keep the best upgrade.
-    checkIfUpgrade(currentBossUpgrades, potentialUpgrade, itemSlot);
+    if (
+      potentialUpgrade[itemSlot].dpsUpgrade >
+      currentBossUpgrades[indexOfExistingItem][itemSlot].dpsUpgrade
+    ) {
+      currentBossUpgrades[indexOfExistingItem] = potentialUpgrade;
+    }
   }
+};
 
-}
+const queryUpgrades = (bossesWithUpgrades: any, player: IPlayer) => {
+  bossesWithUpgrades.forEach((upgrades: any, boss: string) => {
+    const items = [];
+    const upgradeValue = [];
 
+    for (const upgrade of upgrades) {
+      const entries = Object.keys(upgrade)[0];
+      const values: any = Object.values(upgrade)[0];
+      items.push(entries);
+      upgradeValue.push(`'${values.dpsPercentage}% (${values.dpsUpgrade})'`);
+    }
+
+    const inputItems = items.join(",");
+    const inputValues = upgradeValue.join(",");
+
+    const query = `INSERT INTO ${boss}(player_name, role, class_name, guild_name, upgrade_count, ${inputItems}) 
+    VALUE('${player.playerName.toLowerCase()}','${player.role}','${
+      player.className
+    }','${player.guildName}', ${items.length}, ${inputValues}) `;
+
+    connection.query(query, (err, result) => {
+      if (err) console.log(err);
+      if (result) console.log(result);
+    });
+  });
+};
 export { addPlayerData };

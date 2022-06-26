@@ -2,17 +2,17 @@
  * Give ID, get bossname
  */
 const IdToBoss = {
-  2458: "vigilant",
-  2465: "Skolex, the Insatiable Ravener",
-  2470: "Artificer Xy'mox",
-  2459: "Dausegne, the Fallen Oracle",
-  2460: "Prototype Pantheon",
-  2461: "Lihuvim, Principal Architect",
-  2463: "Halondrus the Reclaimer",
-  2469: "Anduin Wrynn",
-  2457: "Lords of Dread",
-  2467: "Rygelon",
-  2464: "The Jailer",
+  2458: "vigilant_guardian",
+  2465: "skolex_the_insatiable_ravener",
+  2470: "artificer_xymox",
+  2459: "dausegne_the_fallen_oracle",
+  2460: "prototype_pantheon",
+  2461: "lihuvim_principal_architect",
+  2463: "halondrus_the_reclaimer",
+  2469: "anduin_wrynn",
+  2457: "lords_of_dread",
+  2467: "rygelon",
+  2464: "the_jailer",
 } as const;
 
 /**

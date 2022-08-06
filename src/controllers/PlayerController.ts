@@ -6,7 +6,7 @@ import {
   RaidDifficulty,
   RaidId,
 } from "../constants";
-import { queryDatabase } from "../database";
+import { pool } from "../database";
 import { IBossUpgrade } from "../models/IBossUpgrade";
 // import { connection } from "../database";
 import { IPlayer, IItemType } from "../models/Player";
@@ -174,7 +174,7 @@ const queryUpgrades = async (
     }','${player.guildName}', ${
       upgradeItems.length
     }, ${inputValues}) ON DUPLICATE KEY UPDATE ${onDuplicate}`;
-    await queryDatabase(query);
+    await pool.execute(query);
   }
 };
 export { addPlayerData };

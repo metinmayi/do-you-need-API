@@ -4,30 +4,43 @@
 import express from "express";
 const PlayerRouter = express.Router();
 import { Request, Response } from "express";
-import { reportURL } from "../constants";
-import { addBossData } from "../controllers/addBossData";
+import { getBossTable } from "../controllers/getBossTable";
 import { addPlayerData } from "../controllers/PlayerController";
+import { addPlayerDataValidation } from "../validations/addPlayerDataValidation";
+import { getBossTableValidation } from "../validations/getBossTableValidation";
 
 PlayerRouter.get("/", (req: Request, res: Response) => {
   res.send("Reached PlayerRouter");
 });
 
-PlayerRouter.post("/addBossData", async (req: Request, res: Response) => {
+/**
+ * Route for adding playerUpgrades to the database.
+ */
+PlayerRouter.post("/addPlayerData", async (req: Request, res: Response) => {
   // Validation
-  try{
-    const URLobject = new URL(req.body.url);
-    const url = URLobject.origin + "/simbot/report/";
-    if (url !== reportURL) {
-      throw new Error('Invalid URL')
-    }
+  const isValidated = addPlayerDataValidation(req.body.url);
+  if (!isValidated) return res.status(400).send("Invalid Simbot URL");
 
-  } catch(err) {
+  try {
+    const reportId = req.body.url.split("/")[5];
+    await addPlayerData(reportId);
+    res.status(200).send("Player has been added to the tables");
+  } catch (err) {
     return res.sendStatus(400);
   }
-  // Execution
-  const reportId = req.body.url.split("/")[5];
-  const player = await addPlayerData(reportId);
-  res.send(player);
 });
 
+/**
+ * Gets player information from a boss table
+ */
+PlayerRouter.get("/getBossTable/", async (req: Request, res: Response) => {
+  // Validate bossName
+  const isValidated = getBossTableValidation(req.query.bossName?.toString());
+  if (!isValidated) {
+    return res.status(400).send("Invalid boss");
+  }
+
+  const result = await getBossTable("the_jailer");
+  res.status(200).send(result?.[0]);
+});
 export default PlayerRouter;

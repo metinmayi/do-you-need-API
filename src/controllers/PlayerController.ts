@@ -1,27 +1,39 @@
 import axios from "axios";
-import { IBossId, IdToBoss, RaidDifficulty, RaidId } from "../constants";
-import { connection } from "../database";
+import {
+  IBossId,
+  IBossName,
+  IdToBoss,
+  RaidDifficulty,
+  RaidId,
+} from "../constants";
+import { queryDatabase } from "../database";
+import { IBossUpgrade } from "../models/IBossUpgrade";
+// import { connection } from "../database";
 import { IPlayer, IItemType } from "../models/Player";
+import { IPlayerData, Meta } from "../models/PlayerData";
 
 /**
  * Takes a reportID and starts the process of importing data, breaking it up and sending back a player object.
  */
 const addPlayerData = async (reportId: string) => {
   // Does the fetch.
-  const playerData = await fetchPlayerData(reportId);
+  const playerData: IPlayerData = await fetchPlayerData(reportId);
+
+  // Necessary declarations
+  const metaInfo = playerData.simbot.meta;
+  const simResults = playerData.sim.profilesets.results;
+  const playerDps = playerData.sim.players[0].collected_data.dps.mean;
 
   // Checks if the log is for the correct raid;
-  validateInstanceAndDifficulty(playerData);
+  validateInstanceAndDifficulty(metaInfo);
 
   // Gets a player object with default values.
-  const player = getDefaultPlayer(playerData);
+  const player = getDefaultPlayer(metaInfo);
 
   // Maps out all the bosses with their upgrades.
-  const playerDps = playerData.sim.players[0].collected_data.dps.mean;
-  const bossesWithUpgrades = new Map();
-  const simResults = playerData.sim.profilesets.results;
+  const bossesWithUpgrades = new Map<IBossName, IBossUpgrade[]>();
   mapUpgradesToBoss(simResults, bossesWithUpgrades, playerDps);
-  queryUpgrades(bossesWithUpgrades, player);
+  await queryUpgrades(bossesWithUpgrades, player);
 
   return true;
 };
@@ -42,11 +54,10 @@ const fetchPlayerData = async (reportId: string) => {
 /**
  * Ensures it's mythic difficulty and the instance ID is correct
  */
-const validateInstanceAndDifficulty = (playerData: any) => {
-  const raidId = playerData.sim.profilesets.results[0].name.split("/")[0];
-  const raidDifficulty =
-    playerData.sim.profilesets.results[0].name.split("/")[2];
-  if (parseInt(raidId) !== RaidId || raidDifficulty !== RaidDifficulty) {
+const validateInstanceAndDifficulty = (metaInfo: Meta) => {
+  const raidId = metaInfo.instanceLibrary[0].id;
+  const raidDifficulty = metaInfo.itemLibrary[0].difficulty;
+  if (raidId !== RaidId || raidDifficulty !== RaidDifficulty) {
     throw new Error("Wrong raid and/or difficulty linked");
   }
 };
@@ -54,10 +65,10 @@ const validateInstanceAndDifficulty = (playerData: any) => {
 /**
  * Returns a player object with default information: Name, Role, className and upgradeCount = 0.
  */
-const getDefaultPlayer = (playerData: any) => {
-  const name = playerData.simbot.meta.player;
-  const role = playerData.simbot.meta.role;
-  const className = playerData.simbot.meta.charClass;
+const getDefaultPlayer = (metaInfo: Meta) => {
+  const name = metaInfo.player;
+  const role = metaInfo.role;
+  const className = metaInfo.charClass;
   const player = new IPlayer(
     name,
     false,
@@ -69,6 +80,9 @@ const getDefaultPlayer = (playerData: any) => {
   return player;
 };
 
+/**
+ * Iterates sim results and maps them to the corresponding boss.
+ */
 const mapUpgradesToBoss = (
   simResults: any,
   bossesWithUpgrades: any,
@@ -81,7 +95,9 @@ const mapUpgradesToBoss = (
 
     // If the bossname is undefined (Not included in constant of current bosses) skip.
     const itemSlot: IItemType = result.name.split("/")[5];
+
     const bossId: IBossId = result.name.split("/")[1];
+
     const bossName = IdToBoss[bossId];
     if (!bossName) continue;
 
@@ -126,30 +142,39 @@ const mapUpgradesToBoss = (
   }
 };
 
-const queryUpgrades = (bossesWithUpgrades: any, player: IPlayer) => {
-  bossesWithUpgrades.forEach((upgrades: any, boss: string) => {
-    const items = [];
-    const upgradeValue = [];
+const queryUpgrades = async (
+  bossesWithUpgrades: Map<IBossName, IBossUpgrade[]>,
+  player: IPlayer
+) => {
+  for (const upgrade of bossesWithUpgrades) {
+    const nameOfBoss = upgrade[0];
+    const upgradeItems: any[] = [];
+    const upgradeValues: any[] = [];
+    upgrade[1].forEach((upgrade) => {
+      upgradeItems.push(Object.keys(upgrade));
+      const values = Object.values(upgrade);
+      upgradeValues.push(
+        `${values[0].dpsPercentage}% (${values[0].dpsUpgrade})`
+      );
+    });
 
-    for (const upgrade of upgrades) {
-      const entries = Object.keys(upgrade)[0];
-      const values: any = Object.values(upgrade)[0];
-      items.push(entries);
-      upgradeValue.push(`'${values.dpsPercentage}% (${values.dpsUpgrade})'`);
+    const inputItems: any = upgradeItems.join(",");
+    const inputValues = upgradeValues.join(",");
+    let onDuplicate = "";
+
+    for (let i = 0; i < upgradeItems.length; i++) {
+      onDuplicate += `${upgradeItems[i]}=${upgradeValues[i]},`;
     }
 
-    const inputItems = items.join(",");
-    const inputValues = upgradeValue.join(",");
+    onDuplicate = onDuplicate.slice(0, -1);
 
-    const query = `INSERT INTO ${boss}(player_name, role, class_name, guild_name, upgrade_count, ${inputItems}) 
+    const query = `INSERT INTO ${nameOfBoss}(player_name, role, class_name, guild_name, upgrade_count, ${inputItems})
     VALUE('${player.playerName.toLowerCase()}','${player.role}','${
       player.className
-    }','${player.guildName}', ${items.length}, ${inputValues}) `;
-
-    connection.query(query, (err, result) => {
-      if (err) console.log(err);
-      if (result) console.log(result);
-    });
-  });
+    }','${player.guildName}', ${
+      upgradeItems.length
+    }, ${inputValues}) ON DUPLICATE KEY UPDATE ${onDuplicate}`;
+    await queryDatabase(query);
+  }
 };
 export { addPlayerData };

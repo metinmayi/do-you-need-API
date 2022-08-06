@@ -1,1 +1,1 @@
-export const reportURL = "https://www.raidbots.com/simbot/report/" as const;
+export const ReportURL = "https://www.raidbots.com/simbot/report/" as const;

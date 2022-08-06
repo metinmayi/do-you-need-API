@@ -13,23 +13,39 @@ const IdToBoss = {
   2457: "lords_of_dread",
   2467: "rygelon",
   2464: "the_jailer",
-} as const;
+};
 
 /**
  * Sepulcher boss Ids
  */
 type IBossId =
-  | 2458
-  | 2465
-  | 2470
-  | 2459
-  | 2460
-  | 2461
-  | 2463
-  | 2469
-  | 2457
-  | 2467
-  | 2464;
+  | "2458"
+  | "2465"
+  | "2470"
+  | "2459"
+  | "2460"
+  | "2461"
+  | "2463"
+  | "2469"
+  | "2457"
+  | "2467"
+  | "2464";
+
+/**
+ * Sepulcher boss Ids
+ */
+export type IBossName =
+  | "vigilant_guardian"
+  | "skolex_the_insatiable_ravener"
+  | "artificer_xymox"
+  | "dausegne_the_fallen_oracle"
+  | "prototype_pantheon"
+  | "lihuvim_principal_architect"
+  | "halondrus_the_reclaimer"
+  | "anduin_wrynn"
+  | "lords_of_dread"
+  | "rygelon"
+  | "the_jailer";
 
 /**
  * Current raid ID

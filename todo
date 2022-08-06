@@ -1,5 +1,5 @@
-Add main_hand to tables
+Maybe create a response object with errors/messages.
 
-Look over logic again to detect cleanup
+GET bossinfo from a particular guild
 
-Type up more stuff
+The addPlayerData chain is T R A S H

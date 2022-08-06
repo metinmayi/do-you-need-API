@@ -2,13 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import PlayerRouter from "./routes/PlayerRouter";
 import cors from "cors";
-import { connection } from "./database";
 dotenv.config();
-
-connection.query("SELECT player_name FROM vigilant_guardian", (err, res) => {
-  if (err) return console.log(err);
-  console.log(res);
-});
 
 const app = express();
 app.use(express.json());

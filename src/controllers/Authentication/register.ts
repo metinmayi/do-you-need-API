@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { registrationValidation } from "../../validations/authorization/registrationValidation";
+import { registrationValidation } from "../../validations/authentication/registrationValidation";
 import { pool } from "../../database";
 import bcrypt from "bcryptjs";
 
@@ -15,7 +15,7 @@ export const registerUser = async (req: Request, res: Response) => {
   const userValues = await getSqlValues(req);
   try {
     await pool.execute(sql, userValues);
-    return res.status(200);
+    return res.status(200).send("Registration Complete");
   } catch (error) {
     console.log(error);
     res.status(500).send("Failed to query database");

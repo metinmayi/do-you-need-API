@@ -1,13 +1,10 @@
 import Joi from "joi";
 import { Request } from "express";
+import { PASSWORD_REGEX, USERNAME_REGEX } from "../../constants/authentication";
 
 const registrationSchema = Joi.object({
-  username: Joi.string()
-    .pattern(/^[a-zA-Z][a-zA-Z0-9_]{3,23}$/)
-    .required(),
-  password: Joi.string()
-    .pattern(/.(?=.*[a-zA-Z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/)
-    .required(),
+  username: Joi.string().pattern(USERNAME_REGEX).required(),
+  password: Joi.string().pattern(PASSWORD_REGEX).required(),
   email: Joi.string().email().required(),
 });
 export const registrationValidation = (request: Request) => {

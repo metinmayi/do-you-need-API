@@ -4,7 +4,7 @@ import { pool } from "../../database";
 import bcrypt from "bcryptjs";
 
 const sql =
-  "INSERT INTO users(name, password, usergroup, email, created) VALUES (?, ?, ?, ?, ?)";
+  "INSERT INTO users(name, password, usergroup, email, created, blizz_sync) VALUES (?, ?, ?, ?, ?, ?)";
 
 export const registerUser = async (req: Request, res: Response) => {
   const isValid = registrationValidation(req);
@@ -30,8 +30,9 @@ const getSqlValues = async (req: any) => {
   const email = req.body.email;
   const usergroup = "basic";
   const createdAt = Date.now();
+  const blizz_sync = 0;
 
-  return [name, password, usergroup, email, createdAt];
+  return [name, password, usergroup, email, createdAt, blizz_sync];
 };
 
 const getHashedPassword = async (password: string) => {

@@ -4,16 +4,16 @@
 import express from "express";
 import { registerUser } from "../controllers/Authentication/register";
 import { loginUser } from "../controllers/Authentication/login";
-const AuthorizationRouter = express.Router();
+const AuthenticationRouter = express.Router();
 
 /**
  * Register player
  */
-AuthorizationRouter.post("/register", registerUser);
+AuthenticationRouter.post("/register", registerUser);
 
 /**
  * Login player
  */
-AuthorizationRouter.post("/login", loginUser);
+AuthenticationRouter.post("/login", loginUser);
 
-export default AuthorizationRouter;
+export default AuthenticationRouter;

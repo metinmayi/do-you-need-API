@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import PlayerRouter from "./routes/PlayerRouter";
-import AuthorizationRouter from "./routes/AuthorizationRoutes";
+import AuthenticationRouter from "./routes/AuthenticationRouter";
 import cors from "cors";
 dotenv.config();
 
@@ -12,7 +12,7 @@ const port = process.env.PORT;
 
 // Routes
 app.use("/player", PlayerRouter);
-app.use("/authorization", AuthorizationRouter);
+app.use("/authentication", AuthenticationRouter);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);

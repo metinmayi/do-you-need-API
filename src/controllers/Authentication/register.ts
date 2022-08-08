@@ -16,18 +16,18 @@ export const registerUser = async (req: Request, res: Response) => {
   try {
     await pool.execute(sql, userValues);
     return res.status(200).send("Registration Complete");
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Failed to query database");
+  } catch (error: any) {
+    console.log(error.sqlMessage);
+    res.status(500).send(error.sqlMessage || "Failed to query database");
   }
 };
 
 const getSqlValues = async (req: any) => {
   const hashedPassword = await getHashedPassword(req.body.password);
 
-  const name = req.body.username;
+  const name = req.body.username.toLowerCase();
   const password = hashedPassword;
-  const email = req.body.email;
+  const email = req.body.email.toLowerCase();
   const usergroup = "basic";
   const createdAt = Date.now();
   const blizz_sync = 0;

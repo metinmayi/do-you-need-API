@@ -11,6 +11,5 @@ export const loginValidation = (request: Request) => {
   if (result.error) {
     return { success: false, message: result.error.message };
   }
-  console.log("Continue");
   return { success: true, message: "Valid" };
 };

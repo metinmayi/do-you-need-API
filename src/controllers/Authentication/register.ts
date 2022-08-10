@@ -2,6 +2,11 @@ import { Request, Response } from "express";
 import { registrationValidation } from "../../validations/authentication/registrationValidation";
 import { pool } from "../../database";
 import bcrypt from "bcryptjs";
+declare module "express-session" {
+  interface SessionData {
+    visits: number;
+  }
+}
 
 const sql =
   "INSERT INTO users(name, password, usergroup, email, created, blizz_sync) VALUES (?, ?, ?, ?, ?, ?)";

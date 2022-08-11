@@ -5,7 +5,6 @@ import "../config/passport/";
  */
 import express from "express";
 import { registerUser } from "../controllers/Authentication/register";
-// import { loginUser } from "../controllers/Authentication/login";
 const AuthenticationRouter = express.Router();
 
 /**

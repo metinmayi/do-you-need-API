@@ -1,4 +1,3 @@
-import { Request, Response } from "express";
 import { RowDataPacket } from "mysql2";
 import { pool } from "../../config/database/database";
 import { loginValidation } from "../../validations/authentication/loginValidation";
@@ -13,9 +12,9 @@ type errRes = {
   success: boolean;
   message: string;
 };
-const errorResponse: errRes = { error: null, success: false, message: "" };
 
 export const loginUser = async (username: string, password: string) => {
+  const errorResponse: errRes = { error: null, success: false, message: "" };
   const isValid = loginValidation(username, password);
   if (!isValid.success) {
     errorResponse.message = "Invalid body";

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { RowDataPacket } from "mysql2";
-import { pool } from "../../database";
+import { pool } from "../../config/database/database";
 import { loginValidation } from "../../validations/authentication/loginValidation";
 import bcryptjs from "bcryptjs";
 

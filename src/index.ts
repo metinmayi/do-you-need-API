@@ -5,7 +5,7 @@ import AuthenticationRouter from "./routes/AuthenticationRouter";
 import cors from "cors";
 import session from "express-session";
 import MySQLSessionStore from "express-mysql-session";
-import { DATABASE_OPTIONS, pool } from "./database";
+import { DATABASE_OPTIONS, pool } from "./config/database/database";
 dotenv.config();
 const store = new (MySQLSessionStore as any)(DATABASE_OPTIONS, pool);
 const app = express();
@@ -20,7 +20,7 @@ app.use(
 app.use(express.json());
 app.use(
   session({
-    secret: "abc",
+    secret: process.env.SESSION_SECRET || "",
     resave: false,
     saveUninitialized: true,
     store: store,

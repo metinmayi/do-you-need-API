@@ -19,16 +19,17 @@ AuthenticationRouter.post("/register", registerUser);
 AuthenticationRouter.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/goodLogin",
-    failureRedirect: "/badLogin",
+    successRedirect: "goodLogin",
+    failureRedirect: "badLogin",
   })
 );
 
 AuthenticationRouter.get("/goodLogin", (req, res, next) => {
-  res.send("Good Login");
+  res.send("Good login!");
 });
+
 AuthenticationRouter.get("/badLogin", (req, res, next) => {
-  res.send(" badLogin");
+  res.sendStatus(401);
 });
 
 export default AuthenticationRouter;

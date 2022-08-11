@@ -40,14 +40,6 @@ const port = process.env.PORT;
 app.use("/player", PlayerRouter);
 app.use("/authentication", AuthenticationRouter);
 
-app.get("/goodLogin", (req, res, next) => {
-  res.send("Good login!");
-});
-
-app.get("/badLogin", (req, res, next) => {
-  res.send("Bad login!");
-});
-
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });

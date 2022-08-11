@@ -6,6 +6,9 @@ import cors from "cors";
 import session from "express-session";
 import MySQLSessionStore from "express-mysql-session";
 import { DATABASE_OPTIONS, pool } from "./config/database/database";
+import passport from "passport";
+import "./config/passport";
+
 dotenv.config();
 const store = new (MySQLSessionStore as any)(DATABASE_OPTIONS, pool);
 const app = express();
@@ -16,7 +19,6 @@ app.use(
     origin: "http://localhost:3000",
   })
 );
-
 app.use(express.json());
 app.use(
   session({
@@ -29,12 +31,22 @@ app.use(
     },
   })
 );
+app.use(passport.initialize());
+app.use(passport.session());
 
 const port = process.env.PORT;
 
 // Routes
 app.use("/player", PlayerRouter);
 app.use("/authentication", AuthenticationRouter);
+
+app.get("/goodLogin", (req, res, next) => {
+  res.send("Good login!");
+});
+
+app.get("/badLogin", (req, res, next) => {
+  res.send("Bad login!");
+});
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);

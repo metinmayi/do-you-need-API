@@ -8,31 +8,44 @@ interface IRetrievedPassword extends RowDataPacket {
   password: string;
 }
 
-export const loginUser = async (req: Request, res: Response) => {
-  const isValid = loginValidation(req);
+type errRes = {
+  error: null | boolean;
+  success: boolean;
+  message: string;
+};
+const errorResponse: errRes = { error: null, success: false, message: "" };
+
+export const loginUser = async (username: string, password: string) => {
+  const isValid = loginValidation(username, password);
   if (!isValid.success) {
-    return res.status(400).send(isValid.message);
+    errorResponse.message = "Invalid body";
+    return errorResponse;
   }
 
   try {
-    const incomingPassword = req.body.password;
-    const actualPassword = await getUserPassword(req.body.username);
-    const isMatch = await comparePasswords(incomingPassword, actualPassword);
-
+    const dbPassword = await getUserPassword(username);
+    const isMatch = await comparePasswords(password, dbPassword);
     if (isMatch) {
-      return res.status(200).send("Login successful");
+      errorResponse.message = "Successfully logged in.";
+      errorResponse.success = true;
+      return errorResponse;
     }
 
-    return res.status(401).send("Wrong username/password");
+    errorResponse.message = "Wrong username/password";
+    return errorResponse;
   } catch (error) {
     console.log(error);
+    errorResponse.error = true;
+    errorResponse.message = "Couldn't connect to the database";
+    return errorResponse;
   }
 };
 
 const getUserPassword = async (username: string) => {
   const sql = "SELECT password FROM users WHERE name=?";
   const result = await pool.execute<IRetrievedPassword[]>(sql, [username]);
-  return result[0][0].password;
+  const userPassword = result[0][0]?.password ?? "";
+  return userPassword;
 };
 
 const comparePasswords = async (incoming: string, actual: string) => {

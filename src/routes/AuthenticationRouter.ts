@@ -23,10 +23,23 @@ AuthenticationRouter.post(
   })
 );
 
+AuthenticationRouter.get("/isAuthenticated", (req, res, next) => {
+  console.log("reached");
+  console.log(req.isAuthenticated());
+  if (req.isAuthenticated()) return res.sendStatus(200);
+  res.sendStatus(401);
+});
+
+/**
+ * Good Login
+ */
 AuthenticationRouter.get("/goodLogin", (req, res, next) => {
   res.send("Good login!");
 });
 
+/**
+ * Bad Login
+ */
 AuthenticationRouter.get("/badLogin", (req, res, next) => {
   res.sendStatus(401);
 });

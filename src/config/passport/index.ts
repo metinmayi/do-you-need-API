@@ -1,31 +1,62 @@
 import passport from "passport";
-import { IVerifyOptions, Strategy } from "passport-local";
-import { loginUser } from "../../controllers/Authentication/login";
+import { Strategy } from "passport-local";
+import bcryptjs from "bcryptjs";
+import { IReceivedUser } from "../../models/IReceivedUser";
+import { loginValidation } from "../../validations/authentication/loginValidation";
 import { pool } from "../database/database";
 
-const verifyCallback = async (
-  username: string,
-  password: string,
-  done: (error: any, user?: any, options?: IVerifyOptions) => void
-) => {
-  const result = await loginUser(username, password);
-  if (result.success) return done(result.error, username);
-  if (result.error) return done(result.error);
-  return done(result.error, result.success);
-};
+const sql = "SELECT name, id, password FROM users WHERE name=?";
 
-passport.use(new Strategy(verifyCallback));
+passport.use(
+  new Strategy(async (username, password, done) => {
+    if (!loginValidation(username, password)) {
+      return done(null);
+    }
+
+    try {
+      const user = (await pool.execute<IReceivedUser[]>(sql, [username]))[0][0];
+      if (!user) {
+        return done(null);
+      }
+
+      if (!matchingPasswords(password, user.password)) {
+        return done(null);
+      }
+
+      return done(null, user);
+    } catch (error) {
+      console.log(error);
+      if (!loginValidation)
+        return done(error, "Couldn't connect to the database");
+    }
+  })
+);
 
 passport.serializeUser((user, done) => {
-  return done(null, user);
+  return done(null, { name: user.name, id: user.id });
 });
 
-passport.deserializeUser(async (user: string, done) => {
+passport.deserializeUser(async (username: Express.User, done) => {
   const sql = "SELECT * FROM users WHERE name=?";
   try {
-    const result = await pool.execute(sql, [user]);
-    return done(null, result[0]);
+    const user = (
+      await pool.execute<IReceivedUser[]>(sql, [username.name])
+    )[0][0];
+    return done(null, user);
   } catch (err) {
     return done(err);
   }
 });
+
+const matchingPasswords = async (incoming: string, actual: string) => {
+  return await bcryptjs.compare(incoming, actual);
+};
+
+declare global {
+  namespace Express {
+    interface User {
+      name: string;
+      id: number;
+    }
+  }
+}

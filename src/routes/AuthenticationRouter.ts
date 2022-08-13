@@ -27,7 +27,7 @@ AuthenticationRouter.get("/isAuthenticated", (req, res, next) => {
   console.log("reached");
   console.log(req.isAuthenticated());
   if (req.isAuthenticated()) return res.sendStatus(200);
-  res.sendStatus(401);
+  res.status(200).send(req.user);
 });
 
 /**

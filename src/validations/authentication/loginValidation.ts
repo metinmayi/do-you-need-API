@@ -1,5 +1,4 @@
 import Joi from "joi";
-import { Request } from "express";
 import { PASSWORD_REGEX, USERNAME_REGEX } from "../../constants/authentication";
 
 const registrationSchema = Joi.object({
@@ -9,7 +8,7 @@ const registrationSchema = Joi.object({
 export const loginValidation = (username: string, password: string) => {
   const result = registrationSchema.validate({ username, password });
   if (result.error) {
-    return { success: false, message: result.error.message };
+    return false;
   }
-  return { success: true, message: "Valid" };
+  return true;
 };

@@ -32,14 +32,14 @@ AuthenticationRouter.get("/isAuthenticated", (req, res, next) => {
  * Good Login
  */
 AuthenticationRouter.get("/goodLogin", (req, res, next) => {
-  res.send("Good login!");
+  res.status(200).json(req.user);
 });
 
 /**
  * Bad Login
  */
 AuthenticationRouter.get("/badLogin", (req, res, next) => {
-  res.sendStatus(401);
+  res.status(401).json({ message: "unauthorized" });
 });
 
 export default AuthenticationRouter;

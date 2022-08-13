@@ -19,7 +19,7 @@ passport.use(
         return done(null);
       }
 
-      if (!matchingPasswords(password, user.password)) {
+      if (!(await matchingPasswords(password, user.password))) {
         return done(null);
       }
 

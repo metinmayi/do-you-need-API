@@ -9,7 +9,7 @@ declare module "express-session" {
 }
 
 const sql =
-  "INSERT INTO users(name, password, usergroup, email, created, blizz_sync) VALUES (?, ?, ?, ?, ?, ?)";
+  "INSERT INTO users(name, password, email, createdAt) VALUES (?, ?, ?, ?)";
 
 export const registerUser = async (req: Request, res: Response) => {
   const isValid = registrationValidation(req);
@@ -33,11 +33,9 @@ const getSqlValues = async (req: any) => {
   const name = req.body.username.toLowerCase();
   const password = hashedPassword;
   const email = req.body.email.toLowerCase();
-  const usergroup = "basic";
   const createdAt = Date.now();
-  const blizz_sync = 0;
 
-  return [name, password, usergroup, email, createdAt, blizz_sync];
+  return [name, password, email, createdAt];
 };
 
 const getHashedPassword = async (password: string) => {

@@ -8,6 +8,7 @@ import MySQLSessionStore from "express-mysql-session";
 import { DATABASE_OPTIONS, pool } from "./config/database/database";
 import passport from "passport";
 import "./config/passport";
+import BlizzardRouter from "./routes/BlizzardRouter";
 
 dotenv.config();
 const store = new (MySQLSessionStore as any)(DATABASE_OPTIONS, pool);
@@ -39,6 +40,7 @@ const port = process.env.PORT;
 // Routes
 app.use("/player", PlayerRouter);
 app.use("/authentication", AuthenticationRouter);
+app.use('/blizzard', BlizzardRouter);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);

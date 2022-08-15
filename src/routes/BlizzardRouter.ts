@@ -1,43 +1,52 @@
 /**
  * Routes for www.domain.com/blizzard
  */
+const authURL =
+  "https://eu.battle.net/oauth/authorize?region=eu&response_type=code&client_id=182681dbb88f41a28f5abe8e2782ab16&redirect_uri=http://localhost:8000/blizzard/getAccessToken&scope=wow.profile";
 import express from "express";
 import axios from "axios";
-import http from "http2";
+
 const BlizzardRouter = express.Router();
-const REGION = 'eu';
-const REDIRECT_URI = 'http://localhost:8000/blizzard/getAccessToken';
-const scope = 'wow.profile';
-const CLIENT_ID = process.env.BLIZZARD_CLIENT;
-const authorizeURL = `https://eu.battle.net/oauth/authorize?region=${REGION}&client_id=${CLIENT_ID}&scope=${scope}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-const tokenURL = 'https://eu.battle.net/oauth/token';
+const CLIENT_ID = process.env.BLIZZARD_CLIENT_ID;
+const CLIENT_SECRET = process.env.BLIZZARD_CLIENT_SECRET;
 
+/**
+ * Sends the user to blizzards authentication page
+ */
+BlizzardRouter.get("/authenticate", (req, res, next) => {
+  res.redirect(authURL);
+});
 
+/**
+ * Gets redirected here after authenticating with blizzard.
+ * Use this to get accessToken
+ */
+BlizzardRouter.get("/getAccessToken", async (req, res, next) => {
+  const { code } = req.query;
+  const buffer = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`);
+  const auth = buffer.toString("base64");
 
-BlizzardRouter.post('/authenticate', async (req, res, next) => {
-    if (!req.isAuthenticated()) {
-        return res.status(401).json({message: 'You are not authenticated with doYouNeed'});
-    }
+  try {
+    const response = await axios("https://eu.battle.net/oauth/token", {
+      method: "post",
+      headers: {
+        Authorization: `Basic ${auth}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      data: `redirect_uri=http://localhost:8000/blizzard/getAccessToken&grant_type=authorization_code&code=${code}`,
+    });
 
-    const {code} = req.body;
-    const u = '182681dbb88f41a28f5abe8e2782ab16:Vy14wuX0MRLq5UZbQbytmJb6bq2SNqCg';
-    const buff = Buffer.from(u);
-    const auth = buff.toString('base64');
+    const token = response.data.access_token;
 
-    try {
-        const response = await axios.post("https://eu.battle.net/oauth/token", {
-            body: `redirect_uri=http://localhost:3000/synchronize&scope=wow.profile&grant_type=authorization_code&code=${code}`,
-            headers: {
-              Authorization: `Basic ${auth}`,
-              "Content-Type": "application/x-www-form-urlencoded"
-            },
-          })
-          res.sendStatus(200);
+    const result = await axios(
+      `https://eu.api.blizzard.com/profile/user/wow?namespace=profile-eu&locale=en_EU&access_token=${token}`
+    );
+    console.log(result);
+  } catch (error) {
+    console.log(error);
+  }
 
-    } catch(error:any) {
-        console.log(error.request['_options']);
-        res.sendStatus(401);
-    }
-})
+  return res.redirect("http://localhost:3000");
+});
 
 export default BlizzardRouter;

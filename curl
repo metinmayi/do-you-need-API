@@ -1,1 +1,0 @@
-curl -X POST https://eu.battle.net/oauth/token -u 182681dbb88f41a28f5abe8e2782ab16:Vy14wuX0MRLq5UZbQbytmJb6bq2SNqCg -d redirect_uri=http://localhost:3000/synchronize -d scope=wow.profile -d grant_type=authorization_code -d code=EUJU9T75RHQFILPJ4UPTRHGES1R9JO6U8C

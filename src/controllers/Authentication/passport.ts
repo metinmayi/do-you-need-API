@@ -3,7 +3,8 @@ import { Strategy } from "passport-local";
 import bcryptjs from "bcryptjs";
 import { IReceivedUser } from "../../models/IReceivedUser";
 import { isValidLogin } from "../../validations/authentication/isValidLogin";
-import { pool } from "../database/database";
+import { pool } from "../../database/database";
+import "../../models/ExpressUser";
 
 const sql = "SELECT name, id, password FROM users WHERE name=?";
 
@@ -62,11 +63,3 @@ const isPasswordMatch = async (reqPassword: string, dbHash: string) => {
   return await bcryptjs.compare(reqPassword, dbHash);
 };
 
-declare global {
-  namespace Express {
-    interface User {
-      name: string;
-      id: number;
-    }
-  }
-}

@@ -8,6 +8,7 @@ import MySQLSessionStore from "express-mysql-session";
 import { DATABASE_OPTIONS, pool } from "./database/database";
 import passport from "passport";
 import BlizzardRouter from "./routes/BlizzardRouter";
+import { isAuthenticated } from "./middleware/isAuthenticated";
 
 dotenv.config();
 const store = new (MySQLSessionStore as any)(DATABASE_OPTIONS, pool);
@@ -38,7 +39,7 @@ app.use(passport.session());
 // Routes
 app.use("/player", PlayerRouter);
 app.use("/authentication", AuthenticationRouter);
-app.use('/blizzard', BlizzardRouter);
+app.use('/blizzard',isAuthenticated, BlizzardRouter);
 
 
 const port = process.env.PORT;

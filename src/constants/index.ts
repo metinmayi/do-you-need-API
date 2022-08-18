@@ -1,3 +1,3 @@
 export * from "./instanceConstants";
-export * from "./raidbots";
-export * from "./blizzard";
+export * from "./raidbotsConstants";
+export * from "./blizzardConstants";

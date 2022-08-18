@@ -1,8 +1,8 @@
-import passport from "passport";
-import "../config/passport/";
 /**
  * Routes for www.domain.com/authentication
  */
+import passport from "passport";
+import "../controllers/Authentication/passport";
 import express from "express";
 import { registerUser } from "../controllers/Authentication/register";
 const AuthenticationRouter = express.Router();

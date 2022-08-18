@@ -4,9 +4,9 @@
 import { NextFunction, Request, Response } from "express";
 
 export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
-    debugger;
     if (req.isAuthenticated()) {
         next();
+        return;
     }
     res.sendStatus(401);
 }

@@ -5,9 +5,8 @@ import AuthenticationRouter from "./routes/AuthenticationRouter";
 import cors from "cors";
 import session from "express-session";
 import MySQLSessionStore from "express-mysql-session";
-import { DATABASE_OPTIONS, pool } from "./config/database/database";
+import { DATABASE_OPTIONS, pool } from "./database/database";
 import passport from "passport";
-import "./config/passport";
 import BlizzardRouter from "./routes/BlizzardRouter";
 
 dotenv.config();
@@ -35,13 +34,14 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-const port = process.env.PORT;
 
 // Routes
 app.use("/player", PlayerRouter);
 app.use("/authentication", AuthenticationRouter);
 app.use('/blizzard', BlizzardRouter);
 
+
+const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });

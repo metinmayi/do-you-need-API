@@ -9,4 +9,5 @@ export interface IReceivedUser extends RowDataPacket {
   usergroup: string;
   createdAt: number;
   blizz_sync: number;
+  accessToken: string;
 }

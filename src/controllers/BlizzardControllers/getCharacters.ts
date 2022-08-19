@@ -1,27 +1,43 @@
-import axios from "axios";
-import { Request, Response } from "express";
-import { getAccessToken } from "./BlizzardUtils/getAccessToken";
+import axios from 'axios';
+import { Request, Response } from 'express';
 
-export const getCharacters = async (req: Request, res:Response) => {
-    const { code } = req.query;
-    if (typeof code !== 'string') {
-        res.sendStatus(400);
-        return;
-    }
+export const getCharacters = async (req: Request, res: Response) => {
+  const token = req.user?.accessToken;
 
-    const token = await getAccessToken(code);
+  if (typeof token !== 'string') {
+    res.status(401).json({ message: 'User does not have a valid accessToken' });
+  }
 
+  try {
     const result = await axios(
-    `https://eu.api.blizzard.com/profile/user/wow?namespace=profile-eu&locale=en_EU&access_token=${token}`
-  );
-  const maxLevelChars =  getMaxLevelCharacters(result.data.wow_accounts);
-  res.redirect('http://localhost:3000/synchronize');
-}
+      `https://eu.api.blizzard.com/profile/user/wow?namespace=profile-eu&locale=en_EU&access_token=${token}`
+    );
+
+    const maxLevelChars = getMaxLevelCharacters(result.data.wow_accounts);
+    console.log(maxLevelChars);
+    res.json(maxLevelChars);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+};
 
 const getMaxLevelCharacters = (accounts: Array<any>) => {
-  const characters = accounts.map(account => account.characters).flat();
-  console.log(characters);
-  const maxLevel = characters.filter(character => character.level == 60);
-  console.log(JSON.stringify(maxLevel));
+  const characters = accounts
+    .map((account) => account.characters)
+    .flat()
+    .filter((character) => character.level === 60);
 
-}
+  const maxLevel = characters.reduce((a, b) => {
+    const character = {
+      name: b.name,
+      realm: b.realm.slug,
+      faction: b.faction.type,
+    };
+    console.log(character);
+    a.push(character);
+    return a;
+  }, []);
+
+  return maxLevel;
+};

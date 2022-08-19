@@ -2,25 +2,30 @@
  * Routes for www.domain.com/blizzard
  */
 
-import express from "express";
-import { authenticate } from "../controllers/BlizzardControllers/authenticate";
-import { checkAccessToken } from "../controllers/BlizzardControllers/checkAccessToken";
-import { getCharacters } from "../controllers/BlizzardControllers/getCharacters";
+import express from 'express';
+import { checkAccessToken } from '../controllers/BlizzardControllers/checkAccessToken';
+import { getAndStoreAccessToken } from '../controllers/BlizzardControllers/getAndStoreAccessToken';
+import { getAuthorizeCode } from '../controllers/BlizzardControllers/getAuthorizeCode';
+import { getCharacters } from '../controllers/BlizzardControllers/getCharacters';
 
 const BlizzardRouter = express.Router();
 
+/**
+ * Sends the user to blizzards authentication page where an auth code is generated.
+ * The request gets redirected with the authCode to the "authenticateCallback" endpoint.
+ */
+BlizzardRouter.get('/authenticate', getAuthorizeCode);
 
 /**
- * Sends the user to blizzards authentication page.
- * After authentication, they get redirected
+ * Redirect of the authenticate endpoint.
  */
-BlizzardRouter.get("/authenticate", authenticate);
+BlizzardRouter.get('/authenticateCallback', getAndStoreAccessToken);
 
 /**
  * Gets redirected here after authenticating with blizzard.
  * Use this to get accessToken
  */
-BlizzardRouter.get("/getCharacters", getCharacters);
+BlizzardRouter.get('/getCharacters', getCharacters);
 
 /**
  * Checks the validity of the provided accesstoken

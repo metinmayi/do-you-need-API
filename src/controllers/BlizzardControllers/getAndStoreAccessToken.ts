@@ -1,8 +1,8 @@
-import axios from 'axios';
-import { Request, Response } from 'express';
-import { REDIRECT_URI, GET_TOKEN_URL, SYNC_URL } from '../../constants';
-import { getBasicAuth } from './BlizzardUtils/getBasicAuth';
-import { saveAccessToken } from './BlizzardUtils/saveAccessToken';
+import axios from "axios";
+import { Request, Response } from "express";
+import { REDIRECT_URI, GET_TOKEN_URL, SYNC_URL } from "../../constants";
+import { getBasicAuth } from "./BlizzardUtils/getBasicAuth";
+import { saveAccessToken } from "./BlizzardUtils/saveAccessToken";
 
 /**
  *
@@ -11,8 +11,8 @@ import { saveAccessToken } from './BlizzardUtils/saveAccessToken';
 export const getAndStoreAccessToken = async (req: Request, res: Response) => {
   const { code } = req.query;
   const userId = req.user?.id;
-  if (typeof code !== 'string') {
-    res.status(401).json({ message: 'Invalid code received' });
+  if (typeof code !== "string") {
+    res.status(401).json({ message: "Invalid code received" });
     return;
   }
 
@@ -20,10 +20,10 @@ export const getAndStoreAccessToken = async (req: Request, res: Response) => {
 
   try {
     const response = await axios(GET_TOKEN_URL, {
-      method: 'post',
+      method: "post",
       headers: {
         Authorization,
-        'Content-Type': 'application/x-www-form-urlencoded',
+        "Content-Type": "application/x-www-form-urlencoded",
       },
       data: `redirect_uri=${REDIRECT_URI}&grant_type=authorization_code&code=${code}`,
     });

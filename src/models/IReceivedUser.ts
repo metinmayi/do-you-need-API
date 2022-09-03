@@ -1,13 +1,6 @@
-import { RowDataPacket } from "mysql2";
+import { ObjectId } from "mongoose";
+import { IUser } from "./IUser";
 
-export interface IReceivedUser extends RowDataPacket {
-  id: number;
-  name: string;
-  password: string;
-  email: string;
-  guild: string;
-  usergroup: string;
-  createdAt: number;
-  blizz_sync: number;
-  accessToken: string;
+export interface IReceivedUser extends IUser {
+  _id: ObjectId;
 }

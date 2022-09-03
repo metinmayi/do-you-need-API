@@ -10,7 +10,7 @@ import { saveAccessToken } from "./BlizzardUtils/saveAccessToken";
  */
 export const getAndStoreAccessToken = async (req: Request, res: Response) => {
   const { code } = req.query;
-  const userId = req.user?.id;
+  const userId = req.user?._id;
   if (typeof code !== "string") {
     res.status(401).json({ message: "Invalid code received" });
     return;

@@ -1,12 +1,10 @@
 import passport from "passport";
 import { Strategy } from "passport-local";
 import bcryptjs from "bcryptjs";
-import { IReceivedUser } from "../../models/IReceivedUser";
 import { isValidLogin } from "../../validations/authentication/isValidLogin";
-import { pool } from "../../database/database";
 import "../../models/ExpressUser";
-
-const sql = "SELECT name, id, password FROM users WHERE name=?";
+import { UserModel } from "../../mongoose/schemas/UserSchema";
+import { IReceivedUser } from "../../models/IReceivedUser";
 
 /**
  * Login middleware
@@ -18,7 +16,7 @@ passport.use(
     }
 
     try {
-      const user = (await pool.execute<IReceivedUser[]>(sql, [username]))[0][0];
+      const user: IReceivedUser | null = await UserModel.findOne({ username });
       if (!user) {
         return done(null);
       }
@@ -40,16 +38,15 @@ passport.use(
  * Assign passport properties
  */
 passport.serializeUser((user, done) => {
-  return done(null, user.name);
+  return done(null, user.username);
 });
 
 /**
  * Query DB by with above passport, and return session user
  */
 passport.deserializeUser(async (username: string, done) => {
-  const sql = "SELECT * FROM users WHERE name=?";
   try {
-    const user = (await pool.execute<IReceivedUser[]>(sql, [username]))[0][0];
+    const user: IReceivedUser | null = await UserModel.findOne({ username });
     return done(null, user);
   } catch (err) {
     return done(err);
@@ -62,4 +59,3 @@ passport.deserializeUser(async (username: string, done) => {
 const isPasswordMatch = async (reqPassword: string, dbHash: string) => {
   return await bcryptjs.compare(reqPassword, dbHash);
 };
-

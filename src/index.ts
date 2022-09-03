@@ -9,6 +9,7 @@ import { DATABASE_OPTIONS, pool } from "./database/database";
 import passport from "passport";
 import BlizzardRouter from "./routes/BlizzardRouter";
 import { isAuthenticated } from "./middleware/isAuthenticated";
+import "./mongoose/mongoose";
 
 dotenv.config();
 const store = new (MySQLSessionStore as any)(DATABASE_OPTIONS, pool);
@@ -35,12 +36,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 // Routes
 app.use("/player", PlayerRouter);
 app.use("/authentication", AuthenticationRouter);
-app.use('/blizzard',isAuthenticated, BlizzardRouter);
-
+app.use("/blizzard", isAuthenticated, BlizzardRouter);
 
 const port = process.env.PORT;
 app.listen(port, () => {

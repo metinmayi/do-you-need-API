@@ -4,13 +4,13 @@
 import passport from "passport";
 import "../controllers/Authentication/passport";
 import express from "express";
-import { registerUser } from "../controllers/Authentication/register";
+import { register } from "../controllers/Authentication/register";
 const AuthenticationRouter = express.Router();
 
 /**
  * Register player
  */
-AuthenticationRouter.post("/register", registerUser);
+AuthenticationRouter.post("/register", register);
 
 /**
  * Login player

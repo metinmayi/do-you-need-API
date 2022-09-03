@@ -1,7 +1,7 @@
 /**
  * Give ID, get bossname
  */
-const IdToBoss = {
+export const IdToBoss = {
   2458: "vigilant_guardian",
   2465: "skolex_the_insatiable_ravener",
   2470: "artificer_xymox",
@@ -18,7 +18,7 @@ const IdToBoss = {
 /**
  * Sepulcher boss Ids
  */
-type IBossId =
+export type IBossId =
   | "2458"
   | "2465"
   | "2470"
@@ -56,5 +56,3 @@ export const RaidId = 1195 as const;
  * Supported Raid Difficulty
  */
 export const RaidDifficulty = "raid-mythic" as const;
-
-export { IdToBoss, IBossId };

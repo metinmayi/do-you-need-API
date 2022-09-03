@@ -6,7 +6,7 @@ import {
   RaidDifficulty,
   RaidId,
 } from "../constants";
-import { pool } from "../config/database/database";
+import { pool } from "../database/database";
 import { IBossUpgrade } from "../models/IBossUpgrade";
 // import { connection } from "../database";
 import { IPlayer, IItemType } from "../models/Player";

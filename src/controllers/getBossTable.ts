@@ -1,4 +1,4 @@
-import { pool } from "../config/database/database";
+import { pool } from "../database/database";
 
 // Type the bossName to a bossName Type
 export const getBossTable = async (bossName: string) => {

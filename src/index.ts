@@ -4,15 +4,17 @@ import PlayerRouter from "./routes/PlayerRouter";
 import AuthenticationRouter from "./routes/AuthenticationRouter";
 import cors from "cors";
 import session from "express-session";
-import MySQLSessionStore from "express-mysql-session";
-import { DATABASE_OPTIONS, pool } from "./database/database";
+import MongoStore from "connect-mongo";
 import passport from "passport";
 import BlizzardRouter from "./routes/BlizzardRouter";
 import { isAuthenticated } from "./middleware/isAuthenticated";
 import "./mongoose/mongoose";
 
+const store = MongoStore.create({
+  mongoUrl: process.env.MONGOOSE_URL,
+  collectionName: "sessions",
+});
 dotenv.config();
-const store = new (MySQLSessionStore as any)(DATABASE_OPTIONS, pool);
 const app = express();
 
 app.use(
@@ -27,7 +29,7 @@ app.use(
     secret: process.env.SESSION_SECRET || "",
     resave: false,
     saveUninitialized: true,
-    store: store,
+    store,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24,
     },

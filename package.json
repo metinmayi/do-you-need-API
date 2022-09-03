@@ -32,6 +32,7 @@
     "@types/passport": "^1.0.10",
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
+    "connect-mongo": "^4.6.0",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.1",
     "joi": "^17.6.0",

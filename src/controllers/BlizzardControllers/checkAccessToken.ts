@@ -5,7 +5,7 @@ import { CHECK_TOKEN_URL, WOW_REGION } from "../../constants";
 export const checkAccessToken = async (req: Request, res: Response) => {
   const token = req.user?.accessToken;
 
-  if (typeof token !== "string") {
+  if (!token) {
     res
       .status(403)
       .json({ message: "User does not have an active accessToken" });

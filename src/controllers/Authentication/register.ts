@@ -21,12 +21,13 @@ export const register = async (req: Request, res: Response) => {
 
     return res.status(200).send("Registration Complete");
   } catch (error: any) {
-    console.log(error.sqlMessage);
-    res.status(500).send(error.sqlMessage || "Failed to query database");
+    console.log(error._message);
+    res.status(500).send(error._message || "Failed to query database");
   }
 };
 
 const constructUser = async (req: any) => {
+  debugger;
   const username = req.body.username.toLowerCase();
   const password = await getHashedPassword(req.body.password);
   const email = req.body.email.toLowerCase();

@@ -1,11 +1,7 @@
 import { ObjectId } from "mongoose";
-import { pool } from "../../../database/database";
-const SQL = "UPDATE users SET accessToken=? WHERE id=?";
+import { UserModel } from "../../../mongoose/schemas/UserSchema";
 
-export const saveAccessToken = async (
-  token: string,
-  userId: ObjectId | undefined
-) => {
-  const insertion = await pool.execute(SQL, [token, userId]);
-  console.log(insertion);
+export const saveAccessToken = async (accessToken: string, id: ObjectId) => {
+  const _id = id.toString();
+  const result = await UserModel.updateOne({ _id }, { accessToken });
 };

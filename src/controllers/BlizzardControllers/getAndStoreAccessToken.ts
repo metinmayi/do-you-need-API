@@ -16,6 +16,11 @@ export const getAndStoreAccessToken = async (req: Request, res: Response) => {
     return;
   }
 
+  if (!userId) {
+    res.status(401).json({ message: "Invalid user id" });
+    return;
+  }
+
   const Authorization = getBasicAuth();
 
   try {

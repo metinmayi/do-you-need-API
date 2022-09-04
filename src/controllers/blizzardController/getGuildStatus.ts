@@ -1,3 +1,27 @@
 import { Request, Response } from "express";
+import { getPlayer } from "../../helpers/blizzardHelpers/getPlayer";
+import { dbGuildStatus } from "../../helpers/doYouNeedHelpers/dbGuildStatus";
+import { getGuildStatusValidation } from "../../validations/blizzardValidation/getGuildStatusValidation";
 
-export const getGuildStatus = async (req: Request, res: Response) => {};
+export const getGuildStatus = async (req: Request, res: Response) => {
+  const token = req.user?.accessToken;
+
+  const validation = getGuildStatusValidation(req.query, token);
+  if (!validation.success) {
+    return res.status(403).json(validation.error);
+  }
+
+  try {
+    const { guild } = await getPlayer(
+      validation.data.character,
+      validation.data.realm,
+      validation.data.token
+    );
+    const guildStatus = await dbGuildStatus(guild.id);
+    guild.status = guildStatus;
+    res.status(200).json({ guild });
+  } catch (error: any) {
+    console.log(error);
+    res.status(500).send(error.message);
+  }
+};

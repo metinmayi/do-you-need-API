@@ -1,4 +1,4 @@
-import { IdToBoss } from "../constants";
+import { IdToBoss } from "../../constants";
 
 export const getBossTableValidation = (bossName: string | undefined) => {
   try {

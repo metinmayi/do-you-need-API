@@ -1,4 +1,4 @@
-import { ReportURL } from "../constants";
+import { ReportURL } from "../../constants";
 
 /**
  * Takes in a URL and makes sure it is actually from raidbots

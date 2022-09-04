@@ -6,8 +6,8 @@ const PlayerRouter = express.Router();
 import { Request, Response } from "express";
 import { getBossTable } from "../controllers/doYouNeed/getBossTable";
 import { addPlayerData } from "../controllers/doYouNeed/PlayerController";
-import { addPlayerDataValidation } from "../validations/addPlayerDataValidation";
-import { getBossTableValidation } from "../validations/getBossTableValidation";
+import { addPlayerDataValidation } from "../validations/doYouNeedValidation/addPlayerDataValidation";
+import { getBossTableValidation } from "../validations/doYouNeedValidation/getBossTableValidation";
 
 PlayerRouter.get("/", (req: Request, res: Response) => {
   res.send("Reached PlayerRouter");

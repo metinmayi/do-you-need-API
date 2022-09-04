@@ -1,7 +1,7 @@
 import passport from "passport";
 import { Strategy } from "passport-local";
 import bcryptjs from "bcryptjs";
-import { isValidLogin } from "../../validations/authentication/isValidLogin";
+import { isValidLogin } from "../../validations/authenticationValidation/isValidLogin";
 import "../../models/ExpressUser";
 import { UserModel } from "../../mongoose/schemas/UserSchema";
 import { IReceivedUser } from "../../models/IReceivedUser";

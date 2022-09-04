@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { registrationValidation } from "../../validations/authentication/registrationValidation";
+import { registrationValidation } from "../../validations/authenticationValidation/registrationValidation";
 import { pool } from "../../database/database";
 import bcrypt from "bcryptjs";
 declare module "express-session" {

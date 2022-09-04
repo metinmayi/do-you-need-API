@@ -2,9 +2,9 @@
  * Routes for www.domain.com/authentication
  */
 import passport from "passport";
-import "../controllers/Authentication/passport";
+import "../controllers/authenticationController/passport";
 import express from "express";
-import { register } from "../controllers/Authentication/register";
+import { register } from "../controllers/authenticationController/register";
 const AuthenticationRouter = express.Router();
 
 /**

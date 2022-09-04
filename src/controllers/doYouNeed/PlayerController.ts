@@ -5,12 +5,11 @@ import {
   IdToBoss,
   RaidDifficulty,
   RaidId,
-} from "../constants";
-import { pool } from "../database/database";
-import { IBossUpgrade } from "../models/IBossUpgrade";
-// import { connection } from "../database";
-import { IPlayer, IItemType } from "../models/Player";
-import { IPlayerData, Meta } from "../models/PlayerData";
+} from "../../constants";
+import { pool } from "../../database/database";
+import { IBossUpgrade } from "../../models/IBossUpgrade";
+import { IItemType, IPlayer } from "../../models/Player";
+import { IPlayerData, Meta } from "../../models/PlayerData";
 
 /**
  * Takes a reportID and starts the process of importing data, breaking it up and sending back a player object.

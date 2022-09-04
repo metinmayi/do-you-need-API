@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { registrationValidation } from "../../validations/authentication/registrationValidation";
+import { registrationValidation } from "../../validations/authenticationValidation/registrationValidation";
 import bcrypt from "bcryptjs";
 import { UserModel } from "../../mongoose/schemas/UserSchema";
 import { IUser } from "../../models/IUser";

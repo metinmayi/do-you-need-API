@@ -4,8 +4,8 @@
 import express from "express";
 const PlayerRouter = express.Router();
 import { Request, Response } from "express";
-import { getBossTable } from "../controllers/getBossTable";
-import { addPlayerData } from "../controllers/PlayerController";
+import { getBossTable } from "../controllers/doYouNeed/getBossTable";
+import { addPlayerData } from "../controllers/doYouNeed/PlayerController";
 import { addPlayerDataValidation } from "../validations/addPlayerDataValidation";
 import { getBossTableValidation } from "../validations/getBossTableValidation";
 

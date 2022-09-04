@@ -1,11 +1,11 @@
-import axios from 'axios';
-import { Request, Response } from 'express';
+import axios from "axios";
+import { Request, Response } from "express";
 
 export const getCharacters = async (req: Request, res: Response) => {
   const token = req.user?.accessToken;
 
-  if (typeof token !== 'string') {
-    res.status(401).json({ message: 'User does not have a valid accessToken' });
+  if (!token) {
+    res.status(401).json({ message: "User does not have a valid accessToken" });
   }
 
   try {
@@ -14,8 +14,7 @@ export const getCharacters = async (req: Request, res: Response) => {
     );
 
     const maxLevelChars = getMaxLevelCharacters(result.data.wow_accounts);
-    console.log(maxLevelChars);
-    res.json(maxLevelChars);
+    res.status(200).json(maxLevelChars);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
@@ -34,7 +33,6 @@ const getMaxLevelCharacters = (accounts: Array<any>) => {
       realm: b.realm.slug,
       faction: b.faction.type,
     };
-    console.log(character);
     a.push(character);
     return a;
   }, []);

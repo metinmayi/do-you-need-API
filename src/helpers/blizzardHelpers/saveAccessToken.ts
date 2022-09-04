@@ -1,5 +1,5 @@
 import { ObjectId } from "mongoose";
-import { UserModel } from "../../../mongoose/schemas/UserSchema";
+import { UserModel } from "../../mongoose/schemas/UserSchema";
 
 export const saveAccessToken = async (accessToken: string, id: ObjectId) => {
   const _id = id.toString();

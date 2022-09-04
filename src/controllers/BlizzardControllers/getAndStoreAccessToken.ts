@@ -1,8 +1,8 @@
 import axios from "axios";
 import { Request, Response } from "express";
 import { REDIRECT_URI, GET_TOKEN_URL, SYNC_URL } from "../../constants";
-import { getBasicAuth } from "./BlizzardUtils/getBasicAuth";
-import { saveAccessToken } from "./BlizzardUtils/saveAccessToken";
+import { getBasicAuth } from "../../helpers/blizzardHelpers/getBasicAuth";
+import { saveAccessToken } from "../../helpers/blizzardHelpers/saveAccessToken";
 
 /**
  *

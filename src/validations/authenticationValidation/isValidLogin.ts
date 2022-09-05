@@ -10,7 +10,10 @@ const registrationSchema = Joi.object({
  * Checks if the requested username and password match the regex.
  */
 export const isValidLogin = (username: string, password: string) => {
-  const result = registrationSchema.validate({ username, password });
+  const result = registrationSchema.validate({
+    username,
+    password,
+  });
   if (result.error) {
     return false;
   }

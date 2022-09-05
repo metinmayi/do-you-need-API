@@ -11,6 +11,7 @@ import { IReceivedUser } from "../../models/IReceivedUser";
  */
 passport.use(
   new Strategy(async (username, password, done) => {
+    username = username.toLocaleLowerCase();
     if (!isValidLogin(username, password)) {
       return done(null);
     }

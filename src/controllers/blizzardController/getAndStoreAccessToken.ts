@@ -36,8 +36,8 @@ export const getAndStoreAccessToken = async (req: Request, res: Response) => {
     const token = response.data.access_token;
     await saveAccessToken(token, userId);
     res.redirect(SYNC_URL);
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    console.log("getAndStoreAccessToken: " + error.message);
     res.redirect(SYNC_URL);
   }
 };

@@ -17,8 +17,8 @@ export const getCharacters = async (req: Request, res: Response) => {
     const maxLevelChars = getMaxLevelCharacters(result.data.wow_accounts);
 
     res.status(200).json(maxLevelChars);
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
     res.sendStatus(500);
+    console.log("getCharacters:" + error.message);
   }
 };

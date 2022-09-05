@@ -6,6 +6,7 @@ declare global {
       username: string;
       _id: ObjectId;
       accessToken: string;
+      guilds: number[];
     }
   }
 }

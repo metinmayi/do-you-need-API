@@ -5,6 +5,7 @@ import passport from "passport";
 import "../controllers/authenticationController/passport";
 import express from "express";
 import { register } from "../controllers/authenticationController/register";
+import { debug } from "console";
 const AuthenticationRouter = express.Router();
 
 /**
@@ -32,7 +33,8 @@ AuthenticationRouter.get("/isAuthenticated", (req, res, next) => {
  * Good Login
  */
 AuthenticationRouter.get("/goodLogin", (req, res, next) => {
-  res.status(200).json(req.user);
+  const { guilds } = req.user || { guilds: [] };
+  res.status(200).json({ guilds });
 });
 
 /**

@@ -21,7 +21,7 @@ export const getGuildStatus = async (req: Request, res: Response) => {
     guild.status = guildStatus;
     res.status(200).json({ guild });
   } catch (error: any) {
-    console.log(error);
+    console.log("getGuildStatus" + error.message);
     res.status(500).send(error.message);
   }
 };

@@ -4,7 +4,7 @@ export const dbGuildStatus = async (guildId: number) => {
   try {
     const result = await GuildModel.findOne({ guildId }).lean();
     return result;
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    console.log("dbGuildStatis: " + error.message);
   }
 };

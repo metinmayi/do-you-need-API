@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { CHECK_TOKEN_URL, WOW_REGION } from "../../constants";
 
 export const checkAccessToken = async (req: Request, res: Response) => {
+  debugger;
   const token = req.user?.accessToken;
 
   if (!token) {
@@ -22,8 +23,8 @@ export const checkAccessToken = async (req: Request, res: Response) => {
     });
 
     res.sendStatus(result.status);
-  } catch (error) {
-    console.log(error);
-    res.send(error);
+  } catch (error: any) {
+    console.log("checkAccessToken: " + error.message);
+    res.status(error.response.status || 500).send(error.message);
   }
 };

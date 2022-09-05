@@ -27,8 +27,8 @@ passport.use(
       }
 
       return done(null, user);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      console.log("passport: " + error.message);
       return done(error, "Couldn't connect to the database");
     }
   })

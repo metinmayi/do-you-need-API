@@ -21,7 +21,7 @@ export const register = async (req: Request, res: Response) => {
 
     return res.status(200).send("Registration Complete");
   } catch (error: any) {
-    console.log(error._message);
+    console.log("register: " + error._message);
     res.status(500).send(error._message || "Failed to query database");
   }
 };

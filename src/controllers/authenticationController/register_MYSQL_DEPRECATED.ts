@@ -22,7 +22,7 @@ export const registerUser = async (req: Request, res: Response) => {
     await pool.execute(sql, userValues);
     return res.status(200).send("Registration Complete");
   } catch (error: any) {
-    console.log(error.sqlMessage);
+    console.log("register_MYSQL_DEPRECATED" + error.sqlMessage);
     res.status(500).send(error.sqlMessage || "Failed to query database");
   }
 };

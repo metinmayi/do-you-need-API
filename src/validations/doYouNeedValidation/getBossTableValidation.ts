@@ -7,7 +7,7 @@ export const getBossTableValidation = (bossName: string | undefined) => {
       throw new Error("Invalid bossName requested");
     }
     return true;
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    console.log("getBossTableValidation: " + error);
   }
 };

@@ -27,7 +27,6 @@ export const register = async (req: Request, res: Response) => {
 };
 
 const constructUser = async (req: any) => {
-  debugger;
   const username = req.body.username.toLowerCase();
   const password = await getHashedPassword(req.body.password);
   const email = req.body.email.toLowerCase();

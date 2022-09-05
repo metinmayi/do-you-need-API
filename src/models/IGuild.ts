@@ -1,3 +1,6 @@
 export interface IGuild {
-  guildId: number;
+  id: number;
+  name: string;
+  realm: string;
+  status: boolean;
 }

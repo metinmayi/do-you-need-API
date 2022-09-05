@@ -12,14 +12,13 @@ export const getGuildStatus = async (req: Request, res: Response) => {
   }
 
   try {
-    const { guild } = await getPlayer(
+    const player = await getPlayer(
       validation.data.character,
       validation.data.realm,
       validation.data.token
     );
-    const guildStatus = await dbGuildStatus(guild.id);
-    guild.status = guildStatus;
-    res.status(200).json({ guild });
+    const guild = await dbGuildStatus(player.guild.id);
+    res.status(200).json(guild);
   } catch (error: any) {
     console.log("getGuildStatus" + error.message);
     res.status(500).send(error.message);

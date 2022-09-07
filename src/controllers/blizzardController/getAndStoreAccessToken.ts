@@ -2,7 +2,7 @@ import axios from "axios";
 import { Request, Response } from "express";
 import { REDIRECT_URI, GET_TOKEN_URL, SYNC_URL } from "../../constants";
 import { getBasicAuth } from "../../helpers/blizzardHelpers/getBasicAuth";
-import { saveAccessToken } from "../../helpers/blizzardHelpers/saveAccessToken";
+import { dbSaveAccessToken } from "../../helpers/blizzardHelpers/dbSaveAccessToken";
 
 /**
  *
@@ -34,7 +34,7 @@ export const getAndStoreAccessToken = async (req: Request, res: Response) => {
     });
 
     const token = response.data.access_token;
-    await saveAccessToken(token, userId);
+    await dbSaveAccessToken(token, userId);
     res.redirect(SYNC_URL);
   } catch (error: any) {
     console.log("getAndStoreAccessToken: " + error.message);

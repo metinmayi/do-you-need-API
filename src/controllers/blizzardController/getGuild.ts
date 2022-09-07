@@ -3,7 +3,7 @@ import { getPlayer } from "../../helpers/blizzardHelpers/getPlayer";
 import { dbGuildStatus } from "../../helpers/doYouNeedHelpers/dbGuildStatus";
 import { getGuildStatusValidation } from "../../validations/blizzardValidation/getGuildStatusValidation";
 
-export const getGuildStatus = async (req: Request, res: Response) => {
+export const getGuild = async (req: Request, res: Response) => {
   const token = req.user?.accessToken;
 
   const validation = getGuildStatusValidation(req.query, token);

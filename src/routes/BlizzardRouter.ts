@@ -7,7 +7,7 @@ import { checkAccessToken } from "../controllers/blizzardController/checkAccessT
 import { getAndStoreAccessToken } from "../controllers/blizzardController/getAndStoreAccessToken";
 import { getAuthorizeCode } from "../controllers/blizzardController/getAuthorizeCode";
 import { getCharacters } from "../controllers/blizzardController/getCharacters";
-import { getGuildStatus } from "../controllers/blizzardController/getGuildStatus";
+import { getGuild } from "../controllers/blizzardController/getGuild";
 
 const BlizzardRouter = express.Router();
 
@@ -36,6 +36,6 @@ BlizzardRouter.get("/checkAccessToken", checkAccessToken);
 /**
  * Checks the status of the players guild
  */
-BlizzardRouter.get("/getGuildStatus", getGuildStatus);
+BlizzardRouter.get("/getGuildStatus", getGuild);
 
 export default BlizzardRouter;

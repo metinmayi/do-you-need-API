@@ -27,9 +27,9 @@ export const getGuild = async (req: Request, res: Response) => {
       (await dbGuildStatus(player.guild.id)) || getUnregisteredGuild(player);
 
     response.message = "No registered guilds were found";
-    response.data.push(guild);
+    response.data = guild;
 
-    res.status(200).json(guild);
+    res.status(200).json(response);
   } catch (error: any) {
     response.error = true;
     response.errorMessage = error.message;

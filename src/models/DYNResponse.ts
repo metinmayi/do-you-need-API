@@ -2,5 +2,5 @@ export class DYNResponse {
   error: boolean = false;
   message?: string;
   errorMessage?: string;
-  data?: [];
+  data:Array<any> = [];
 }

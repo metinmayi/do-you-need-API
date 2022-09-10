@@ -7,6 +7,7 @@ import { checkAccessToken } from "../controllers/blizzardController/checkAccessT
 import { getAndStoreAccessToken } from "../controllers/blizzardController/getAndStoreAccessToken";
 import { getAuthorizeCode } from "../controllers/blizzardController/getAuthorizeCode";
 import { getCharacters } from "../controllers/blizzardController/getCharacters";
+import { activateGuild } from "../controllers/blizzardController/activateGuild";
 import { getGuild } from "../controllers/blizzardController/getGuild";
 
 const BlizzardRouter = express.Router();
@@ -37,5 +38,10 @@ BlizzardRouter.get("/checkAccessToken", checkAccessToken);
  * Checks the status of the players guild
  */
 BlizzardRouter.get("/getGuildStatus", getGuild);
+
+/**
+ * Attempts to active a players guild. Checks if the player is the GM of the attempted guild
+ */
+BlizzardRouter.post("/activateGuild", activateGuild);
 
 export default BlizzardRouter;

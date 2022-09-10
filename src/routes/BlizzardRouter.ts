@@ -9,6 +9,7 @@ import { getAuthorizeCode } from "../controllers/blizzardController/getAuthorize
 import { getCharacters } from "../controllers/blizzardController/getCharacters";
 import { activateGuild } from "../controllers/blizzardController/activateGuild";
 import { getGuild } from "../controllers/blizzardController/getGuild";
+import { getPlayersRank } from "../controllers/blizzardController/getPlayersRank";
 
 const BlizzardRouter = express.Router();
 
@@ -43,5 +44,10 @@ BlizzardRouter.get("/getGuildStatus", getGuild);
  * Attempts to active a players guild. Checks if the player is the GM of the attempted guild
  */
 BlizzardRouter.post("/activateGuild", activateGuild);
+
+/**
+ * Gets a players rank from the Blizzard API. Also sets the rank into the DYN database
+ */
+BlizzardRouter.post("/getPlayersRank", getPlayersRank);
 
 export default BlizzardRouter;

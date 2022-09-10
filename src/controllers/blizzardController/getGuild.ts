@@ -23,12 +23,15 @@ export const getGuild = async (req: Request, res: Response) => {
       validation.data.token
     );
 
-    const guild =
-      (await dbGuildStatus(player.guild.id)) || getUnregisteredGuild(player);
+    const guild = await dbGuildStatus(player.guild.id);
+    if (guild) {
+      response.data = guild;
+      return res.status(200).json(response);
+    }
 
+    const newGuild = getUnregisteredGuild(player);
     response.message = "No registered guilds were found";
-    response.data = guild;
-
+    response.data = newGuild;
     res.status(200).json(response);
   } catch (error: any) {
     response.error = true;

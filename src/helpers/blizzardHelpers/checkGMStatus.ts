@@ -9,7 +9,7 @@ export async function checkGMStatus(guildAndCharacterData: any) {
   const { character, guild, realm, token } = guildAndCharacterData;
   const guildInformation = await axios(
     `https://eu.api.blizzard.com/data/wow/guild/${realm}/${guild}?namespace=profile-eu&locale=en_EU&access_token=${token}`
-  ).then((res) => res.data.roster.href);
+  );
 
   const rosterURL = guildInformation.data.roster.href;
 

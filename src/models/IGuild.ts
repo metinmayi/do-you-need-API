@@ -2,5 +2,6 @@ export interface IGuild {
   id: number;
   name: string;
   realm: string;
-  status: boolean;
+  license: string;
+  faction: string;
 }

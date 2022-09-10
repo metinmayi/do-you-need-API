@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema<IUser>({
   email: { type: String, required: true },
   createdAt: { type: Number, required: true },
   guilds: {
-    type: [Number],
+    type: [],
     required: false,
     set: (a: any) => (a === "" ? undefined : a),
   },

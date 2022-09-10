@@ -5,7 +5,8 @@ const guildSchema = new mongoose.Schema<IGuild>({
   id: { type: Number, required: true },
   name: { type: String, required: true },
   realm: { type: String, required: true },
-  status: { type: Boolean, required: true },
+  license: { type: String, required: true },
+  faction: { type: String, required: true },
 });
 
 export const GuildModel = mongoose.model("guilds", guildSchema);

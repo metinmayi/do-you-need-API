@@ -23,14 +23,15 @@ export async function activateGuild(req: Request, res: Response) {
     const isGM = await checkGMStatus(user);
     if (!isGM) {
       response.error = true;
-      response.errorMessage =
-        "The character you selected is not the guildmaster.";
+      response.errorMessage = `${validation.data.character} is not the Guildmaster of ${validation.data.guild}`;
       return res.status(400).json(response);
     }
 
     return res.status(200).json(response);
-  } catch (error) {
-    res.sendStatus(500);
+  } catch (error: any) {
+    res
+      .status(error.response.status)
+      .json({ error: true, errorMessage: error.message });
     console.log(error);
   }
 }

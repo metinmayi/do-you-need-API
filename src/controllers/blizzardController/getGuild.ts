@@ -2,14 +2,14 @@ import { Request, Response } from "express";
 import { getPlayer } from "../../helpers/blizzardHelpers/getPlayer";
 import { dbGuildStatus } from "../../helpers/doYouNeedHelpers/dbGuildStatus";
 import { DYNResponse } from "../../models/DYNResponse";
-import { getGuildStatusValidation } from "../../validations/blizzardValidation/getGuildStatusValidation";
+import { getGuildValidation } from "../../validations/blizzardValidation/getGuildValidation";
 import { getUnregisteredGuild } from "./getUnregisteredGuild";
 
 export const getGuild = async (req: Request, res: Response) => {
   const response = new DYNResponse();
   const token = req.user?.accessToken;
 
-  const validation = getGuildStatusValidation(req.query, token);
+  const validation = getGuildValidation(req.query, token);
   if (!validation.success) {
     response.error = true;
     response.errorMessage = validation.error.message;

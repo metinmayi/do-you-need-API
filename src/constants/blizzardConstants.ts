@@ -36,3 +36,18 @@ export const WOW_REGION = "eu";
  * The scope of our battle.net request
  */
 export const WOW_SCOPE = "wow.profile";
+
+export const CLASS_ID_TO_NAME = {
+  1: "warrior",
+  2: "paladin",
+  3: "hunter",
+  4: "rogue",
+  5: "priest",
+  6: "death knight",
+  7: "shaman",
+  8: "mage",
+  9: "warlock",
+  10: "monk",
+  11: "druid",
+  12: "demon hunter",
+};

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Request, Response } from "express";
 import { getMaxLevelCharacters } from "../../helpers/blizzardHelpers/getMaxLevelCharacters";
+import { BlizzardRetrievedUser } from "../../models/BlizzardModels/BlizzardRetrievedUser";
 
 export const getCharacters = async (req: Request, res: Response) => {
   const token = req.user?.accessToken;
@@ -13,8 +14,8 @@ export const getCharacters = async (req: Request, res: Response) => {
     const result = await axios(
       `https://eu.api.blizzard.com/profile/user/wow?namespace=profile-eu&locale=en_EU&access_token=${token}`
     );
-
-    const maxLevelChars = getMaxLevelCharacters(result.data.wow_accounts);
+    const retrievedUser: BlizzardRetrievedUser = result.data;
+    const maxLevelChars = getMaxLevelCharacters(retrievedUser.wow_accounts);
 
     res.status(200).json(maxLevelChars);
   } catch (error: any) {

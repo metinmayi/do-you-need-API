@@ -3,4 +3,5 @@ export interface ReturnedCharacter {
   realm: string;
   faction: string;
   class: string;
+  color: string;
 }

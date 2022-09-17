@@ -7,7 +7,7 @@ import { DYNResponse } from "../../models/DYNResponse";
 import { activateGuildValidation } from "../../validations/blizzardValidation/activateGuildValidation";
 import { addGuildToUser } from "./addGuildToUser";
 
-export async function activateGuild(req: Request, res: Response) {
+export async function registerGuild(req: Request, res: Response) {
   try {
     const response = new DYNResponse();
     const user = {

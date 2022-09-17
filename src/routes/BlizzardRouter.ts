@@ -7,7 +7,7 @@ import { checkAccessToken } from "../controllers/blizzardController/checkAccessT
 import { getAndStoreAccessToken } from "../controllers/blizzardController/getAndStoreAccessToken";
 import { getAuthorizeCode } from "../controllers/blizzardController/getAuthorizeCode";
 import { getCharacters } from "../controllers/blizzardController/getCharacters";
-import { activateGuild } from "../controllers/blizzardController/activateGuild";
+import { registerGuild } from "../controllers/blizzardController/registerGuild";
 import { getGuild } from "../controllers/blizzardController/getGuild";
 import { getPlayersRank } from "../controllers/blizzardController/getPlayersRank";
 
@@ -43,7 +43,7 @@ BlizzardRouter.get("/getGuildStatus", getGuild);
 /**
  * Attempts to active a players guild. Checks if the player is the GM of the attempted guild
  */
-BlizzardRouter.post("/activateGuild", activateGuild);
+BlizzardRouter.post("/activateGuild", registerGuild);
 
 /**
  * Gets a players rank from the Blizzard API. Also sets the rank into the DYN database

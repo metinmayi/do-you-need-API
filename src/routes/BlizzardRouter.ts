@@ -43,7 +43,7 @@ BlizzardRouter.get("/getGuildStatus", getGuild);
 /**
  * Attempts to active a players guild. Checks if the player is the GM of the attempted guild
  */
-BlizzardRouter.post("/activateGuild", registerGuild);
+BlizzardRouter.post("/registerGuild", registerGuild);
 
 /**
  * Gets a players rank from the Blizzard API. Also sets the rank into the DYN database

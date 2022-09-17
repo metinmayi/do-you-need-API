@@ -4,7 +4,7 @@ import { getGuildInformation } from "../../helpers/blizzardHelpers/getGuildInfor
 import { getRoster } from "../../helpers/blizzardHelpers/getRoster";
 import { storeGuild } from "../../helpers/blizzardHelpers/storeGuild";
 import { DYNResponse } from "../../models/DYNResponse";
-import { activateGuildValidation } from "../../validations/blizzardValidation/activateGuildValidation";
+import { registerGuildValidation } from "../../validations/blizzardValidation/registerGuildValidation";
 import { addGuildToUser } from "./addGuildToUser";
 
 export async function registerGuild(req: Request, res: Response) {
@@ -17,7 +17,7 @@ export async function registerGuild(req: Request, res: Response) {
       token: req.user?.accessToken,
     };
 
-    const validation = activateGuildValidation(user);
+    const validation = registerGuildValidation(user);
     if (!validation.success) {
       response.error = true;
       response.errorMessage = validation.error.message;

@@ -9,7 +9,7 @@ import axios from "axios";
 export async function checkGMStatus(roster: any, character: string) {
   const isGM: boolean = roster.some(
     (member: any) =>
-      member.character.name.toLowerCase() === "amenaya" && member.rank === 0
+      member.character.name.toLowerCase() === character && member.rank === 0
   );
 
   return isGM;

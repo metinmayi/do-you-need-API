@@ -4,8 +4,8 @@
 import express from "express";
 const PlayerRouter = express.Router();
 import { Request, Response } from "express";
-import { getBossTable } from "../controllers/doYouNeed/getBossTable";
-import { addPlayerData } from "../controllers/doYouNeed/PlayerController";
+import { getBossTable } from "../controllers/playerController/getBossTable";
+import { addPlayerData } from "../controllers/playerController/PlayerController";
 import { addPlayerDataValidation } from "../validations/doYouNeedValidation/addPlayerDataValidation";
 import { getBossTableValidation } from "../validations/doYouNeedValidation/getBossTableValidation";
 
@@ -16,8 +16,7 @@ PlayerRouter.get("/", (req: Request, res: Response) => {
 /**
  * Route for adding playerUpgrades to the database.
  */
-PlayerRouter.post("/addPlayerData", async (req: Request, res: Response) => {
-  // Validation
+PlayerRouter.post("/addPlayerUpgrades", async (req: Request, res: Response) => {
   const isValidated = addPlayerDataValidation(req.body.url);
   if (!isValidated) return res.status(400).send("Invalid Simbot URL");
 

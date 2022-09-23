@@ -1,5 +1,5 @@
 export interface IGuild {
-  id: number;
+  id: string;
   name: string;
   realm: string;
   license: string;

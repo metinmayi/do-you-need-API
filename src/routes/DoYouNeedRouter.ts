@@ -2,25 +2,25 @@
  * Routes for domain.com/player/
  */
 import express from "express";
-const PlayerRouter = express.Router();
+const DoYouNeedRouter = express.Router();
 import { Request, Response } from "express";
 import { addPlayerUpgrades } from "../controllers/doYouNeedController/addPlayerUpgrades";
 import { getBossTable } from "../controllers/doYouNeedController/getBossTable";
 import { getBossTableValidation } from "../validations/doYouNeedValidation/getBossTableValidation";
 
-PlayerRouter.get("/", (req: Request, res: Response) => {
-  res.send("Reached PlayerRouter");
+DoYouNeedRouter.get("/", (req: Request, res: Response) => {
+  res.send("Reached DoYouNeedRouter");
 });
 
 /**
  * Route for adding playerUpgrades to the database.
  */
-PlayerRouter.post("/addPlayerUpgrades", addPlayerUpgrades);
+DoYouNeedRouter.post("/addPlayerUpgrades", addPlayerUpgrades);
 
 /**
  * Gets player information from a boss table
  */
-PlayerRouter.get("/getBossTable/", async (req: Request, res: Response) => {
+DoYouNeedRouter.get("/getBossTable/", async (req: Request, res: Response) => {
   // Validate bossName
   const isValidated = getBossTableValidation(req.query.bossName?.toString());
   if (!isValidated) {
@@ -30,4 +30,4 @@ PlayerRouter.get("/getBossTable/", async (req: Request, res: Response) => {
   const result = await getBossTable("the_jailer");
   res.status(200).send(result?.[0]);
 });
-export default PlayerRouter;
+export default DoYouNeedRouter;

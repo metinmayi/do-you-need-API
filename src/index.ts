@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import PlayerRouter from "./routes/PlayerRouter";
+import DoYouNeedRouter from "./routes/DoYouNeedRouter";
 import AuthenticationRouter from "./routes/AuthenticationRouter";
 import cors from "cors";
 import session from "express-session";
@@ -39,7 +39,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.use("/player", PlayerRouter);
+app.use("/doYouNeed", DoYouNeedRouter);
 app.use("/authentication", AuthenticationRouter);
 app.use("/blizzard", isAuthenticated, BlizzardRouter);
 

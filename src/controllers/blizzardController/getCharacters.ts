@@ -3,6 +3,11 @@ import { Request, Response } from "express";
 import { getMaxLevelCharacters } from "../../helpers/blizzardHelpers/getMaxLevelCharacters";
 import { BlizzardRetrievedUser } from "../../models/BlizzardModels/BlizzardRetrievedUser";
 
+/**
+ * Get's the max level characters from a user's account. This will check through all of their WoW accounts.
+ * @param req Express Request
+ * @param res Express Response
+ */
 export const getCharacters = async (req: Request, res: Response) => {
   const token = req.user?.accessToken;
 

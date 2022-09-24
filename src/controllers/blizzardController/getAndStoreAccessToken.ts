@@ -5,8 +5,9 @@ import { getBasicAuth } from "../../helpers/blizzardHelpers/getBasicAuth";
 import { dbSaveAccessToken } from "../../helpers/blizzardHelpers/dbSaveAccessToken";
 
 /**
- *
- * @param {string} code User authorization code, retrieved from authenticating on Blizzard website
+ * Gets a new user access token from blizzard API and stores it in the user's table.
+ * @param req Express Request - Code is in the query
+ * @param res Express Response
  */
 export const getAndStoreAccessToken = async (req: Request, res: Response) => {
   const { code } = req.query;

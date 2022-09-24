@@ -5,6 +5,13 @@ import { DYNResponse } from "../../models/DYNResponse";
 import { GetCharactersGuildValidation } from "../../validations/blizzardValidation/getCharactersGuildValidation";
 import { constructNewGuild } from "../../helpers/blizzardHelpers/constructNewGuild";
 
+/**
+ * Check's what guild the character is a member of through the blizzard API.
+ * Then proceeds to check if that guild is registered in DoYouNeed.
+ * @param req Express Request
+ * @param res Express Response
+ * @returns void
+ */
 export async function getCharactersGuild(req: Request, res: Response) {
   const response = new DYNResponse();
   const token = req.user?.accessToken;

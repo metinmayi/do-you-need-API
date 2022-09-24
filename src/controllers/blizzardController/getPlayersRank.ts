@@ -5,6 +5,13 @@ import { DYNResponse } from "../../models/DYNResponse";
 import { getPlayersRankValidation } from "../../validations/blizzardValidation/getPlayersRankValidation";
 import { dbAddGuildToUser } from "../../helpers/blizzardHelpers/dbAddGuildToUser";
 
+/**
+ * Checks the blizzard API for the user's rank within the specified guild.
+ * Also adds that guild to the user's list of guilds in the DB.
+ * @param req Express Request
+ * @param res Express Reponse
+ * @returns Void
+ */
 export async function getPlayersRank(req: Request, res: Response) {
   try {
     const response = new DYNResponse();

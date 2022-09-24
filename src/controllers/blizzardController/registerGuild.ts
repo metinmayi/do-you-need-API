@@ -2,17 +2,24 @@ import { Request, Response } from "express";
 import { checkGMStatus } from "../../helpers/blizzardHelpers/checkGMStatus";
 import { getGuildInformation } from "../../helpers/blizzardHelpers/getGuildInformation";
 import { getRoster } from "../../helpers/blizzardHelpers/getRoster";
-import { storeGuild } from "../../helpers/blizzardHelpers/storeGuild";
+import { dbStoreGuild } from "../../helpers/blizzardHelpers/dbStoreGuild";
 import { DYNResponse } from "../../models/DYNResponse";
 import { registerGuildValidation } from "../../validations/blizzardValidation/registerGuildValidation";
-import { addGuildToUser } from "./addGuildToUser";
+import { dbAddGuildToUser } from "../../helpers/blizzardHelpers/dbAddGuildToUser";
 
+/**
+ * Registers a guild to DoYouNeed.
+ * Also adds that guild to the player's list of guilds.
+ * @param req Express Request
+ * @param res Express Response
+ * @returns Void
+ */
 export async function registerGuild(req: Request, res: Response) {
   try {
     const response = new DYNResponse();
     const user = {
       character: req.body.character.toLowerCase(),
-      guild: req.body.guild.toLowerCase(),
+      guild: req.body.guild,
       realm: req.body.realm.toLowerCase(),
       token: req.user?.accessToken,
     };
@@ -26,7 +33,11 @@ export async function registerGuild(req: Request, res: Response) {
 
     const { character, guild, realm, token } = validation.data;
 
-    const guildInformation = await getGuildInformation(realm, guild, token);
+    const guildInformation = await getGuildInformation(
+      realm,
+      guild.name,
+      token
+    );
     const rosterURL = guildInformation.data.roster.href;
     const roster = await getRoster(rosterURL, token);
 
@@ -37,8 +48,8 @@ export async function registerGuild(req: Request, res: Response) {
       return res.status(400).json(response);
     }
 
-    await storeGuild(guildInformation);
-    await addGuildToUser(guildInformation.data.id, req.user?.username, 0);
+    const insertedGuild = await dbStoreGuild(guildInformation);
+    await dbAddGuildToUser(req.user?.username, insertedGuild, "0");
 
     return res.status(200).json(response);
   } catch (error: any) {

@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 import { getCharacter } from "../../helpers/blizzardHelpers/getCharacter";
 import { dbGuildStatus } from "../../helpers/doYouNeedHelpers/dbGuildStatus";
 import { DYNResponse } from "../../models/DYNResponse";
-import { GetCharactersGuildValidation } from "../../validations/blizzardValidation/getGuildValidation";
-import { getUnregisteredGuild } from "./getUnregisteredGuild";
+import { GetCharactersGuildValidation } from "../../validations/blizzardValidation/getCharactersGuildValidation";
+import { constructNewGuild } from "../../helpers/blizzardHelpers/constructNewGuild";
 
 export async function getCharactersGuild(req: Request, res: Response) {
   const response = new DYNResponse();
@@ -17,19 +17,19 @@ export async function getCharactersGuild(req: Request, res: Response) {
   }
 
   try {
-    const player = await getCharacter(
+    const retrievedCharacter = await getCharacter(
       validation.data.character,
       validation.data.realm,
       validation.data.token
     );
 
-    const guild = await dbGuildStatus(player.guild.id);
+    const guild = await dbGuildStatus(retrievedCharacter.guild.id);
     if (guild) {
       response.data = guild;
       return res.status(200).json(response);
     }
 
-    const newGuild = getUnregisteredGuild(player);
+    const newGuild = constructNewGuild(retrievedCharacter);
     response.message = "No registered guilds were found";
     response.data = newGuild;
     res.status(200).json(response);

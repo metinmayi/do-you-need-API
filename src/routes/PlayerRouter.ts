@@ -4,8 +4,8 @@
 import express from "express";
 const PlayerRouter = express.Router();
 import { Request, Response } from "express";
-import { addPlayerUpgrades } from "../controllers/playerController/addPlayerUpgrades";
-import { getBossTable } from "../controllers/playerController/getBossTable";
+import { addPlayerUpgrades } from "../controllers/doYouNeedController/addPlayerUpgrades";
+import { getBossTable } from "../controllers/doYouNeedController/getBossTable";
 import { getBossTableValidation } from "../validations/doYouNeedValidation/getBossTableValidation";
 
 PlayerRouter.get("/", (req: Request, res: Response) => {

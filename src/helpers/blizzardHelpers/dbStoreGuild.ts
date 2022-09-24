@@ -1,12 +1,14 @@
+import { IGuild } from "../../models/IGuild";
 import { GuildModel } from "../../mongoose/schemas/GuildSchema";
 
-export async function storeGuild(guildInformation: any) {
-  const guild = {
+export async function dbStoreGuild(guildInformation: any) {
+  const guild: IGuild = {
     name: guildInformation.data.name.toLowerCase(),
     realm: guildInformation.data.realm.slug.toLowerCase(),
-    id: guildInformation.data.id,
+    id: guildInformation.data.id.toString(),
     faction: guildInformation.data.faction.type.toLowerCase(),
     license: "standard",
   };
-  const response = await GuildModel.create(guild);
+  await GuildModel.create(guild);
+  return guild;
 }

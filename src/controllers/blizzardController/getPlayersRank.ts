@@ -3,7 +3,7 @@ import { getGuildInformation } from "../../helpers/blizzardHelpers/getGuildInfor
 import { getRoster } from "../../helpers/blizzardHelpers/getRoster";
 import { DYNResponse } from "../../models/DYNResponse";
 import { getPlayersRankValidation } from "../../validations/blizzardValidation/getPlayersRankValidation";
-import { addGuildToUser } from "./addGuildToUser";
+import { dbAddGuildToUser } from "../../helpers/blizzardHelpers/dbAddGuildToUser";
 
 export async function getPlayersRank(req: Request, res: Response) {
   try {
@@ -30,7 +30,7 @@ export async function getPlayersRank(req: Request, res: Response) {
     const { rank } = roster.find(
       (member: any) => member.character.name === characterName
     );
-    await addGuildToUser(guildInformation.data.id, req.user?.username, rank);
+    await dbAddGuildToUser(characterName, guildInformation.data, rank);
 
     response.data = rank;
     res.status(200).json(response);

@@ -2,6 +2,12 @@ import axios from "axios";
 import { Request, Response } from "express";
 import { CHECK_TOKEN_URL, WOW_REGION } from "../../constants";
 
+/**
+ * Checks the user's accessToken and validates it towards blizzard's API.
+ * @param req Express Request
+ * @param res Express Response
+ * @returns void
+ */
 export const checkAccessToken = async (req: Request, res: Response) => {
   const token = req.user?.accessToken;
 

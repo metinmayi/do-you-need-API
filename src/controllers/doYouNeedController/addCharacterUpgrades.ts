@@ -7,7 +7,7 @@ import { zAddCharacterUpgradeValidation } from "../../validations/doYouNeedValid
  */
 export const addCharacterUpgrades = async (req: Request, res: Response) => {
   const response = new DYNResponse();
-  const validation = zAddCharacterUpgradeValidation(req);
+  const validation = zAddCharacterUpgradeValidation(req.body);
   if (!validation.success) {
     response.error = true;
     response.message = validation.error.message;

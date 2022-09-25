@@ -4,7 +4,7 @@
 import express from "express";
 const DoYouNeedRouter = express.Router();
 import { Request, Response } from "express";
-import { addPlayerUpgrades } from "../controllers/doYouNeedController/addPlayerUpgrades";
+import { addCharacterUpgrades } from "../controllers/doYouNeedController/addCharacterUpgrades";
 import { getBossTable } from "../controllers/doYouNeedController/getBossTable";
 import { getBossTableValidation } from "../validations/doYouNeedValidation/getBossTableValidation";
 
@@ -15,7 +15,7 @@ DoYouNeedRouter.get("/", (req: Request, res: Response) => {
 /**
  * Route for adding playerUpgrades to the database.
  */
-DoYouNeedRouter.post("/addPlayerUpgrades", addPlayerUpgrades);
+DoYouNeedRouter.post("/addCharacterUpgrades", addCharacterUpgrades);
 
 /**
  * Gets player information from a boss table

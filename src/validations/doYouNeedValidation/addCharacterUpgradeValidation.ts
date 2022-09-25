@@ -6,7 +6,7 @@ interface IAddPlayerValidation {
   raidbotsURL: string;
 }
 
-const zAddPlayerValidationSchema: z.ZodType<IAddPlayerValidation> = z.lazy(() =>
+const zAddCharacterUpgradeSchema: z.ZodType<IAddPlayerValidation> = z.lazy(() =>
   z.object({
     guild: z.object({
       id: z.string(),
@@ -21,7 +21,7 @@ const zAddPlayerValidationSchema: z.ZodType<IAddPlayerValidation> = z.lazy(() =>
   })
 );
 
-export function zAddPLayerValidation(request: any) {
-  const parsed = zAddPlayerValidationSchema.safeParse(request);
+export function zAddCharacterUpgradeValidation(request: any) {
+  const parsed = zAddCharacterUpgradeSchema.safeParse(request);
   return parsed;
 }

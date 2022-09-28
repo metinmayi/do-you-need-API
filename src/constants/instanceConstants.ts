@@ -55,4 +55,4 @@ export const RaidId = 1195 as const;
 /**
  * Supported Raid Difficulty
  */
-export const RaidDifficulty = "raid-mythic" as const;
+export const RaidDifficulty = "raid-mythic-fated" as const;

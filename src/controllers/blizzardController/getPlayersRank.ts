@@ -39,19 +39,10 @@ export async function getPlayersRank(req: Request, res: Response) {
     const { rank } = roster.find(
       (member: any) => member.character.name === characterName
     );
-    const iGuild = constructGuild(guildInformation);
-    const iUserGuild: IUserGuild = { ...iGuild, playerRank: rank };
-
-    // Remove later, make it more elegant
-    if (!req.user?._id) {
-      return;
-    }
-    await dbAddGuildToUser(req.user?._id, iUserGuild);
-
     response.data = rank;
     res.status(200).json(response);
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
-    res.status(500);
+    res.status(500).send(error?.message);
   }
 }

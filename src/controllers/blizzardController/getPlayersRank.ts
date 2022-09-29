@@ -5,6 +5,7 @@ import { DYNResponse } from "../../models/DYNResponse";
 import { getPlayersRankValidation } from "../../validations/blizzardValidation/getPlayersRankValidation";
 import { dbAddGuildToUser } from "../../helpers/blizzardHelpers/dbAddGuildToUser";
 import { constructGuild } from "../../helpers/blizzardHelpers/constructGuild";
+import { IUserGuild } from "../../models/IUserGuild";
 
 /**
  * Checks the blizzard API for the user's rank within the specified guild.
@@ -39,7 +40,13 @@ export async function getPlayersRank(req: Request, res: Response) {
       (member: any) => member.character.name === characterName
     );
     const iGuild = constructGuild(guildInformation);
-    await dbAddGuildToUser(characterName, iGuild, rank);
+    const iUserGuild: IUserGuild = { ...iGuild, playerRank: rank };
+
+    // Remove later, make it more elegant
+    if (!req.user?._id) {
+      return;
+    }
+    await dbAddGuildToUser(req.user?._id, iUserGuild);
 
     response.data = rank;
     res.status(200).json(response);

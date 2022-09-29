@@ -7,6 +7,7 @@ import { DYNResponse } from "../../models/DYNResponse";
 import { registerGuildValidation } from "../../validations/blizzardValidation/registerGuildValidation";
 import { dbAddGuildToUser } from "../../helpers/blizzardHelpers/dbAddGuildToUser";
 import { constructGuild } from "../../helpers/blizzardHelpers/constructGuild";
+import { IUserGuild } from "../../models/IUserGuild";
 
 /**
  * Registers a guild to DoYouNeed.
@@ -51,8 +52,13 @@ export async function registerGuild(req: Request, res: Response) {
     }
 
     const iGuild = constructGuild(guildInformation);
+    const iUserGuild: IUserGuild = { ...iGuild, playerRank: "0" };
     await dbStoreGuild(iGuild);
-    await dbAddGuildToUser(req.user?.username, iGuild, "0");
+
+    if (!req.user?._id) {
+      return;
+    }
+    await dbAddGuildToUser(req.user?._id, iUserGuild);
 
     return res.status(200).json(response);
   } catch (error: any) {

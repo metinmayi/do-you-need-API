@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { IGuild } from "../../models/IGuild";
+import { IUserGuild } from "../../models/IUserGuild";
 
 interface IAddGuildToUser {
-  guild: IGuild;
+  guild: IUserGuild;
   token: string;
 }
 
@@ -14,6 +14,7 @@ const zAddGuildToUserSchema: z.ZodType<IAddGuildToUser> = z.lazy(() =>
       realm: z.string(),
       license: z.string(),
       faction: z.string(),
+      playerRank: z.string(),
     }),
     token: z.string(),
   })

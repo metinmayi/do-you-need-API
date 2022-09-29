@@ -1,3 +1,4 @@
+import { ObjectId } from "mongoose";
 import { IGuild } from "../../models/IGuild";
 import { IUserGuild } from "../../models/IUserGuild";
 import { UserModel } from "../../mongoose/schemas/UserSchema";
@@ -8,12 +9,6 @@ import { UserModel } from "../../mongoose/schemas/UserSchema";
  * @param guild Guild object
  * @param playerRank Rank of the player
  */
-export async function dbAddGuildToUser(
-  username: any,
-  guild: IGuild,
-  playerRank: string
-) {
-  const userGuild: IUserGuild = { ...guild, playerRank };
-
-  await UserModel.updateOne({ username }, { $push: { guilds: userGuild } });
+export async function dbAddGuildToUser(userID: ObjectId, guild: IUserGuild) {
+  await UserModel.updateOne({ _id: userID }, { $push: { guilds: guild } });
 }

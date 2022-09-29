@@ -5,6 +5,7 @@ import express from "express";
 const DoYouNeedRouter = express.Router();
 import { Request, Response } from "express";
 import { addCharacterUpgrades } from "../controllers/doYouNeedController/addCharacterUpgrades";
+import { addGuildToUser } from "../controllers/doYouNeedController/addGuildToUser";
 import { getBossTable } from "../controllers/doYouNeedController/getBossTable";
 import { getBossTableValidation } from "../validations/doYouNeedValidation/getBossTableValidation";
 
@@ -17,6 +18,10 @@ DoYouNeedRouter.get("/", (req: Request, res: Response) => {
  */
 DoYouNeedRouter.post("/addCharacterUpgrades", addCharacterUpgrades);
 
+/**
+ * Route for adding a guild to a user's guilds.
+ */
+DoYouNeedRouter.post("/addGuildToUser", addGuildToUser);
 /**
  * Gets player information from a boss table
  */

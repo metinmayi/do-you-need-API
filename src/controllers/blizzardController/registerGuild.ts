@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { checkGMStatus } from "../../helpers/blizzardHelpers/checkGMStatus";
 import { getGuildInformation } from "../../helpers/blizzardHelpers/getGuildInformation";
 import { getRoster } from "../../helpers/blizzardHelpers/getRoster";
-import { dbStoreGuild } from "../../helpers/blizzardHelpers/dbStoreGuild";
+import { dbStoreGuild } from "../../helpers/doYouNeedHelpers/dbStoreGuild";
 import { DYNResponse } from "../../models/DYNResponse";
 import { registerGuildValidation } from "../../validations/blizzardValidation/registerGuildValidation";
 import { dbAddGuildToUser } from "../../helpers/blizzardHelpers/dbAddGuildToUser";

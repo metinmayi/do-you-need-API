@@ -6,6 +6,7 @@ import { dbStoreGuild } from "../../helpers/blizzardHelpers/dbStoreGuild";
 import { DYNResponse } from "../../models/DYNResponse";
 import { registerGuildValidation } from "../../validations/blizzardValidation/registerGuildValidation";
 import { dbAddGuildToUser } from "../../helpers/blizzardHelpers/dbAddGuildToUser";
+import { constructGuild } from "../../helpers/blizzardHelpers/constructGuild";
 
 /**
  * Registers a guild to DoYouNeed.
@@ -38,7 +39,8 @@ export async function registerGuild(req: Request, res: Response) {
       guild.name,
       token
     );
-    const rosterURL = guildInformation.data.roster.href;
+
+    const rosterURL = guildInformation.roster.href;
     const roster = await getRoster(rosterURL, token);
 
     const isGM = await checkGMStatus(roster, character);
@@ -48,8 +50,9 @@ export async function registerGuild(req: Request, res: Response) {
       return res.status(400).json(response);
     }
 
-    const insertedGuild = await dbStoreGuild(guildInformation);
-    await dbAddGuildToUser(req.user?.username, insertedGuild, "0");
+    const iGuild = constructGuild(guildInformation);
+    await dbStoreGuild(iGuild);
+    await dbAddGuildToUser(req.user?.username, iGuild, "0");
 
     return res.status(200).json(response);
   } catch (error: any) {

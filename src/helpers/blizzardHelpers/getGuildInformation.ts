@@ -1,4 +1,5 @@
 import axios from "axios";
+import { BlizzardRetrievedGuild } from "../../models/BlizzardModels/BlizzardRetrievedGuild";
 
 /**
  * Fetches information about the guild from Blizzard's API
@@ -12,9 +13,11 @@ export async function getGuildInformation(
   guildName: string,
   token: string
 ) {
-  const guildInformation = await axios(
+  const response = await axios(
     `https://eu.api.blizzard.com/data/wow/guild/${realm}/${guildName.toLowerCase()}?namespace=profile-eu&locale=en_EU&access_token=${token}`
   );
+
+  const guildInformation: BlizzardRetrievedGuild = response.data;
 
   return guildInformation;
 }

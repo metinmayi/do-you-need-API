@@ -1,8 +1,7 @@
 import { IdToBoss, isIBossName } from "../../constants";
-import {
-  ICharacter,
-  ICharacterBossUpgrade,
-} from "../../models/ICharacterUpgrade";
+import { ICharacter } from "../../models/doYouNeed/ICharacter";
+import { ICharacterBossUpgrade } from "../../models/doYouNeed/ICharacterBossUpgrade";
+
 import {
   RaidbotsDroptimizer,
   Result,
@@ -33,7 +32,8 @@ export function insertUpgrades(
 
     const ICharacterBossUpgrade: ICharacterBossUpgrade = {
       slot,
-      value: percentIncrease,
+      rawValue: decimalIncrease.toString(),
+      percentageValue: percentIncrease,
     };
 
     if (isIBossName(bossName)) {

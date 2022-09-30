@@ -13,6 +13,14 @@ export const constructNewGuild = (character: BlizzardRetrievedCharacter) => {
   const isNew = true;
   const faction = character.guild.faction.type;
   const license = "standard";
-  const newGuild: INewGuild = { id, name, realm, isNew, faction, license };
+  const newGuild: INewGuild = {
+    id,
+    name,
+    realm,
+    isNew,
+    faction,
+    license,
+    characters: [],
+  };
   return newGuild;
 };

@@ -1,4 +1,5 @@
 import { ObjectId } from "mongoose";
+import { IGuild } from "./IGuild";
 
 declare global {
   namespace Express {
@@ -6,7 +7,7 @@ declare global {
       username: string;
       _id: ObjectId;
       accessToken: string;
-      guilds: number[];
+      guilds: IGuild[];
     }
   }
 }

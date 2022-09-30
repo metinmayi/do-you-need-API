@@ -8,6 +8,7 @@ export function constructGuild(guildInformation: BlizzardRetrievedGuild) {
     realm: guildInformation.realm.slug,
     license: "standard",
     faction: guildInformation.faction.type,
+    characters: [],
   };
   return guild;
 }

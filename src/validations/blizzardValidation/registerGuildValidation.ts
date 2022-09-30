@@ -20,6 +20,7 @@ const zRegisterGuildSchema: z.ZodType<IRegisterGuild> = z.lazy(() =>
       name: z.string(),
       realm: z.string(),
       faction: z.string(),
+      characters: z.array(z.any()),
     }),
   })
 );

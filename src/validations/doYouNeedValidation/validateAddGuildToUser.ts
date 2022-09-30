@@ -15,6 +15,7 @@ const zAddGuildToUserSchema: z.ZodType<IAddGuildToUser> = z.lazy(() =>
       license: z.string(),
       faction: z.string(),
       playerRank: z.string(),
+      characters: z.array(z.any()),
     }),
     token: z.string(),
   })

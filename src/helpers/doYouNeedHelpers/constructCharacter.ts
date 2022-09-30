@@ -1,4 +1,5 @@
-import { ICharacter, ICharacterUpgrades } from "../../models/ICharacterUpgrade";
+import { ICharacter } from "../../models/doYouNeed/ICharacter";
+import { ICharacterUpgrades } from "../../models/doYouNeed/ICharacterUpgrades";
 import { RaidbotsDroptimizer } from "../../models/raidbots/RaidbotsDroptimizer";
 
 /**

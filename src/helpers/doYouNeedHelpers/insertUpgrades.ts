@@ -26,13 +26,13 @@ export function insertUpgrades(
 
     const bossName = IdToBoss[+bossID];
 
-    const newDPS = upgrade.mean - currentDPS;
-    const decimalIncrease = newDPS / currentDPS;
+    const damageIncrease = upgrade.mean - currentDPS;
+    const decimalIncrease = damageIncrease / currentDPS;
     const percentIncrease = (decimalIncrease * 100).toFixed(2);
 
     const ICharacterBossUpgrade: ICharacterBossUpgrade = {
       slot,
-      rawValue: decimalIncrease.toString(),
+      rawValue: Math.round(damageIncrease).toString(),
       percentageValue: percentIncrease,
     };
 

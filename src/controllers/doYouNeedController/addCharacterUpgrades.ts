@@ -1,39 +1,52 @@
+import axios from "axios";
 import { Request, Response } from "express";
+import { constructCharacter } from "../../helpers/doYouNeedHelpers/constructCharacter";
+import { dbAddCharacterToGuild } from "../../helpers/doYouNeedHelpers/dbAddCharacterToGuild";
+import { getPositiveUpgrades } from "../../helpers/doYouNeedHelpers/getPositiveUpgrades";
+import { insertUpgrades } from "../../helpers/doYouNeedHelpers/insertUpgrades";
 import { DYNResponse } from "../../models/DYNResponse";
+import { RaidbotsDroptimizer } from "../../models/raidbots/RaidbotsDroptimizer";
 import { zAddCharacterUpgradeValidation } from "../../validations/doYouNeedValidation/addCharacterUpgradeValidation";
+import { validateInstanceAndDifficulty } from "../../validations/doYouNeedValidation/validateInstanceAndDifficulty";
 
 /**
- * Takes a reportID and starts the process of importing data, breaking it up and sending back a player object.
+ * Takes a raidbots URL and adds the character's upgrades to the guild.
+ * @param req Express Request
+ * @param res Express Response
+ * @returns void
  */
 export const addCharacterUpgrades = async (req: Request, res: Response) => {
   const response = new DYNResponse();
+
   const validation = zAddCharacterUpgradeValidation(req.body);
   if (!validation.success) {
     response.error = true;
     response.message = validation.error.message;
     return res.status(403).json(response);
   }
-  res.send(200);
-  // console.log(req.body);
-  // res.send(200);
+
   // Does the fetch.
-  //   const playerData = await fetch(raidbotsURL);
+  try {
+    const droptimizer: RaidbotsDroptimizer = await axios(
+      `${validation.data.raidbotsURL}/data.json`
+    ).then((res) => res.data);
 
-  // Necessary declarations
-  //   const metaInfo = playerData.simbot.meta;
-  //   const simResults = playerData.sim.profilesets.results;
-  //   const playerDps = playerData.sim.players[0].collected_data.dps.mean;
+    const isValidInstance = validateInstanceAndDifficulty(droptimizer);
+    if (!isValidInstance) {
+      response.error = true;
+      response.errorMessage = "Invalid instance and/or difficulty";
+      return res.send(403).json(response);
+    }
 
-  //   // Checks if the log is for the correct raid;
-  //   validateInstanceAndDifficulty(metaInfo);
+    const character = constructCharacter(droptimizer);
+    const positiveUpgrades = getPositiveUpgrades(droptimizer);
 
-  //   // Gets a player object with default values.
-  //   const player = getDefaultPlayer(metaInfo);
+    insertUpgrades(character, positiveUpgrades, droptimizer);
 
-  //   // Maps out all the bosses with their upgrades.
-  //   const bossesWithUpgrades = new Map<IBossName, IBossUpgrade[]>();
-  //   mapUpgradesToBoss(simResults, bossesWithUpgrades, playerDps);
-  //   await queryUpgrades(bossesWithUpgrades, player);
-
-  return true;
+    await dbAddCharacterToGuild(character, validation.data.guild);
+    res.sendStatus(200);
+  } catch (error: any) {
+    res.sendStatus(500);
+    console.log({ addCharacterUpgrades: error });
+  }
 };

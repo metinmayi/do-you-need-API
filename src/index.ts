@@ -10,11 +10,11 @@ import BlizzardRouter from "./routes/BlizzardRouter";
 import { isAuthenticated } from "./middleware/isAuthenticated";
 import "./mongoose/mongoose";
 
+dotenv.config();
 const store = MongoStore.create({
   mongoUrl: process.env.MONGOOSE_URL,
   collectionName: "sessions",
 });
-dotenv.config();
 const app = express();
 
 app.use(

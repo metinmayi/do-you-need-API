@@ -39,7 +39,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.use("/doYouNeed", DoYouNeedRouter);
+app.use("/doyouneed", DoYouNeedRouter);
 app.use("/authentication", AuthenticationRouter);
 app.use("/blizzard", isAuthenticated, BlizzardRouter);
 

@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "start": "ts-node ./src/index.ts"},
+    "start": "ts-node ./src/index.ts",
+    "build": "ts-node ./src/index.ts"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

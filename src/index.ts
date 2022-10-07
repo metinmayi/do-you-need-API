@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import dotenv from "dotenv";
 import DoYouNeedRouter from "./routes/DoYouNeedRouter";
 import AuthenticationRouter from "./routes/AuthenticationRouter";
@@ -16,6 +16,10 @@ const store = MongoStore.create({
   collectionName: "sessions",
 });
 const app = express();
+
+app.get("/", (req: Request, res: Response) => {
+  res.sendStatus(200);
+});
 
 app.use(
   cors({

@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema<IUser>({
   accessToken: {
     type: String,
     required: false,
-    set: (a: any) => (a === [] ? undefined : a),
+    set: (a: any) => (a === "" ? undefined : a),
   },
 });
 

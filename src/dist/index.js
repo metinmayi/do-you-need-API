@@ -43,6 +43,7 @@ app.use(passport_1.default.session());
 app.use("/doyouneed", DoYouNeedRouter_1.default);
 app.use("/authentication", AuthenticationRouter_1.default);
 app.use("/blizzard", isAuthenticated_1.isAuthenticated, BlizzardRouter_1.default);
+console.log("GOOD TO GO");
 const port = process.env.PORT;
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);

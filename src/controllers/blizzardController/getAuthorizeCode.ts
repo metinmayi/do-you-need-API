@@ -16,5 +16,6 @@ const AuthEndpoint = `${AUTHORIZE_URL}?region=${WOW_REGION}&response_type=code&c
  * @param res Express Response
  */
 export const getAuthorizeCode = (req: Request, res: Response) => {
+  console.log("reached getAuthorizeCode");
   res.redirect(AuthEndpoint);
 };

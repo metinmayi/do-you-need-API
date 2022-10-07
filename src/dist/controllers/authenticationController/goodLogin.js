@@ -15,7 +15,7 @@ function goodLogin(req, res) {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
         const response = new DYNResponse_1.DYNResponse();
-        const guilds = (_a = req === null || req === void 0 ? void 0 : req.user) === null || _a === void 0 ? void 0 : _a.guilds;
+        const guilds = ((_a = req === null || req === void 0 ? void 0 : req.user) === null || _a === void 0 ? void 0 : _a.guilds) || [];
         response.data = guilds;
         res.status(200).json(response);
     });

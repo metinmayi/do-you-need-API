@@ -16,11 +16,6 @@ function goodLogin(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const response = new DYNResponse_1.DYNResponse();
         const guilds = (_a = req === null || req === void 0 ? void 0 : req.user) === null || _a === void 0 ? void 0 : _a.guilds;
-        if (!guilds) {
-            response.error = true;
-            response.errorMessage = "The user is not connected to any guild.";
-            return res.status(200).json(response);
-        }
         response.data = guilds;
         res.status(200).json(response);
     });

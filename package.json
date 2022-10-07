@@ -4,11 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "start": "ts-node ./src/index.ts",
-    "start:prod": "npm run build && node ./dist/src/index.js",
-    "build": "ts-node ./src/index.ts",
-    "start:nodemon": "nodemon ./node_modules/nodemon/bin/nodemon.js"
-  },
+    "start": "ts-node ./src/index.ts"},
   "keywords": [],
   "author": "",
   "license": "ISC",

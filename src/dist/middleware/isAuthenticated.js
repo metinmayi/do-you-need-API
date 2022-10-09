@@ -6,6 +6,7 @@ const isAuthenticated = (req, res, next) => {
         next();
         return;
     }
+    console.log("Invalid authentication. Possibly missing cookie");
     res.sendStatus(401);
 };
 exports.isAuthenticated = isAuthenticated;

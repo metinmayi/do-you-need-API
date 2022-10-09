@@ -36,7 +36,6 @@ app.use(
     store,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24,
-      sameSite: "none",
     },
   })
 );
@@ -47,7 +46,6 @@ app.use(passport.session());
 app.use("/doyouneed", DoYouNeedRouter);
 app.use("/authentication", AuthenticationRouter);
 app.use("/blizzard", isAuthenticated, BlizzardRouter);
-console.log("GOOD TO GO");
 const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);

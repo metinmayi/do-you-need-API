@@ -9,7 +9,7 @@ import { BlizzardRetrievedUser } from "../../models/BlizzardModels/BlizzardRetri
  * @param res Express Response
  */
 export const getCharacters = async (req: Request, res: Response) => {
-  const token = req.user?.accessToken;
+  const token = req.user?.access_token;
 
   if (!token) {
     res.status(401).json({ message: "User does not have a valid accessToken" });

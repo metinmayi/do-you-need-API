@@ -17,7 +17,8 @@ const passport_local_1 = require("passport-local");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const isValidLogin_1 = require("../../validations/authenticationValidation/isValidLogin");
 require("../../models/ExpressUser");
-const UserSchema_1 = require("../../mongoose/schemas/UserSchema");
+const database_1 = require("../../database/database");
+const sql = "SELECT name, id, password FROM users WHERE username=?";
 /**
  * Login middleware
  */
@@ -27,7 +28,7 @@ passport_1.default.use(new passport_local_1.Strategy((username, password, done) 
         return done(null);
     }
     try {
-        const user = yield UserSchema_1.UserModel.findOne({ username });
+        const user = (yield database_1.pool.execute(sql, [username]))[0][0];
         if (!user) {
             return done(null);
         }
@@ -38,7 +39,7 @@ passport_1.default.use(new passport_local_1.Strategy((username, password, done) 
         return done(null, user);
     }
     catch (error) {
-        console.log("passport: " + error.message);
+        console.log("passport.use: " + error.message);
         return done(error, "Couldn't connect to the database");
     }
 })));
@@ -52,11 +53,14 @@ passport_1.default.serializeUser((user, done) => {
  * Query DB by with above passport, and return session user
  */
 passport_1.default.deserializeUser((username, done) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(username);
+    const sql = "SELECT * FROM users WHERE username=?";
     try {
-        const user = yield UserSchema_1.UserModel.findOne({ username });
+        const user = (yield database_1.pool.execute(sql, [username]))[0][0];
         return done(null, user);
     }
     catch (err) {
+        console.log({ "passport.deserializeUser": err });
         return done(err);
     }
 }));

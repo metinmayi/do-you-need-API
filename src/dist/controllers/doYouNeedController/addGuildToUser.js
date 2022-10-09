@@ -19,15 +19,15 @@ function addGuildToUser(req, res) {
             // Validate request
             const validation = (0, validateAddGuildToUser_1.zValidateAddGuildToUser)({
                 guild: req.body,
-                token: (_a = req.user) === null || _a === void 0 ? void 0 : _a.accessToken,
+                token: (_a = req.user) === null || _a === void 0 ? void 0 : _a.access_token,
             });
             if (!validation.success) {
                 return res.status(403).json(validation.error.errors);
             }
-            if (!((_b = req.user) === null || _b === void 0 ? void 0 : _b._id)) {
+            if (!((_b = req.user) === null || _b === void 0 ? void 0 : _b.id)) {
                 return;
             }
-            yield (0, dbAddGuildToUser_1.dbAddGuildToUser)((_c = req.user) === null || _c === void 0 ? void 0 : _c._id, validation.data.guild);
+            yield (0, dbAddGuildToUser_1.dbAddGuildToUser)((_c = req.user) === null || _c === void 0 ? void 0 : _c.id, validation.data.guild);
             return res.sendStatus(200);
         }
         catch (error) {

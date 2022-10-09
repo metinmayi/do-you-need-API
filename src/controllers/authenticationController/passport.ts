@@ -3,9 +3,10 @@ import { Strategy } from "passport-local";
 import bcryptjs from "bcryptjs";
 import { isValidLogin } from "../../validations/authenticationValidation/isValidLogin";
 import "../../models/ExpressUser";
-import { UserModel } from "../../mongoose/schemas/UserSchema";
 import { IReceivedUser } from "../../models/IReceivedUser";
+import { pool } from "../../database/database";
 
+const sql = "SELECT name, id, password FROM users WHERE username=?";
 /**
  * Login middleware
  */
@@ -17,7 +18,7 @@ passport.use(
     }
 
     try {
-      const user: IReceivedUser | null = await UserModel.findOne({ username });
+      const user = (await pool.execute<IReceivedUser[]>(sql, [username]))[0][0];
       if (!user) {
         return done(null);
       }
@@ -29,7 +30,7 @@ passport.use(
 
       return done(null, user);
     } catch (error: any) {
-      console.log("passport: " + error.message);
+      console.log("passport.use: " + error.message);
       return done(error, "Couldn't connect to the database");
     }
   })
@@ -46,10 +47,13 @@ passport.serializeUser((user, done) => {
  * Query DB by with above passport, and return session user
  */
 passport.deserializeUser(async (username: string, done) => {
+  console.log(username);
+  const sql = "SELECT * FROM users WHERE username=?";
   try {
-    const user: IReceivedUser | null = await UserModel.findOne({ username });
+    const user = (await pool.execute<IReceivedUser[]>(sql, [username]))[0][0];
     return done(null, user);
   } catch (err) {
+    console.log({ "passport.deserializeUser": err });
     return done(err);
   }
 });

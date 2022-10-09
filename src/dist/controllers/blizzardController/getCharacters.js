@@ -22,7 +22,7 @@ const getMaxLevelCharacters_1 = require("../../helpers/blizzardHelpers/getMaxLev
  */
 const getCharacters = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    const token = (_a = req.user) === null || _a === void 0 ? void 0 : _a.accessToken;
+    const token = (_a = req.user) === null || _a === void 0 ? void 0 : _a.access_token;
     if (!token) {
         res.status(401).json({ message: "User does not have a valid accessToken" });
     }

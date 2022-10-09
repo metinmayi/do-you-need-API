@@ -14,7 +14,7 @@ import { constructNewGuild } from "../../helpers/blizzardHelpers/constructNewGui
  */
 export async function getCharactersGuild(req: Request, res: Response) {
   const response = new DYNResponse();
-  const token = req.user?.accessToken;
+  const token = req.user?.access_token;
 
   const validation = GetCharactersGuildValidation(req.query, token);
   if (!validation.success) {

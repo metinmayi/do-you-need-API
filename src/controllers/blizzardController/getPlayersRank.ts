@@ -17,7 +17,7 @@ import { IUserGuild } from "../../models/IUserGuild";
 export async function getPlayersRank(req: Request, res: Response) {
   try {
     const response = new DYNResponse();
-    req.body.token = req.user?.accessToken;
+    req.body.token = req.user?.access_token;
 
     const validation = getPlayersRankValidation(req.body);
     if (!validation.success) {

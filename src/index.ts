@@ -4,17 +4,15 @@ import DoYouNeedRouter from "./routes/DoYouNeedRouter";
 import AuthenticationRouter from "./routes/AuthenticationRouter";
 import cors from "cors";
 import session from "express-session";
-import MongoStore from "connect-mongo";
+import MySQLSessionStore from "express-mysql-session";
 import passport from "passport";
 import BlizzardRouter from "./routes/BlizzardRouter";
 import { isAuthenticated } from "./middleware/isAuthenticated";
 import "./mongoose/mongoose";
+import { DATABASE_OPTIONS, pool } from "./database/database";
 
 dotenv.config();
-const store = MongoStore.create({
-  mongoUrl: process.env.MONGOOSE_URL,
-  collectionName: "sessions",
-});
+const store = new (MySQLSessionStore as any)(DATABASE_OPTIONS, pool);
 const app = express();
 
 app.get("/", (req: Request, res: Response) => {

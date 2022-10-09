@@ -23,7 +23,7 @@ const constants_1 = require("../../constants");
  */
 const checkAccessToken = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    const token = (_a = req.user) === null || _a === void 0 ? void 0 : _a.accessToken;
+    const token = (_a = req.user) === null || _a === void 0 ? void 0 : _a.access_token;
     if (!token) {
         res
             .status(403)

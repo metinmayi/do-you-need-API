@@ -3,8 +3,7 @@ import { DYNResponse } from "../../models/DYNResponse";
 
 export async function goodLogin(req: Request, res: Response) {
   const response = new DYNResponse();
-  const guilds = req?.user?.guilds || [];
 
-  response.data = guilds;
+  response.data = ["This needs to be fixed"];
   res.status(200).json(response);
 }

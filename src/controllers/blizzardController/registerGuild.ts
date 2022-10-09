@@ -23,7 +23,7 @@ export async function registerGuild(req: Request, res: Response) {
       character: req.body.character.toLowerCase(),
       guild: req.body.guild,
       realm: req.body.realm.toLowerCase(),
-      token: req.user?.accessToken,
+      token: req.user?.access_token,
     };
 
     const validation = registerGuildValidation(user);
@@ -55,10 +55,10 @@ export async function registerGuild(req: Request, res: Response) {
     const iUserGuild: IUserGuild = { ...iGuild, playerRank: "0" };
     await dbStoreGuild(iGuild);
 
-    if (!req.user?._id) {
+    if (!req.user?.id) {
       return;
     }
-    await dbAddGuildToUser(req.user?._id, iUserGuild);
+    await dbAddGuildToUser(req.user?.id, iUserGuild);
 
     return res.status(200).json(response);
   } catch (error: any) {

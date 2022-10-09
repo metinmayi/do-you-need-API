@@ -12,34 +12,34 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.registerUser = void 0;
+exports.register = void 0;
 const registrationValidation_1 = require("../../validations/authenticationValidation/registrationValidation");
-const database_1 = require("../../database/database");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
-const sql = "INSERT INTO users(name, password, email, createdAt) VALUES (?, ?, ?, ?)";
-const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const UserSchema_1 = require("../../mongoose/schemas/UserSchema");
+const IUser_1 = require("../../models/IUser");
+const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const isValid = (0, registrationValidation_1.registrationValidation)(req);
     if (!isValid.success) {
         return res.status(400).send(isValid.message);
     }
-    const userValues = yield getSqlValues(req);
     try {
-        yield database_1.pool.execute(sql, userValues);
+        const User = yield constructUser(req);
+        const result = yield User.save();
         return res.status(200).send("Registration Complete");
     }
     catch (error) {
-        console.log("register_MYSQL_DEPRECATED" + error.sqlMessage);
-        res.status(500).send(error.sqlMessage || "Failed to query database");
+        console.log("register: " + error._message);
+        res.status(500).send(error._message || "Failed to query database");
     }
 });
-exports.registerUser = registerUser;
-const getSqlValues = (req) => __awaiter(void 0, void 0, void 0, function* () {
-    const hashedPassword = yield getHashedPassword(req.body.password);
-    const name = req.body.username.toLowerCase();
-    const password = hashedPassword;
+exports.register = register;
+const constructUser = (req) => __awaiter(void 0, void 0, void 0, function* () {
+    const username = req.body.username.toLowerCase();
+    const password = yield getHashedPassword(req.body.password);
     const email = req.body.email.toLowerCase();
-    const createdAt = Date.now();
-    return [name, password, email, createdAt];
+    const newUser = new IUser_1.IUser(username, password, email);
+    const User = new UserSchema_1.UserModel(newUser);
+    return User;
 });
 const getHashedPassword = (password) => __awaiter(void 0, void 0, void 0, function* () {
     const salt = yield bcryptjs_1.default.genSalt(10);

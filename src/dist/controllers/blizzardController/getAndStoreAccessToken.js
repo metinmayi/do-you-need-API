@@ -25,7 +25,7 @@ const dbSaveAccessToken_1 = require("../../helpers/blizzardHelpers/dbSaveAccessT
 const getAndStoreAccessToken = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const { code } = req.query;
-    const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a._id;
+    const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
     if (typeof code !== "string") {
         res.status(401).json({ message: "Invalid code received" });
         return;

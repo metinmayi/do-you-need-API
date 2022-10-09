@@ -9,16 +9,14 @@ const DoYouNeedRouter_1 = __importDefault(require("./routes/DoYouNeedRouter"));
 const AuthenticationRouter_1 = __importDefault(require("./routes/AuthenticationRouter"));
 const cors_1 = __importDefault(require("cors"));
 const express_session_1 = __importDefault(require("express-session"));
-const connect_mongo_1 = __importDefault(require("connect-mongo"));
+const express_mysql_session_1 = __importDefault(require("express-mysql-session"));
 const passport_1 = __importDefault(require("passport"));
 const BlizzardRouter_1 = __importDefault(require("./routes/BlizzardRouter"));
 const isAuthenticated_1 = require("./middleware/isAuthenticated");
 require("./mongoose/mongoose");
+const database_1 = require("./database/database");
 dotenv_1.default.config();
-const store = connect_mongo_1.default.create({
-    mongoUrl: process.env.MONGOOSE_URL,
-    collectionName: "sessions",
-});
+const store = new express_mysql_session_1.default(database_1.DATABASE_OPTIONS, database_1.pool);
 const app = (0, express_1.default)();
 app.get("/", (req, res) => {
     res.sendStatus(200);

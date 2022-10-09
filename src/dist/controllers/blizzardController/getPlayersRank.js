@@ -26,7 +26,7 @@ function getPlayersRank(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const response = new DYNResponse_1.DYNResponse();
-            req.body.token = (_a = req.user) === null || _a === void 0 ? void 0 : _a.accessToken;
+            req.body.token = (_a = req.user) === null || _a === void 0 ? void 0 : _a.access_token;
             const validation = (0, getPlayersRankValidation_1.getPlayersRankValidation)(req.body);
             if (!validation.success) {
                 response.error = true;

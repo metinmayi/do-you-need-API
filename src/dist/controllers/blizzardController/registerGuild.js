@@ -34,7 +34,7 @@ function registerGuild(req, res) {
                 character: req.body.character.toLowerCase(),
                 guild: req.body.guild,
                 realm: req.body.realm.toLowerCase(),
-                token: (_a = req.user) === null || _a === void 0 ? void 0 : _a.accessToken,
+                token: (_a = req.user) === null || _a === void 0 ? void 0 : _a.access_token,
             };
             const validation = (0, registerGuildValidation_1.registerGuildValidation)(user);
             if (!validation.success) {
@@ -55,10 +55,10 @@ function registerGuild(req, res) {
             const iGuild = (0, constructGuild_1.constructGuild)(guildInformation);
             const iUserGuild = Object.assign(Object.assign({}, iGuild), { playerRank: "0" });
             yield (0, dbStoreGuild_1.dbStoreGuild)(iGuild);
-            if (!((_b = req.user) === null || _b === void 0 ? void 0 : _b._id)) {
+            if (!((_b = req.user) === null || _b === void 0 ? void 0 : _b.id)) {
                 return;
             }
-            yield (0, dbAddGuildToUser_1.dbAddGuildToUser)((_c = req.user) === null || _c === void 0 ? void 0 : _c._id, iUserGuild);
+            yield (0, dbAddGuildToUser_1.dbAddGuildToUser)((_c = req.user) === null || _c === void 0 ? void 0 : _c.id, iUserGuild);
             return res.status(200).json(response);
         }
         catch (error) {

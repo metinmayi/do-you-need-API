@@ -9,6 +9,6 @@ import { UserModel } from "../../mongoose/schemas/UserSchema";
  * @param guild Guild object
  * @param playerRank Rank of the player
  */
-export async function dbAddGuildToUser(userID: ObjectId, guild: IUserGuild) {
+export async function dbAddGuildToUser(userID: number, guild: IUserGuild) {
   await UserModel.updateOne({ _id: userID }, { $push: { guilds: guild } });
 }

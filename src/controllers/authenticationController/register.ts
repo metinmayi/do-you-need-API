@@ -1,39 +1,41 @@
 import { Request, Response } from "express";
 import { registrationValidation } from "../../validations/authenticationValidation/registrationValidation";
+import { pool } from "../../database/database";
 import bcrypt from "bcryptjs";
-import { UserModel } from "../../mongoose/schemas/UserSchema";
-import { IUser } from "../../models/IUser";
 declare module "express-session" {
   interface SessionData {
     visits: number;
   }
 }
 
-export const register = async (req: Request, res: Response) => {
+const sql =
+  "INSERT INTO users(name, password, email, createdAt) VALUES (?, ?, ?, ?)";
+
+export const registerUser = async (req: Request, res: Response) => {
   const isValid = registrationValidation(req);
   if (!isValid.success) {
     return res.status(400).send(isValid.message);
   }
 
+  const userValues = await getSqlValues(req);
   try {
-    const User = await constructUser(req);
-    const result = await User.save();
-
+    await pool.execute(sql, userValues);
     return res.status(200).send("Registration Complete");
   } catch (error: any) {
-    console.log("register: " + error._message);
-    res.status(500).send(error._message || "Failed to query database");
+    console.log("register_MYSQL_DEPRECATED" + error.sqlMessage);
+    res.status(500).send(error.sqlMessage || "Failed to query database");
   }
 };
 
-const constructUser = async (req: any) => {
-  const username = req.body.username.toLowerCase();
-  const password = await getHashedPassword(req.body.password);
-  const email = req.body.email.toLowerCase();
-  const newUser = new IUser(username, password, email);
-  const User = new UserModel(newUser);
+const getSqlValues = async (req: any) => {
+  const hashedPassword = await getHashedPassword(req.body.password);
 
-  return User;
+  const name = req.body.username.toLowerCase();
+  const password = hashedPassword;
+  const email = req.body.email.toLowerCase();
+  const createdAt = Date.now();
+
+  return [name, password, email, createdAt];
 };
 
 const getHashedPassword = async (password: string) => {

@@ -9,7 +9,7 @@ import { CHECK_TOKEN_URL, WOW_REGION } from "../../constants";
  * @returns void
  */
 export const checkAccessToken = async (req: Request, res: Response) => {
-  const token = req.user?.accessToken;
+  const token = req.user?.access_token;
 
   if (!token) {
     res

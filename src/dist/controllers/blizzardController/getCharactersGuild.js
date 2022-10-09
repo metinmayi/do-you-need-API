@@ -26,7 +26,7 @@ function getCharactersGuild(req, res) {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
         const response = new DYNResponse_1.DYNResponse();
-        const token = (_a = req.user) === null || _a === void 0 ? void 0 : _a.accessToken;
+        const token = (_a = req.user) === null || _a === void 0 ? void 0 : _a.access_token;
         const validation = (0, getCharactersGuildValidation_1.GetCharactersGuildValidation)(req.query, token);
         if (!validation.success) {
             response.error = true;

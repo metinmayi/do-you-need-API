@@ -6,7 +6,7 @@ import "../../models/ExpressUser";
 import { IReceivedUser } from "../../models/IReceivedUser";
 import { pool } from "../../database/database";
 
-const sql = "SELECT name, id, password FROM users WHERE username=?";
+const sql = "SELECT username, id, password FROM users WHERE username=?";
 /**
  * Login middleware
  */
@@ -47,7 +47,6 @@ passport.serializeUser((user, done) => {
  * Query DB by with above passport, and return session user
  */
 passport.deserializeUser(async (username: string, done) => {
-  console.log(username);
   const sql = "SELECT * FROM users WHERE username=?";
   try {
     const user = (await pool.execute<IReceivedUser[]>(sql, [username]))[0][0];

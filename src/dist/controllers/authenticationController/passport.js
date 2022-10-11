@@ -18,7 +18,7 @@ const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const isValidLogin_1 = require("../../validations/authenticationValidation/isValidLogin");
 require("../../models/ExpressUser");
 const database_1 = require("../../database/database");
-const sql = "SELECT name, id, password FROM users WHERE username=?";
+const sql = "SELECT username, id, password FROM users WHERE username=?";
 /**
  * Login middleware
  */
@@ -53,7 +53,6 @@ passport_1.default.serializeUser((user, done) => {
  * Query DB by with above passport, and return session user
  */
 passport_1.default.deserializeUser((username, done) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(username);
     const sql = "SELECT * FROM users WHERE username=?";
     try {
         const user = (yield database_1.pool.execute(sql, [username]))[0][0];

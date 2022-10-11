@@ -12,12 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.registerUser = void 0;
+exports.register = void 0;
 const registrationValidation_1 = require("../../validations/authenticationValidation/registrationValidation");
 const database_1 = require("../../database/database");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
-const sql = "INSERT INTO users(name, password, email, createdAt) VALUES (?, ?, ?, ?)";
-const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const sql = "INSERT INTO users(username, password, email) VALUES (?, ?, ?)";
+const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    debugger;
     const isValid = (0, registrationValidation_1.registrationValidation)(req);
     if (!isValid.success) {
         return res.status(400).send(isValid.message);
@@ -32,14 +33,13 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         res.status(500).send(error.sqlMessage || "Failed to query database");
     }
 });
-exports.registerUser = registerUser;
+exports.register = register;
 const getSqlValues = (req) => __awaiter(void 0, void 0, void 0, function* () {
     const hashedPassword = yield getHashedPassword(req.body.password);
     const name = req.body.username.toLowerCase();
     const password = hashedPassword;
     const email = req.body.email.toLowerCase();
-    const createdAt = Date.now();
-    return [name, password, email, createdAt];
+    return [name, password, email];
 });
 const getHashedPassword = (password) => __awaiter(void 0, void 0, void 0, function* () {
     const salt = yield bcryptjs_1.default.genSalt(10);

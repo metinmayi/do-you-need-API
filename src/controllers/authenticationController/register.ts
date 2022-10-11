@@ -8,10 +8,10 @@ declare module "express-session" {
   }
 }
 
-const sql =
-  "INSERT INTO users(name, password, email, createdAt) VALUES (?, ?, ?, ?)";
+const sql = "INSERT INTO users(username, password, email) VALUES (?, ?, ?)";
 
-export const registerUser = async (req: Request, res: Response) => {
+export const register = async (req: Request, res: Response) => {
+  debugger;
   const isValid = registrationValidation(req);
   if (!isValid.success) {
     return res.status(400).send(isValid.message);
@@ -33,9 +33,8 @@ const getSqlValues = async (req: any) => {
   const name = req.body.username.toLowerCase();
   const password = hashedPassword;
   const email = req.body.email.toLowerCase();
-  const createdAt = Date.now();
 
-  return [name, password, email, createdAt];
+  return [name, password, email];
 };
 
 const getHashedPassword = async (password: string) => {

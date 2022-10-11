@@ -4,8 +4,8 @@
 import passport from "passport";
 import "../controllers/authenticationController/passport";
 import express from "express";
-import { register } from "../controllers/authenticationController/register_Mongoose_DEPRECATED";
 import { goodLogin } from "../controllers/authenticationController/goodLogin";
+import { register } from "../controllers/authenticationController/register";
 const AuthenticationRouter = express.Router();
 
 /**

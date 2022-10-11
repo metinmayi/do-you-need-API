@@ -9,13 +9,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const passport_1 = __importDefault(require("passport"));
 require("../controllers/authenticationController/passport");
 const express_1 = __importDefault(require("express"));
-const register_Mongoose_DEPRECATED_1 = require("../controllers/authenticationController/register_Mongoose_DEPRECATED");
 const goodLogin_1 = require("../controllers/authenticationController/goodLogin");
+const register_1 = require("../controllers/authenticationController/register");
 const AuthenticationRouter = express_1.default.Router();
 /**
  * Register player
  */
-AuthenticationRouter.post("/register", register_Mongoose_DEPRECATED_1.register);
+AuthenticationRouter.post("/register", register_1.register);
 /**
  * Login player
  */

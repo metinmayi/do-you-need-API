@@ -9,13 +9,32 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.goodLogin = void 0;
-const DYNResponse_1 = require("../../models/DYNResponse");
+exports.isExpressUser = exports.goodLogin = void 0;
+const dbGetUserGuilds_1 = require("../../helpers/doYouNeedHelpers/dbGetUserGuilds");
+/**
+ * Login successful. Returns an array of the guilds connected to the logged in user.
+ * @param {Request} req Express Request
+ * @param {Response} res Express Response
+ * @returns {void}
+ */
 function goodLogin(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const response = new DYNResponse_1.DYNResponse();
-        response.data = ["This needs to be fixed"];
-        res.status(200).json(response);
+        try {
+            if (!isExpressUser(req.user)) {
+                res.status(404).send("No user found");
+                return;
+            }
+            const guilds = (0, dbGetUserGuilds_1.dbGetUserGuilds)(req.user.id);
+            res.status(200).json({ guilds: guilds });
+        }
+        catch (error) {
+            console.log({ goodLogin: error });
+            res.sendStatus(500);
+        }
     });
 }
 exports.goodLogin = goodLogin;
+function isExpressUser(potentialUser) {
+    return true;
+}
+exports.isExpressUser = isExpressUser;

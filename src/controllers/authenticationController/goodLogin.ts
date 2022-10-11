@@ -1,9 +1,29 @@
 import { Request, Response } from "express";
-import { DYNResponse } from "../../models/DYNResponse";
+import { dbGetUserGuilds } from "../../helpers/doYouNeedHelpers/dbGetUserGuilds";
 
+/**
+ * Login successful. Returns an array of the guilds connected to the logged in user.
+ * @param {Request} req Express Request
+ * @param {Response} res Express Response
+ * @returns {void}
+ */
 export async function goodLogin(req: Request, res: Response) {
-  const response = new DYNResponse();
+  try {
+    if (!isExpressUser(req.user)) {
+      res.status(404).send("No user found");
+      return;
+    }
 
-  response.data = ["This needs to be fixed"];
-  res.status(200).json(response);
+    const guilds = dbGetUserGuilds(req.user.id);
+    res.status(200).json({ guilds: guilds });
+  } catch (error) {
+    console.log({ goodLogin: error });
+    res.sendStatus(500);
+  }
+}
+
+export function isExpressUser(
+  potentialUser: Express.User | undefined
+): potentialUser is Express.User {
+  return true;
 }

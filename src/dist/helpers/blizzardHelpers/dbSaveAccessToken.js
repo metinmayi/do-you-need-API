@@ -10,14 +10,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dbSaveAccessToken = void 0;
-const UserSchema_1 = require("../../mongoose/schemas/UserSchema");
+const database_1 = require("../../database/database");
 /**
  * Saves an accesstoken to the user in the database
  * @param accessToken Newly retrieved accessToken from Blizzard's API.
  * @param id ID of the user in the DB
  */
 const dbSaveAccessToken = (accessToken, id) => __awaiter(void 0, void 0, void 0, function* () {
-    const _id = id.toString();
-    yield UserSchema_1.UserModel.updateOne({ _id }, { accessToken });
+    debugger;
+    const SQL = "UPDATE users SET access_token=? WHERE id=?";
+    const result = yield database_1.pool.execute(SQL, [accessToken, id]);
+    console.log("Saved access token: " + result.toString());
 });
 exports.dbSaveAccessToken = dbSaveAccessToken;

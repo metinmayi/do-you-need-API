@@ -9,8 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isExpressUser = exports.goodLogin = void 0;
+exports.goodLogin = void 0;
 const dbGetUserGuilds_1 = require("../../helpers/doYouNeedHelpers/dbGetUserGuilds");
+const ExpressUser_1 = require("../../models/ExpressUser");
 /**
  * Login successful. Returns an array of the guild blizzardIDs connected to the logged in user.
  * @param {Request} req Express Request
@@ -20,12 +21,12 @@ const dbGetUserGuilds_1 = require("../../helpers/doYouNeedHelpers/dbGetUserGuild
 function goodLogin(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            if (!isExpressUser(req.user)) {
+            if (!(0, ExpressUser_1.isExpressUser)(req.user)) {
                 res.status(404).send("No user found");
                 return;
             }
             const guilds = (0, dbGetUserGuilds_1.dbGetUserGuilds)(req.user.id);
-            res.status(200).json({ guilds: guilds });
+            res.status(200).json(guilds);
         }
         catch (error) {
             console.log({ goodLogin: error });
@@ -34,7 +35,3 @@ function goodLogin(req, res) {
     });
 }
 exports.goodLogin = goodLogin;
-function isExpressUser(potentialUser) {
-    return true;
-}
-exports.isExpressUser = isExpressUser;

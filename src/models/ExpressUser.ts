@@ -8,4 +8,12 @@ declare global {
   }
 }
 
-export {};
+export function isExpressUser(
+  potentialUser: Express.User | undefined
+): potentialUser is Express.User {
+  return (
+    typeof potentialUser?.username === "string" &&
+    typeof potentialUser?.id === "number" &&
+    "access_token" in potentialUser
+  );
+}

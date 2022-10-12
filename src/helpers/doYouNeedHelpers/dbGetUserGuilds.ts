@@ -7,7 +7,6 @@ import { pool } from "../../database/database";
  */
 export async function dbGetUserGuilds(userId: number) {
   const SQL = "SELECT blizzard_guild_id FROM user_guilds WHERE user_id=?";
-  debugger;
   const guilds = await pool.execute(SQL, [userId]);
   return guilds[0];
 }

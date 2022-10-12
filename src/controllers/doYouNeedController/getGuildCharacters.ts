@@ -10,5 +10,5 @@ export async function getGuildCharacterUpgrades(req: Request, res: Response) {
   if (!isIGuild(result)) {
     return res.sendStatus(404);
   }
-  res.status(200).json(result.characters);
+  res.status(200).json(result);
 }

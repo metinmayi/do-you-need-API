@@ -19,7 +19,7 @@ const GuildSchema_1 = require("../../mongoose/schemas/GuildSchema");
 function dbAddCharacterToGuild(character, guild) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            yield GuildSchema_1.GuildModel.updateOne({ id: guild.id }, { $push: { characters: character } });
+            yield GuildSchema_1.GuildModel.updateOne({ id: guild.blizzard_id }, { $push: { characters: character } });
         }
         catch (error) {
             console.log({ dbAddCharacterToGuild: error });

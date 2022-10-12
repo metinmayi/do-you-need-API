@@ -4,11 +4,10 @@ exports.isIGuild = void 0;
 function isIGuild(object) {
     if (typeof object !== "object" || !object)
         return false;
-    return (typeof object.id === "string" &&
+    return (typeof object.blizzard_id === "string" &&
         typeof object.name === "string" &&
         typeof object.realm === "string" &&
         typeof object.license === "string" &&
-        typeof object.faction === "string" &&
-        typeof object.characters === "object");
+        typeof object.faction === "string");
 }
 exports.isIGuild = isIGuild;

@@ -13,7 +13,7 @@ export async function dbAddCharacterToGuild(
 ) {
   try {
     await GuildModel.updateOne(
-      { id: guild.id },
+      { id: guild.blizzard_id },
       { $push: { characters: character } }
     );
   } catch (error: any) {

@@ -15,12 +15,11 @@ const zRegisterGuildSchema: z.ZodType<IRegisterGuild> = z.lazy(() =>
     realm: z.string(),
     guild: z.object({
       isNew: z.boolean(),
-      id: z.string(),
+      blizzard_id: z.string(),
       license: z.string(),
       name: z.string(),
       realm: z.string(),
       faction: z.string(),
-      characters: z.array(z.any()),
     }),
   })
 );

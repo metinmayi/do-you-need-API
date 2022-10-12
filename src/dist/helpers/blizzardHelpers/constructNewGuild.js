@@ -14,13 +14,12 @@ const constructNewGuild = (character) => {
     const faction = character.guild.faction.type;
     const license = "standard";
     const newGuild = {
-        id,
+        blizzard_id: id,
         name,
         realm,
         isNew,
         faction,
         license,
-        characters: [],
     };
     return newGuild;
 };

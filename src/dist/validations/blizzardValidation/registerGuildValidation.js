@@ -8,12 +8,11 @@ const zRegisterGuildSchema = zod_1.z.lazy(() => zod_1.z.object({
     realm: zod_1.z.string(),
     guild: zod_1.z.object({
         isNew: zod_1.z.boolean(),
-        id: zod_1.z.string(),
+        blizzard_id: zod_1.z.string(),
         license: zod_1.z.string(),
         name: zod_1.z.string(),
         realm: zod_1.z.string(),
         faction: zod_1.z.string(),
-        characters: zod_1.z.array(zod_1.z.any()),
     }),
 }));
 const registerGuildValidation = (user) => {

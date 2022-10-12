@@ -3,9 +3,6 @@ import { getGuildInformation } from "../../helpers/blizzardHelpers/getGuildInfor
 import { getRoster } from "../../helpers/blizzardHelpers/getRoster";
 import { DYNResponse } from "../../models/DYNResponse";
 import { getPlayersRankValidation } from "../../validations/blizzardValidation/getPlayersRankValidation";
-import { dbAddGuildToUser } from "../../helpers/blizzardHelpers/dbAddGuildToUser";
-import { constructGuild } from "../../helpers/blizzardHelpers/constructGuild";
-import { IUserGuild } from "../../models/IUserGuild";
 
 /**
  * Checks the blizzard API for the user's rank within the specified guild.

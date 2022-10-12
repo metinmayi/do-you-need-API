@@ -21,7 +21,7 @@ function getGuildCharacterUpgrades(req, res) {
         if (!(0, IGuild_1.isIGuild)(result)) {
             return res.sendStatus(404);
         }
-        res.status(200).json(result.characters);
+        res.status(200).json(result);
     });
 }
 exports.getGuildCharacterUpgrades = getGuildCharacterUpgrades;

@@ -9,7 +9,7 @@ interface IAddPlayerValidation {
 const zAddCharacterUpgradeSchema: z.ZodType<IAddPlayerValidation> = z.lazy(() =>
   z.object({
     guild: z.object({
-      id: z.string(),
+      blizzard_id: z.string(),
       name: z.string(),
       realm: z.string(),
       license: z.string(),

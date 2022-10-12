@@ -13,11 +13,11 @@ exports.registerGuild = void 0;
 const checkGMStatus_1 = require("../../helpers/blizzardHelpers/checkGMStatus");
 const getGuildInformation_1 = require("../../helpers/blizzardHelpers/getGuildInformation");
 const getRoster_1 = require("../../helpers/blizzardHelpers/getRoster");
-const dbStoreGuild_1 = require("../../helpers/doYouNeedHelpers/dbStoreGuild");
-const DYNResponse_1 = require("../../models/DYNResponse");
 const registerGuildValidation_1 = require("../../validations/blizzardValidation/registerGuildValidation");
-const dbAddGuildToUser_1 = require("../../helpers/blizzardHelpers/dbAddGuildToUser");
 const constructGuild_1 = require("../../helpers/blizzardHelpers/constructGuild");
+const dbStoreGuild_1 = require("../../helpers/doYouNeedHelpers/dbStoreGuild");
+const dbStoreUsersGuild_1 = require("../../helpers/doYouNeedHelpers/dbStoreUsersGuild");
+const ExpressUser_1 = require("../../models/ExpressUser");
 /**
  * Registers a guild to DoYouNeed.
  * Also adds that guild to the player's list of guilds.
@@ -26,10 +26,13 @@ const constructGuild_1 = require("../../helpers/blizzardHelpers/constructGuild")
  * @returns Void
  */
 function registerGuild(req, res) {
-    var _a, _b, _c;
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
+        debugger;
+        if (!(0, ExpressUser_1.isExpressUser)(req.user)) {
+            return res.status(401).json("No user registered");
+        }
         try {
-            const response = new DYNResponse_1.DYNResponse();
             const user = {
                 character: req.body.character.toLowerCase(),
                 guild: req.body.guild,
@@ -38,9 +41,7 @@ function registerGuild(req, res) {
             };
             const validation = (0, registerGuildValidation_1.registerGuildValidation)(user);
             if (!validation.success) {
-                response.error = true;
-                response.errorMessage = validation.error.message;
-                return res.status(400).json(response);
+                return res.status(403).json("Bad payload");
             }
             const { character, guild, realm, token } = validation.data;
             const guildInformation = yield (0, getGuildInformation_1.getGuildInformation)(realm, guild.name, token);
@@ -48,18 +49,12 @@ function registerGuild(req, res) {
             const roster = yield (0, getRoster_1.getRoster)(rosterURL, token);
             const isGM = yield (0, checkGMStatus_1.checkGMStatus)(roster, character);
             if (!isGM) {
-                response.error = true;
-                response.errorMessage = `${character} is not the Guildmaster of ${guild}`;
-                return res.status(400).json(response);
+                return res.status(401).json("Character is not the GM");
             }
             const iGuild = (0, constructGuild_1.constructGuild)(guildInformation);
-            const iUserGuild = Object.assign(Object.assign({}, iGuild), { playerRank: "0" });
             yield (0, dbStoreGuild_1.dbStoreGuild)(iGuild);
-            if (!((_b = req.user) === null || _b === void 0 ? void 0 : _b.id)) {
-                return;
-            }
-            yield (0, dbAddGuildToUser_1.dbAddGuildToUser)((_c = req.user) === null || _c === void 0 ? void 0 : _c.id, iUserGuild);
-            return res.status(200).json(response);
+            yield (0, dbStoreUsersGuild_1.dbStoreUserGuild)(iGuild.blizzard_id, (_b = req.user) === null || _b === void 0 ? void 0 : _b.id, 0);
+            return res.sendStatus(200);
         }
         catch (error) {
             res.sendStatus(500);

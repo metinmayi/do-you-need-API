@@ -9,23 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.dbStoreGuild = void 0;
+exports.dbStoreUserGuild = void 0;
 const database_1 = require("../../database/database");
 /**
- * Breaks down information about a guild into a DYN IGuild and saves it in the DB.
- * @param {IGuild} guild A guild object
- * @returns void
+ * Registers a user to a guild in the DB.
+ * @param {string} guildID Blizzard ID for the guild
+ * @param {number} userId The user's ID.
+ * @param {number} userRank The rank of the user
  */
-function dbStoreGuild(guild) {
+function dbStoreUserGuild(guildID, userId, userRank) {
     return __awaiter(this, void 0, void 0, function* () {
-        const SQL = "INSERT INTO guilds (blizzard_id, name, realm, license, faction) VALUES (?, ?, ?, ?, ?)";
-        const result = database_1.pool.execute(SQL, [
-            guild.blizzard_id,
-            guild.name,
-            guild.realm,
-            guild.license,
-            guild.faction,
-        ]);
+        const SQL = "INSERT INTO user_guilds() VALUES(?, ?, ?)";
+        yield database_1.pool.execute(SQL, [guildID, userId, userRank]);
     });
 }
-exports.dbStoreGuild = dbStoreGuild;
+exports.dbStoreUserGuild = dbStoreUserGuild;

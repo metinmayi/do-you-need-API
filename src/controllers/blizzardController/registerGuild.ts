@@ -2,12 +2,12 @@ import { Request, Response } from "express";
 import { checkGMStatus } from "../../helpers/blizzardHelpers/checkGMStatus";
 import { getGuildInformation } from "../../helpers/blizzardHelpers/getGuildInformation";
 import { getRoster } from "../../helpers/blizzardHelpers/getRoster";
-import { dbStoreGuild } from "../../helpers/doYouNeedHelpers/dbStoreGuild";
-import { DYNResponse } from "../../models/DYNResponse";
 import { registerGuildValidation } from "../../validations/blizzardValidation/registerGuildValidation";
 import { dbAddGuildToUser } from "../../helpers/blizzardHelpers/dbAddGuildToUser";
 import { constructGuild } from "../../helpers/blizzardHelpers/constructGuild";
-import { IUserGuild } from "../../models/IUserGuild";
+import { dbStoreGuild } from "../../helpers/doYouNeedHelpers/dbStoreGuild";
+import { dbStoreUserGuild } from "../../helpers/doYouNeedHelpers/dbStoreUsersGuild";
+import { isExpressUser } from "../../models/ExpressUser";
 
 /**
  * Registers a guild to DoYouNeed.
@@ -17,8 +17,11 @@ import { IUserGuild } from "../../models/IUserGuild";
  * @returns Void
  */
 export async function registerGuild(req: Request, res: Response) {
+  debugger;
+  if (!isExpressUser(req.user)) {
+    return res.status(401).json("No user registered");
+  }
   try {
-    const response = new DYNResponse();
     const user = {
       character: req.body.character.toLowerCase(),
       guild: req.body.guild,
@@ -28,9 +31,7 @@ export async function registerGuild(req: Request, res: Response) {
 
     const validation = registerGuildValidation(user);
     if (!validation.success) {
-      response.error = true;
-      response.errorMessage = validation.error.message;
-      return res.status(400).json(response);
+      return res.status(403).json("Bad payload");
     }
 
     const { character, guild, realm, token } = validation.data;
@@ -46,21 +47,14 @@ export async function registerGuild(req: Request, res: Response) {
 
     const isGM = await checkGMStatus(roster, character);
     if (!isGM) {
-      response.error = true;
-      response.errorMessage = `${character} is not the Guildmaster of ${guild}`;
-      return res.status(400).json(response);
+      return res.status(401).json("Character is not the GM");
     }
 
     const iGuild = constructGuild(guildInformation);
-    const iUserGuild: IUserGuild = { ...iGuild, playerRank: "0" };
     await dbStoreGuild(iGuild);
+    await dbStoreUserGuild(iGuild.blizzard_id, req.user?.id, 0);
 
-    if (!req.user?.id) {
-      return;
-    }
-    await dbAddGuildToUser(req.user?.id, iUserGuild);
-
-    return res.status(200).json(response);
+    return res.sendStatus(200);
   } catch (error: any) {
     res.sendStatus(500);
     console.log(error);

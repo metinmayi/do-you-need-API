@@ -25,7 +25,7 @@ function goodLogin(req, res) {
                 res.status(404).send("No user found");
                 return;
             }
-            const guilds = (0, dbGetUserGuilds_1.dbGetUserGuilds)(req.user.id);
+            const guilds = yield (0, dbGetUserGuilds_1.dbGetUserGuilds)(req.user.id);
             res.status(200).json(guilds);
         }
         catch (error) {

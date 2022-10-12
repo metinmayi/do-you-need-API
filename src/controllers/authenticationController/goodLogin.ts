@@ -15,7 +15,7 @@ export async function goodLogin(req: Request, res: Response) {
       return;
     }
 
-    const guilds = dbGetUserGuilds(req.user.id);
+    const guilds = await dbGetUserGuilds(req.user.id);
     res.status(200).json(guilds);
   } catch (error) {
     console.log({ goodLogin: error });

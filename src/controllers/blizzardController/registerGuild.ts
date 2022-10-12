@@ -17,7 +17,6 @@ import { isExpressUser } from "../../models/ExpressUser";
  * @returns Void
  */
 export async function registerGuild(req: Request, res: Response) {
-  debugger;
   if (!isExpressUser(req.user)) {
     return res.status(401).json("No user registered");
   }
@@ -54,7 +53,7 @@ export async function registerGuild(req: Request, res: Response) {
     await dbStoreGuild(iGuild);
     await dbStoreUserGuild(iGuild.blizzard_id, req.user?.id, 0);
 
-    return res.sendStatus(200);
+    return res.status(200).json("Success");
   } catch (error: any) {
     res.sendStatus(500);
     console.log(error);

@@ -18,7 +18,6 @@ const database_1 = require("../../database/database");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const sql = "INSERT INTO users(username, password, email) VALUES (?, ?, ?)";
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    debugger;
     const isValid = (0, registrationValidation_1.registrationValidation)(req);
     if (!isValid.success) {
         return res.status(400).send(isValid.message);

@@ -6,7 +6,6 @@ import { pool } from "../../database/database";
  * @param id ID of the user in the DB
  */
 export const dbSaveAccessToken = async (accessToken: string, id: number) => {
-  debugger;
   const SQL = "UPDATE users SET access_token=? WHERE id=?";
   const result = await pool.execute(SQL, [accessToken, id]);
   console.log("Saved access token: " + result.toString());

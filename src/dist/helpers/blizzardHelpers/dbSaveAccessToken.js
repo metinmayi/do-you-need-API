@@ -17,7 +17,6 @@ const database_1 = require("../../database/database");
  * @param id ID of the user in the DB
  */
 const dbSaveAccessToken = (accessToken, id) => __awaiter(void 0, void 0, void 0, function* () {
-    debugger;
     const SQL = "UPDATE users SET access_token=? WHERE id=?";
     const result = yield database_1.pool.execute(SQL, [accessToken, id]);
     console.log("Saved access token: " + result.toString());

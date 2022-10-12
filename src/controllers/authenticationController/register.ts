@@ -11,7 +11,6 @@ declare module "express-session" {
 const sql = "INSERT INTO users(username, password, email) VALUES (?, ?, ?)";
 
 export const register = async (req: Request, res: Response) => {
-  debugger;
   const isValid = registrationValidation(req);
   if (!isValid.success) {
     return res.status(400).send(isValid.message);

@@ -28,7 +28,6 @@ const ExpressUser_1 = require("../../models/ExpressUser");
 function registerGuild(req, res) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
-        debugger;
         if (!(0, ExpressUser_1.isExpressUser)(req.user)) {
             return res.status(401).json("No user registered");
         }
@@ -54,7 +53,7 @@ function registerGuild(req, res) {
             const iGuild = (0, constructGuild_1.constructGuild)(guildInformation);
             yield (0, dbStoreGuild_1.dbStoreGuild)(iGuild);
             yield (0, dbStoreUsersGuild_1.dbStoreUserGuild)(iGuild.blizzard_id, (_b = req.user) === null || _b === void 0 ? void 0 : _b.id, 0);
-            return res.sendStatus(200);
+            return res.status(200).json("Success");
         }
         catch (error) {
             res.sendStatus(500);

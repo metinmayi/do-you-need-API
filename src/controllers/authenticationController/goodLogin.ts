@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { dbGetUserGuilds } from "../../helpers/doYouNeedHelpers/dbGetUserGuilds";
 
 /**
- * Login successful. Returns an array of the guilds connected to the logged in user.
+ * Login successful. Returns an array of the guild blizzardIDs connected to the logged in user.
  * @param {Request} req Express Request
  * @param {Response} res Express Response
  * @returns {void}

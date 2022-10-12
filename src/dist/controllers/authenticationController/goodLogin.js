@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.isExpressUser = exports.goodLogin = void 0;
 const dbGetUserGuilds_1 = require("../../helpers/doYouNeedHelpers/dbGetUserGuilds");
 /**
- * Login successful. Returns an array of the guilds connected to the logged in user.
+ * Login successful. Returns an array of the guild blizzardIDs connected to the logged in user.
  * @param {Request} req Express Request
  * @param {Response} res Express Response
  * @returns {void}

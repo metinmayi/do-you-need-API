@@ -12,13 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.dbGetUserGuilds = void 0;
 const database_1 = require("../../database/database");
 /**
- * Gets an array of guilds from the user's registered guilds
+ * Gets an array of blizzard guild id's from the user's registered guilds
  * @param {number} userId The ID of the logged in user.
  * @returns {string[]} An array of the guild IDs
  */
 function dbGetUserGuilds(userId) {
     return __awaiter(this, void 0, void 0, function* () {
-        const SQL = "SELECT * FROM user_guilds WHERE user_id=?";
+        const SQL = "SELECT blizzard_guild_id FROM user_guilds WHERE user_id=?";
         debugger;
         const guilds = yield database_1.pool.execute(SQL, [userId]);
         return guilds[0];

@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import { getCharacter } from "../../helpers/blizzardHelpers/getCharacter";
-import { dbGuildStatus } from "../../helpers/doYouNeedHelpers/dbGuildStatus";
+import { dbGetGuildByBlizzardId } from "../../helpers/doYouNeedHelpers/dbGuildStatus";
 import { DYNResponse } from "../../models/DYNResponse";
 import { GetCharactersGuildValidation } from "../../validations/blizzardValidation/getCharactersGuildValidation";
 import { constructNewGuild } from "../../helpers/blizzardHelpers/constructNewGuild";
+import { isExpressUser } from "../../models/ExpressUser";
 
 /**
  * Check's what guild the character is a member of through the blizzard API.
@@ -13,14 +14,16 @@ import { constructNewGuild } from "../../helpers/blizzardHelpers/constructNewGui
  * @returns void
  */
 export async function getCharactersGuild(req: Request, res: Response) {
-  const response = new DYNResponse();
-  const token = req.user?.access_token;
+  if (!isExpressUser(req.user)) {
+    return res.sendStatus(401).json("No user found");
+  }
 
-  const validation = GetCharactersGuildValidation(req.query, token);
+  const validation = GetCharactersGuildValidation(
+    req.query,
+    req.user.access_token
+  );
   if (!validation.success) {
-    response.error = true;
-    response.errorMessage = validation.error.message;
-    return res.status(403).json(response);
+    return res.status(403).json(validation.error.message);
   }
 
   try {
@@ -30,20 +33,17 @@ export async function getCharactersGuild(req: Request, res: Response) {
       validation.data.token
     );
 
-    const guild = await dbGuildStatus(retrievedCharacter.guild.id);
-    if (guild) {
-      response.data = guild;
-      return res.status(200).json(response);
+    const guild = await dbGetGuildByBlizzardId(
+      retrievedCharacter.guild.id.toString()
+    );
+    if (guild.length > 0) {
+      return res.status(200).json(guild);
     }
 
     const newGuild = constructNewGuild(retrievedCharacter);
-    response.message = "No registered guilds were found";
-    response.data = newGuild;
-    res.status(200).json(response);
+    res.status(404).json(newGuild);
   } catch (error: any) {
-    response.error = true;
-    response.errorMessage = error.message;
     console.log("getGuildStatus" + error.message);
-    res.status(500).json(response);
+    res.status(500).json(error.message);
   }
 }

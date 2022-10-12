@@ -9,15 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.dbGuildStatus = void 0;
-const GuildSchema_1 = require("../../mongoose/schemas/GuildSchema");
-const dbGuildStatus = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const result = yield GuildSchema_1.GuildModel.findOne({ id }).lean();
-        return result;
-    }
-    catch (error) {
-        console.log("dbGuildStatis: " + error.message);
-    }
+exports.dbGetGuildByBlizzardId = void 0;
+const database_1 = require("../../database/database");
+/**
+ * Gets the guild from the database.
+ * @param {string} id The guild's blizzard ID.
+ * @returns
+ */
+const dbGetGuildByBlizzardId = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const SQL = "SELECT blizzard_id, name, realm, license, faction FROM guilds WHERE blizzard_id=?";
+    const response = yield database_1.pool.execute(SQL, [id]);
+    return response[0];
 });
-exports.dbGuildStatus = dbGuildStatus;
+exports.dbGetGuildByBlizzardId = dbGetGuildByBlizzardId;

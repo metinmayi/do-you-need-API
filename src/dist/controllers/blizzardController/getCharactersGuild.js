@@ -12,9 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getCharactersGuild = void 0;
 const getCharacter_1 = require("../../helpers/blizzardHelpers/getCharacter");
 const dbGuildStatus_1 = require("../../helpers/doYouNeedHelpers/dbGuildStatus");
-const DYNResponse_1 = require("../../models/DYNResponse");
 const getCharactersGuildValidation_1 = require("../../validations/blizzardValidation/getCharactersGuildValidation");
 const constructNewGuild_1 = require("../../helpers/blizzardHelpers/constructNewGuild");
+const ExpressUser_1 = require("../../models/ExpressUser");
 /**
  * Check's what guild the character is a member of through the blizzard API.
  * Then proceeds to check if that guild is registered in DoYouNeed.
@@ -23,33 +23,26 @@ const constructNewGuild_1 = require("../../helpers/blizzardHelpers/constructNewG
  * @returns void
  */
 function getCharactersGuild(req, res) {
-    var _a;
     return __awaiter(this, void 0, void 0, function* () {
-        const response = new DYNResponse_1.DYNResponse();
-        const token = (_a = req.user) === null || _a === void 0 ? void 0 : _a.access_token;
-        const validation = (0, getCharactersGuildValidation_1.GetCharactersGuildValidation)(req.query, token);
+        if (!(0, ExpressUser_1.isExpressUser)(req.user)) {
+            return res.sendStatus(401).json("No user found");
+        }
+        const validation = (0, getCharactersGuildValidation_1.GetCharactersGuildValidation)(req.query, req.user.access_token);
         if (!validation.success) {
-            response.error = true;
-            response.errorMessage = validation.error.message;
-            return res.status(403).json(response);
+            return res.status(403).json(validation.error.message);
         }
         try {
             const retrievedCharacter = yield (0, getCharacter_1.getCharacter)(validation.data.character, validation.data.realm, validation.data.token);
-            const guild = yield (0, dbGuildStatus_1.dbGuildStatus)(retrievedCharacter.guild.id);
-            if (guild) {
-                response.data = guild;
-                return res.status(200).json(response);
+            const guild = yield (0, dbGuildStatus_1.dbGetGuildByBlizzardId)(retrievedCharacter.guild.id.toString());
+            if (guild.length > 0) {
+                return res.status(200).json(guild);
             }
             const newGuild = (0, constructNewGuild_1.constructNewGuild)(retrievedCharacter);
-            response.message = "No registered guilds were found";
-            response.data = newGuild;
-            res.status(200).json(response);
+            res.status(404).json(newGuild);
         }
         catch (error) {
-            response.error = true;
-            response.errorMessage = error.message;
             console.log("getGuildStatus" + error.message);
-            res.status(500).json(response);
+            res.status(500).json(error.message);
         }
     });
 }

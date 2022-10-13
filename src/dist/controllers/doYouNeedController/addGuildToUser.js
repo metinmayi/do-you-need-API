@@ -18,7 +18,7 @@ function addGuildToUser(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             if (!(0, ExpressUser_1.isExpressUser)(req.user)) {
-                return res.status(401).json("No express user found");
+                return res.status(401).json("No user found");
             }
             // Validate request
             const validation = (0, validateAddGuildToUser_1.zValidateAddGuildToUser)({

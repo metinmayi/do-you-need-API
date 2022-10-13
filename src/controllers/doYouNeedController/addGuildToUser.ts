@@ -6,7 +6,7 @@ import { zValidateAddGuildToUser } from "../../validations/doYouNeedValidation/v
 export async function addGuildToUser(req: Request, res: Response) {
   try {
     if (!isExpressUser(req.user)) {
-      return res.status(401).json("No express user found");
+      return res.status(401).json("No user found");
     }
     // Validate request
     const validation = zValidateAddGuildToUser({

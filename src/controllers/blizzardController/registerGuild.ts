@@ -18,7 +18,7 @@ import { isExpressUser } from "../../models/ExpressUser";
  */
 export async function registerGuild(req: Request, res: Response) {
   if (!isExpressUser(req.user)) {
-    return res.status(401).json("No user registered");
+    return res.status(401).json("No user found");
   }
   try {
     const user = {

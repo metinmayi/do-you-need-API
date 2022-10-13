@@ -29,7 +29,7 @@ function registerGuild(req, res) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         if (!(0, ExpressUser_1.isExpressUser)(req.user)) {
-            return res.status(401).json("No user registered");
+            return res.status(401).json("No user found");
         }
         try {
             const user = {

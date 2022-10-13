@@ -1,3 +1,4 @@
+import { pool } from "../../database/database";
 import { IGuild } from "../../models/IGuild";
 import { UserModel } from "../../mongoose/schemas/UserSchema";
 
@@ -7,6 +8,12 @@ import { UserModel } from "../../mongoose/schemas/UserSchema";
  * @param guild Guild object
  * @param playerRank Rank of the player
  */
-export async function dbAddGuildToUser(userID: number, guild: IGuild) {
-  await UserModel.updateOne({ _id: userID }, { $push: { guilds: guild } });
+export async function dbAddGuildToUser(
+  userID: number,
+  guild: IGuild,
+  playerRank: number = 3
+) {
+  const SQL =
+    "INSERT INTO user_guilds(blizzard_id, user_id, user_rank) VALUES(?, ?, ?)";
+  await pool.execute(SQL, [guild.blizzard_id, userID, playerRank]);
 }

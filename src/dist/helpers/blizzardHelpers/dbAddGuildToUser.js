@@ -10,16 +10,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dbAddGuildToUser = void 0;
-const UserSchema_1 = require("../../mongoose/schemas/UserSchema");
+const database_1 = require("../../database/database");
 /**
  * Inserts a guild to the list of player's guilds.
  * @param username DoYouNeed username
  * @param guild Guild object
  * @param playerRank Rank of the player
  */
-function dbAddGuildToUser(userID, guild) {
+function dbAddGuildToUser(userID, guild, playerRank = 3) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield UserSchema_1.UserModel.updateOne({ _id: userID }, { $push: { guilds: guild } });
+        const SQL = "INSERT INTO user_guilds(blizzard_id, user_id, user_rank) VALUES(?, ?, ?)";
+        yield database_1.pool.execute(SQL, [guild.blizzard_id, userID, playerRank]);
     });
 }
 exports.dbAddGuildToUser = dbAddGuildToUser;

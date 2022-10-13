@@ -36,7 +36,7 @@ export async function getCharactersGuild(req: Request, res: Response) {
     const guild = await dbGetGuildByBlizzardId(
       retrievedCharacter.guild.id.toString()
     );
-    if (guild.length > 0) {
+    if (guild) {
       return res.status(200).json(guild);
     }
 

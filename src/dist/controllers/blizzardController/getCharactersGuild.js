@@ -34,7 +34,7 @@ function getCharactersGuild(req, res) {
         try {
             const retrievedCharacter = yield (0, getCharacter_1.getCharacter)(validation.data.character, validation.data.realm, validation.data.token);
             const guild = yield (0, dbGuildStatus_1.dbGetGuildByBlizzardId)(retrievedCharacter.guild.id.toString());
-            if (guild.length > 0) {
+            if (guild) {
                 return res.status(200).json(guild);
             }
             const newGuild = (0, constructNewGuild_1.constructNewGuild)(retrievedCharacter);

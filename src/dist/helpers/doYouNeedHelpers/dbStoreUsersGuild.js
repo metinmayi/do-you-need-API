@@ -19,7 +19,7 @@ const database_1 = require("../../database/database");
  */
 function dbStoreUserGuild(guildID, userId, userRank) {
     return __awaiter(this, void 0, void 0, function* () {
-        const SQL = "INSERT INTO user_guilds() VALUES(?, ?, ?)";
+        const SQL = "INSERT INTO user_guilds(blizzard_id, user_id, user_rank) VALUES(?, ?, ?)";
         yield database_1.pool.execute(SQL, [guildID, userId, userRank]);
     });
 }

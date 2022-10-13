@@ -9,7 +9,6 @@ const zAddGuildToUserSchema = zod_1.z.lazy(() => zod_1.z.object({
         realm: zod_1.z.string(),
         license: zod_1.z.string(),
         faction: zod_1.z.string(),
-        characters: zod_1.z.array(zod_1.z.any()),
     }),
     token: zod_1.z.string(),
 }));

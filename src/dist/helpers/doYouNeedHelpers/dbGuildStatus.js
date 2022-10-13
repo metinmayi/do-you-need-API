@@ -19,6 +19,6 @@ const database_1 = require("../../database/database");
 const dbGetGuildByBlizzardId = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const SQL = "SELECT blizzard_id, name, realm, license, faction FROM guilds WHERE blizzard_id=?";
     const response = yield database_1.pool.execute(SQL, [id]);
-    return response[0];
+    return response[0][0];
 });
 exports.dbGetGuildByBlizzardId = dbGetGuildByBlizzardId;

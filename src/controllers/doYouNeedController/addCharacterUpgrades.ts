@@ -22,7 +22,7 @@ export const addCharacterUpgrades = async (req: Request, res: Response) => {
   if (!validation.success) {
     response.error = true;
     response.message = validation.error.message;
-    return res.status(403).json(response);
+    return res.status(400).json(response);
   }
 
   // Does the fetch.
@@ -35,7 +35,7 @@ export const addCharacterUpgrades = async (req: Request, res: Response) => {
     if (!isValidInstance) {
       response.error = true;
       response.errorMessage = "Invalid instance and/or difficulty";
-      return res.send(403).json(response);
+      return res.send(400).json(response);
     }
 
     const character = constructCharacter(droptimizer);

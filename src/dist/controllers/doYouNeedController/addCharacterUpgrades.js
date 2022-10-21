@@ -33,7 +33,7 @@ const addCharacterUpgrades = (req, res) => __awaiter(void 0, void 0, void 0, fun
     if (!validation.success) {
         response.error = true;
         response.message = validation.error.message;
-        return res.status(403).json(response);
+        return res.status(400).json(response);
     }
     // Does the fetch.
     try {
@@ -42,7 +42,7 @@ const addCharacterUpgrades = (req, res) => __awaiter(void 0, void 0, void 0, fun
         if (!isValidInstance) {
             response.error = true;
             response.errorMessage = "Invalid instance and/or difficulty";
-            return res.send(403).json(response);
+            return res.send(400).json(response);
         }
         const character = (0, constructCharacter_1.constructCharacter)(droptimizer);
         const positiveUpgrades = (0, getPositiveUpgrades_1.getPositiveUpgrades)(droptimizer);

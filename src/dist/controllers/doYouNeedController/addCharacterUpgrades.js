@@ -18,7 +18,6 @@ const constructCharacter_1 = require("../../helpers/doYouNeedHelpers/constructCh
 const dbAddCharacterToGuild_1 = require("../../helpers/doYouNeedHelpers/dbAddCharacterToGuild");
 const getPositiveUpgrades_1 = require("../../helpers/doYouNeedHelpers/getPositiveUpgrades");
 const insertUpgrades_1 = require("../../helpers/doYouNeedHelpers/insertUpgrades");
-const DYNResponse_1 = require("../../models/DYNResponse");
 const addCharacterUpgradeValidation_1 = require("../../validations/doYouNeedValidation/addCharacterUpgradeValidation");
 const validateInstanceAndDifficulty_1 = require("../../validations/doYouNeedValidation/validateInstanceAndDifficulty");
 /**
@@ -28,21 +27,16 @@ const validateInstanceAndDifficulty_1 = require("../../validations/doYouNeedVali
  * @returns void
  */
 const addCharacterUpgrades = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const response = new DYNResponse_1.DYNResponse();
     const validation = (0, addCharacterUpgradeValidation_1.zAddCharacterUpgradeValidation)(req.body);
     if (!validation.success) {
-        response.error = true;
-        response.message = validation.error.message;
-        return res.status(400).json(response);
+        return res.status(400).json(validation.error.message);
     }
     // Does the fetch.
     try {
         const droptimizer = yield (0, axios_1.default)(`${validation.data.raidbotsURL}/data.json`).then((res) => res.data);
         const isValidInstance = (0, validateInstanceAndDifficulty_1.validateInstanceAndDifficulty)(droptimizer);
         if (!isValidInstance) {
-            response.error = true;
-            response.errorMessage = "Invalid instance and/or difficulty";
-            return res.send(400).json(response);
+            return res.send(400).json("Invalid instance and/or difficulty");
         }
         const character = (0, constructCharacter_1.constructCharacter)(droptimizer);
         const positiveUpgrades = (0, getPositiveUpgrades_1.getPositiveUpgrades)(droptimizer);

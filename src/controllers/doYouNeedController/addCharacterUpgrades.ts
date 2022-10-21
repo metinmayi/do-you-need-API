@@ -16,13 +16,9 @@ import { validateInstanceAndDifficulty } from "../../validations/doYouNeedValida
  * @returns void
  */
 export const addCharacterUpgrades = async (req: Request, res: Response) => {
-  const response = new DYNResponse();
-
   const validation = zAddCharacterUpgradeValidation(req.body);
   if (!validation.success) {
-    response.error = true;
-    response.message = validation.error.message;
-    return res.status(400).json(response);
+    return res.status(400).json(validation.error.message);
   }
 
   // Does the fetch.
@@ -33,9 +29,7 @@ export const addCharacterUpgrades = async (req: Request, res: Response) => {
 
     const isValidInstance = validateInstanceAndDifficulty(droptimizer);
     if (!isValidInstance) {
-      response.error = true;
-      response.errorMessage = "Invalid instance and/or difficulty";
-      return res.send(400).json(response);
+      return res.send(400).json("Invalid instance and/or difficulty");
     }
 
     const character = constructCharacter(droptimizer);

@@ -14,7 +14,6 @@ const zAddCharacterUpgradeSchema: z.ZodType<IAddPlayerValidation> = z.lazy(() =>
       realm: z.string(),
       license: z.string(),
       faction: z.string(),
-      characters: z.array(z.any()),
     }),
     raidbotsURL: z
       .string()

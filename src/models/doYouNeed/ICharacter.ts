@@ -1,10 +1,7 @@
-import { ICharacterUpgrades } from "./ICharacterUpgrades";
-
 export interface ICharacter {
-  playerName: string;
-  selected: boolean;
+  name: string;
+  selected: number;
   role: string;
-  className: string;
-  characterUpgrades: ICharacterUpgrades;
-  upgradeCount?: number;
+  charClass: string;
+  blizzardId: string;
 }

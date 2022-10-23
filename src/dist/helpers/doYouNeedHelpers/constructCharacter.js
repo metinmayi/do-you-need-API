@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.constructCharacter = void 0;
-const ICharacterUpgrades_1 = require("../../models/doYouNeed/ICharacterUpgrades");
 /**
  * Returns a character object constructed from the droptimizer.
  * @param {RaidbotsDroptimizer} droptimizer Droptimizer object retrieved from Raidbots.
@@ -9,11 +8,13 @@ const ICharacterUpgrades_1 = require("../../models/doYouNeed/ICharacterUpgrades"
  */
 function constructCharacter(droptimizer) {
     const character = {
-        playerName: droptimizer.simbot.meta.player,
-        selected: false,
+        name: droptimizer.simbot.meta.player.toLowerCase(),
+        selected: 1,
         role: droptimizer.simbot.meta.role,
-        className: droptimizer.simbot.meta.charClass,
-        characterUpgrades: new ICharacterUpgrades_1.ICharacterUpgrades(),
+        charClass: droptimizer.simbot.meta.charClass,
+        blizzardId: droptimizer.simbot.meta.player.toLowerCase() +
+            "-" +
+            droptimizer.simbot.meta.rawFormData.armory.realm,
     };
     return character;
 }

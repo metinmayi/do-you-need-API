@@ -9,11 +9,14 @@ import { RaidbotsDroptimizer } from "../../models/raidbots/RaidbotsDroptimizer";
  */
 export function constructCharacter(droptimizer: RaidbotsDroptimizer) {
   const character: ICharacter = {
-    playerName: droptimizer.simbot.meta.player,
-    selected: false,
+    name: droptimizer.simbot.meta.player.toLowerCase(),
+    selected: 1,
     role: droptimizer.simbot.meta.role,
-    className: droptimizer.simbot.meta.charClass,
-    characterUpgrades: new ICharacterUpgrades(),
+    charClass: droptimizer.simbot.meta.charClass,
+    blizzardId:
+      droptimizer.simbot.meta.player.toLowerCase() +
+      "-" +
+      droptimizer.simbot.meta.rawFormData.armory.realm,
   };
 
   return character;

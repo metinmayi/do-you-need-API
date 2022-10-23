@@ -17,7 +17,7 @@ export function getBestUpgradesPerSlot(
   const currentDPS = droptimizer.sim.statistics.raid_dps.mean;
   const bossMap = new Map();
   for (const upgrade of positiveUpgrades) {
-    const [instaceID, bossID, difficulty, itemID, unknown, slot] =
+    let [instaceID, bossID, difficulty, itemID, unknown, slot] =
       upgrade.name.split("/");
     const bossName = IdToBoss[+bossID];
     const DPSupgrade = upgrade.mean - currentDPS;
@@ -28,13 +28,23 @@ export function getBestUpgradesPerSlot(
       continue;
     }
 
+    // Check for fingers
+    if (slot === "finger1" || slot === "finger2") {
+      slot = "finger";
+    }
+
+    // Check for trinkets
+    if (slot === "trinket1" || slot == "trinket2") {
+      slot = "trinket";
+    }
+
     // First entry for the slot in the boss
     if (!bossMap.get(bossName).has(slot)) {
       bossMap.get(bossName).set(slot, DPSupgrade);
       continue;
     }
 
-    // Compare the slot and keep the highest value upgrae
+    // Compare the slot and keep the highest value upgrade
     if (bossMap.get(bossName).get(slot) < DPSupgrade) {
       bossMap.get(bossName).set(slot, DPSupgrade);
     }

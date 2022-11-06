@@ -1,13 +1,13 @@
 import axios from "axios";
 import { Request, Response } from "express";
 import { constructCharacter } from "../../helpers/doYouNeedHelpers/constructCharacter";
-import { dbAddCharacterToGuild } from "../../helpers/doYouNeedHelpers/dbAddCharacterToGuild";
+import { getBestUpgradesPerSlot } from "../../helpers/doYouNeedHelpers/getBestUpgradesPerSlot";
 import { getPositiveUpgrades } from "../../helpers/doYouNeedHelpers/getPositiveUpgrades";
-import { insertUpgrades } from "../../helpers/doYouNeedHelpers/insertUpgrades";
-import { DYNResponse } from "../../models/DYNResponse";
 import { RaidbotsDroptimizer } from "../../models/raidbots/RaidbotsDroptimizer";
 import { zAddCharacterUpgradeValidation } from "../../validations/doYouNeedValidation/addCharacterUpgradeValidation";
 import { validateInstanceAndDifficulty } from "../../validations/doYouNeedValidation/validateInstanceAndDifficulty";
+import { dbAddBossUpgrades } from "./dbAddBossUpgrades";
+import { dbAddCharacter } from "./dbAddCharacter";
 
 /**
  * Takes a raidbots URL and adds the character's upgrades to the guild.
@@ -33,11 +33,18 @@ export const addCharacterUpgrades = async (req: Request, res: Response) => {
     }
 
     const character = constructCharacter(droptimizer);
+    await dbAddCharacter(character);
+
     const positiveUpgrades = getPositiveUpgrades(droptimizer);
+    const bestUpgradesPerSlot = getBestUpgradesPerSlot(
+      positiveUpgrades,
+      droptimizer
+    );
 
-    insertUpgrades(character, positiveUpgrades, droptimizer);
+    for (const upgrade of bestUpgradesPerSlot) {
+      await dbAddBossUpgrades(character.blizzardId, upgrade);
+    }
 
-    await dbAddCharacterToGuild(character, validation.data.guild);
     res.sendStatus(200);
   } catch (error: any) {
     res.sendStatus(500);

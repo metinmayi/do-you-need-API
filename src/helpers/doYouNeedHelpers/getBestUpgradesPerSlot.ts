@@ -22,6 +22,11 @@ export function getBestUpgradesPerSlot(
     const bossName = IdToBoss[+bossID];
     const DPSupgrade = upgrade.mean - currentDPS;
 
+    // Probably means that the upgrade is from Trash mobs
+    if (!bossName) {
+      continue;
+    }
+
     // First entry for a new boss.
     if (!bossMap.has(bossName)) {
       bossMap.set(bossName, new Map([[slot, DPSupgrade]]));

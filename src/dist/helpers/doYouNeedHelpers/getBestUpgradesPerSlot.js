@@ -15,6 +15,10 @@ function getBestUpgradesPerSlot(positiveUpgrades, droptimizer) {
         let [instaceID, bossID, difficulty, itemID, unknown, slot] = upgrade.name.split("/");
         const bossName = constants_1.IdToBoss[+bossID];
         const DPSupgrade = upgrade.mean - currentDPS;
+        // Probably means that the upgrade is from Trash mobs
+        if (!bossName) {
+            continue;
+        }
         // First entry for a new boss.
         if (!bossMap.has(bossName)) {
             bossMap.set(bossName, new Map([[slot, DPSupgrade]]));

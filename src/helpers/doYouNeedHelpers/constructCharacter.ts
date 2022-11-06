@@ -11,7 +11,8 @@ export function constructCharacter(droptimizer: RaidbotsDroptimizer) {
   const character: ICharacter = {
     name: droptimizer.simbot.meta.player.toLowerCase(),
     selected: 1,
-    role: droptimizer.simbot.meta.role,
+    // Temporary solution
+    role: droptimizer.simbot.meta.role || "DPS",
     charClass: droptimizer.simbot.meta.charClass,
     blizzardId:
       droptimizer.simbot.meta.player.toLowerCase() +

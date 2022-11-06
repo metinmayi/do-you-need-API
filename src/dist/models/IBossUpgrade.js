@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.IBossUpgrade = void 0;
 class IBossUpgrade {
-    constructor() {
+    constructor(bossName, characterId) {
         this.boss_name = "";
         this.character_id = "";
         this.head = null;
@@ -20,6 +20,8 @@ class IBossUpgrade {
         this.main_hand = null;
         this.one_hand = null;
         this.off_hand = null;
+        this.boss_name = bossName;
+        this.character_id = characterId;
     }
 }
 exports.IBossUpgrade = IBossUpgrade;

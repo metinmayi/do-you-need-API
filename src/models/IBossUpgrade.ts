@@ -16,4 +16,8 @@ export class IBossUpgrade {
   main_hand = null;
   one_hand = null;
   off_hand = null;
+  constructor(bossName: string, characterId: string) {
+    this.boss_name = bossName;
+    this.character_id = characterId;
+  }
 }

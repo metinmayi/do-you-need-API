@@ -5,21 +5,22 @@ class IBossUpgrade {
     constructor(bossName, characterId) {
         this.boss_name = "";
         this.character_id = "";
-        this.head = null;
-        this.shoulder = null;
-        this.chest = null;
-        this.wrist = null;
-        this.hands = null;
-        this.waist = null;
-        this.legs = null;
-        this.feet = null;
-        this.neck = null;
-        this.back = null;
-        this.finger = null;
-        this.trinket = null;
-        this.main_hand = null;
-        this.one_hand = null;
-        this.off_hand = null;
+        this.head = "";
+        this.shoulder = "";
+        this.chest = "";
+        this.wrist = "";
+        this.hands = "";
+        this.waist = "";
+        this.legs = "";
+        this.feet = "";
+        this.neck = "";
+        this.back = "";
+        this.finger = "";
+        this.trinket = "";
+        this.main_hand = "";
+        this.one_hand = "";
+        this.off_hand = "";
+        this.id = "";
         this.boss_name = bossName;
         this.character_id = characterId;
     }

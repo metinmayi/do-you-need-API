@@ -19,11 +19,6 @@ function getBestUpgradesPerSlot(positiveUpgrades, droptimizer) {
         if (!bossName) {
             continue;
         }
-        // First entry for a new boss.
-        if (!bossMap.has(bossName)) {
-            bossMap.set(bossName, new Map([[slot, DPSupgrade]]));
-            continue;
-        }
         // Check for fingers
         if (slot === "finger1" || slot === "finger2") {
             slot = "finger";
@@ -31,6 +26,11 @@ function getBestUpgradesPerSlot(positiveUpgrades, droptimizer) {
         // Check for trinkets
         if (slot === "trinket1" || slot == "trinket2") {
             slot = "trinket";
+        }
+        // First entry for a new boss.
+        if (!bossMap.has(bossName)) {
+            bossMap.set(bossName, new Map([[slot, DPSupgrade]]));
+            continue;
         }
         // First entry for the slot in the boss
         if (!bossMap.get(bossName).has(slot)) {

@@ -33,7 +33,6 @@ function dbAddBossUpgrades(characterID, bestUpgradesPerSlot, meanDPS) {
             const upgrade = Math.round(value);
             return `${percentageUpgrade}% (${upgrade})`;
         });
-        debugger;
         yield database_1.pool.execute(SQL, values);
     });
 }

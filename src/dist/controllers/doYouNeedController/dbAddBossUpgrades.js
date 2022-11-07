@@ -18,7 +18,7 @@ const IBossUpgrade_1 = require("../../models/IBossUpgrade");
  * @param characterID The character's ID. Consists of name-server
  * @param bestUpgradesPerSlot An array [bossName, arrayOfUpgrades]
  */
-function dbAddBossUpgrades(characterID, bestUpgradesPerSlot) {
+function dbAddBossUpgrades(characterID, bestUpgradesPerSlot, meanDPS) {
     return __awaiter(this, void 0, void 0, function* () {
         const [bossName, upgrades] = bestUpgradesPerSlot;
         const SQL = "INSERT INTO boss_upgrades() VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -26,8 +26,14 @@ function dbAddBossUpgrades(characterID, bestUpgradesPerSlot) {
         const currentUpgrades = Object.fromEntries(upgrades);
         const mergedUpgrades = Object.assign(defaultUpgrades, currentUpgrades);
         const values = Object.values(mergedUpgrades).map((value) => {
-            return typeof value !== "number" ? value : Math.round(value).toString();
+            if (typeof value !== "number") {
+                return value;
+            }
+            const percentageUpgrade = ((value / meanDPS) * 100).toFixed(1);
+            const upgrade = Math.round(value);
+            return `${percentageUpgrade}% (${upgrade})`;
         });
+        debugger;
         yield database_1.pool.execute(SQL, values);
     });
 }

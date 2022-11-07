@@ -9,7 +9,8 @@ import { IBossUpgrade } from "../../models/IBossUpgrade";
  */
 export async function dbAddBossUpgrades(
   characterID: string,
-  bestUpgradesPerSlot: [any, any]
+  bestUpgradesPerSlot: [any, any],
+  meanDPS: number
 ) {
   const [bossName, upgrades] = bestUpgradesPerSlot;
   const SQL =
@@ -19,7 +20,12 @@ export async function dbAddBossUpgrades(
   const currentUpgrades = Object.fromEntries(upgrades);
   const mergedUpgrades = Object.assign(defaultUpgrades, currentUpgrades);
   const values = Object.values(mergedUpgrades).map((value) => {
-    return typeof value !== "number" ? value : Math.round(value).toString();
+    if (typeof value !== "number") {
+      return value;
+    }
+    const percentageUpgrade = ((value / meanDPS) * 100).toFixed(1);
+    const upgrade = Math.round(value);
+    return `${percentageUpgrade}% (${upgrade})`;
   });
   await pool.execute(SQL, values);
 }

@@ -21,7 +21,7 @@ DoYouNeedRouter.post("/addCharacterUpgrades", addCharacterUpgrades);
 /**
  * Route for getting playerUpgrades from the database
  */
-DoYouNeedRouter.post("/addCharacterUpgrades", getCharacterUpgrades);
+DoYouNeedRouter.get("/getCharacterUpgrades", getCharacterUpgrades);
 
 /**
  * Route for adding a guild to a user's guilds.

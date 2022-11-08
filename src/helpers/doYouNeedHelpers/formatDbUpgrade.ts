@@ -5,7 +5,7 @@ import { bossLoot } from "../../constants/bossLoot";
  * @param upgrades Array of upgrades from the DB.
  * @returns Array of upgrades formatted to client needs.
  */
-export async function formatDbUpgrade(upgrades: any[], bossName: string) {
+export function formatDbUpgrade(upgrades: any[], bossName: string) {
   const formattedUpgrades = upgrades.map((upgrade: any) => {
     const upgradeObject = {
       id: upgrade.id,

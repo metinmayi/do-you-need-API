@@ -14,6 +14,12 @@ const formatDbUpgrade_1 = require("../../helpers/doYouNeedHelpers/formatDbUpgrad
 const isArray_1 = require("../../helpers/doYouNeedHelpers/isArray");
 const getCharacterUpgradeValidation_1 = require("../../validations/doYouNeedValidation/getCharacterUpgradeValidation");
 const dbGetBossUpgrade_1 = require("./dbGetBossUpgrade");
+/**
+ * Gets all boss_upgrades from characters of the specified guild
+ * @param req Express request
+ * @param res Express response
+ * @returns {void}
+ */
 function getCharacterUpgrades(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -22,8 +28,6 @@ function getCharacterUpgrades(req, res) {
                 return res.status(400);
             }
             const { guildId, bossName } = validation.data;
-            // could swap req.body.guild with other info
-            debugger;
             const characterUpgrades = yield (0, dbGetBossUpgrade_1.dbGetBossUpgrade)(guildId, bossName);
             if (!(0, isArray_1.isArray)(characterUpgrades)) {
                 return res.status(200).json([]);

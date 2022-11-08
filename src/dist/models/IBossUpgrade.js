@@ -20,7 +20,6 @@ class IBossUpgrade {
         this.main_hand = "";
         this.one_hand = "";
         this.off_hand = "";
-        this.id = "";
         this.boss_name = bossName;
         this.character_id = characterId;
     }

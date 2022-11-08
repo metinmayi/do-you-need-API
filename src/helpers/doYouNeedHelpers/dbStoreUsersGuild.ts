@@ -12,6 +12,6 @@ export async function dbStoreUserGuild(
   userRank: number
 ) {
   const SQL =
-    "INSERT INTO user_guilds(blizzard_id, user_id, user_rank) VALUES(?, ?, ?)";
+    "INSERT INTO user_guilds(blizzard_guild_id, user_id, user_rank) VALUES(?, ?, ?)";
   await pool.execute(SQL, [guildID, userId, userRank]);
 }

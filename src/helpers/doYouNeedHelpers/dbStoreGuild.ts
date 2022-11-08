@@ -9,7 +9,7 @@ import { GuildModel } from "../../mongoose/schemas/GuildSchema";
  */
 export async function dbStoreGuild(guild: IGuild) {
   const SQL =
-    "INSERT INTO guilds (blizzard_id, name, realm, license, faction) VALUES (?, ?, ?, ?, ?)";
+    "INSERT INTO guilds (blizzard_guild_id, name, realm, license, faction) VALUES (?, ?, ?, ?, ?)";
   const result = pool.execute(SQL, [
     guild.blizzard_id,
     guild.name,

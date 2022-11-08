@@ -18,7 +18,7 @@ const database_1 = require("../../database/database");
  */
 function dbStoreGuild(guild) {
     return __awaiter(this, void 0, void 0, function* () {
-        const SQL = "INSERT INTO guilds (blizzard_id, name, realm, license, faction) VALUES (?, ?, ?, ?, ?)";
+        const SQL = "INSERT INTO guilds (blizzard_guild_id, name, realm, license, faction) VALUES (?, ?, ?, ?, ?)";
         const result = database_1.pool.execute(SQL, [
             guild.blizzard_id,
             guild.name,

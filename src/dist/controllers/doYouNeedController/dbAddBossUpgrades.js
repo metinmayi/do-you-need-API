@@ -18,10 +18,10 @@ const IBossUpgrade_1 = require("../../models/IBossUpgrade");
  * @param characterID The character's ID. Consists of name-server
  * @param bestUpgradesPerSlot An array [bossName, arrayOfUpgrades]
  */
-function dbAddBossUpgrades(characterID, bestUpgradesPerSlot, meanDPS, blizzardGuildId) {
+function dbAddBossUpgrades(characterID, bestUpgradesPerSlot, meanDPS) {
     return __awaiter(this, void 0, void 0, function* () {
         const [bossName, upgrades] = bestUpgradesPerSlot;
-        const SQL = "INSERT INTO boss_upgrades(boss_name, character_id, head, shoulder, chest, wrist, hands, waist, legs, feet, neck, back, finger, trinket, main_hand, one_hand, off_hand, blizzard_guild_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) AS new ON DUPLICATE KEY UPDATE boss_name=new.boss_name, character_id=new.character_id, head=new.head, shoulder=new.shoulder, chest=new.chest, wrist=new.wrist, hands=new.hands, waist=new.waist, legs=new.legs, feet=new.feet, neck=new.neck, back=new.back, finger=new.finger, trinket=new.trinket, main_hand=new.main_hand, one_hand=new.one_hand, off_hand=new.off_hand, blizzard_guild_id = new.blizzard_guild_id";
+        const SQL = "INSERT INTO boss_upgrades(boss_name, character_id, head, shoulder, chest, wrist, hands, waist, legs, feet, neck, back, finger, trinket, main_hand, one_hand, off_hand) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) AS new ON DUPLICATE KEY UPDATE boss_name=new.boss_name, character_id=new.character_id, head=new.head, shoulder=new.shoulder, chest=new.chest, wrist=new.wrist, hands=new.hands, waist=new.waist, legs=new.legs, feet=new.feet, neck=new.neck, back=new.back, finger=new.finger, trinket=new.trinket, main_hand=new.main_hand, one_hand=new.one_hand, off_hand=new.off_hand";
         const defaultUpgrades = new IBossUpgrade_1.IBossUpgrade(bossName, characterID);
         const currentUpgrades = Object.fromEntries(upgrades);
         const mergedUpgrades = Object.assign(defaultUpgrades, currentUpgrades);
@@ -33,7 +33,6 @@ function dbAddBossUpgrades(characterID, bestUpgradesPerSlot, meanDPS, blizzardGu
             const upgrade = Math.round(value);
             return `${percentageUpgrade}% (${upgrade})`;
         });
-        values.push(blizzardGuildId);
         yield database_1.pool.execute(SQL, values);
     });
 }

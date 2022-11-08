@@ -45,7 +45,7 @@ const addCharacterUpgrades = (req, res) => __awaiter(void 0, void 0, void 0, fun
         const bestUpgradesPerSlot = (0, getBestUpgradesPerSlot_1.getBestUpgradesPerSlot)(positiveUpgrades, droptimizer);
         const meanDPS = droptimizer.sim.statistics.raid_dps.mean;
         for (const upgrade of bestUpgradesPerSlot) {
-            yield (0, dbAddBossUpgrades_1.dbAddBossUpgrades)(character.blizzardId, upgrade, meanDPS, validation.data.guild.blizzard_guild_id);
+            yield (0, dbAddBossUpgrades_1.dbAddBossUpgrades)(character.blizzardId, upgrade, meanDPS);
         }
         res.sendStatus(200);
     }

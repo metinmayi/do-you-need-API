@@ -43,12 +43,7 @@ export const addCharacterUpgrades = async (req: Request, res: Response) => {
 
     const meanDPS = droptimizer.sim.statistics.raid_dps.mean;
     for (const upgrade of bestUpgradesPerSlot) {
-      await dbAddBossUpgrades(
-        character.blizzardId,
-        upgrade,
-        meanDPS,
-        validation.data.guild.blizzard_guild_id
-      );
+      await dbAddBossUpgrades(character.blizzardId, upgrade, meanDPS);
     }
 
     res.sendStatus(200);

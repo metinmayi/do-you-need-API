@@ -18,7 +18,7 @@ const database_1 = require("../../database/database");
  */
 function dbGetUserGuilds(userId) {
     return __awaiter(this, void 0, void 0, function* () {
-        const SQL = "SELECT blizzard_guild_id, name, realm, license, faction FROM guilds WHERE blizzard_id=(SELECT blizzard_id FROM user_guilds WHERE user_id=?)";
+        const SQL = "SELECT blizzard_guild_id, name, realm, license, faction FROM guilds WHERE blizzard_guild_id=(SELECT blizzard_guild_id FROM user_guilds WHERE user_id=?)";
         const guilds = yield database_1.pool.execute(SQL, [userId]);
         return guilds[0];
     });

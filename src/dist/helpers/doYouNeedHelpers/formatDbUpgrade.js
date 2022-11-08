@@ -16,16 +16,21 @@ function formatDbUpgrade(upgrades, bossName) {
             name: upgrade.name,
             role: upgrade.role,
             class: upgrade.class,
-            upgrades: [""],
+            upgrades: [],
         };
         const bossDrops = bossLoot_1.bossLoot[bossName];
+        let upgradeCount = 0;
         bossDrops.forEach((bossDrop) => {
             let incomingUpgrade = upgrade[bossDrop];
             if (!incomingUpgrade) {
                 incomingUpgrade = "-";
             }
+            else {
+                upgradeCount++;
+            }
             upgradeObject.upgrades.push(incomingUpgrade);
         });
+        upgradeObject.upgrades.push(upgradeCount.toString());
         return upgradeObject;
     });
     return formattedUpgrades;

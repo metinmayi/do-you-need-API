@@ -1,5 +1,5 @@
 export interface IGuild {
-  blizzard_id: string;
+  blizzard_guild_id: string;
   name: string;
   realm: string;
   license: string;
@@ -9,7 +9,7 @@ export interface IGuild {
 export function isIGuild(object: any): object is IGuild {
   if (typeof object !== "object" || !object) return false;
   return (
-    typeof object.blizzard_id === "string" &&
+    typeof object.blizzard_guild_id === "string" &&
     typeof object.name === "string" &&
     typeof object.realm === "string" &&
     typeof object.license === "string" &&

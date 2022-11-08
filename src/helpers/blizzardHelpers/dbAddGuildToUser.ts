@@ -15,5 +15,5 @@ export async function dbAddGuildToUser(
 ) {
   const SQL =
     "INSERT INTO user_guilds(blizzard_guild_id, user_id, user_rank) VALUES(?, ?, ?)";
-  await pool.execute(SQL, [guild.blizzard_id, userID, playerRank]);
+  await pool.execute(SQL, [guild.blizzard_guild_id, userID, playerRank]);
 }

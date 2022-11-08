@@ -4,7 +4,7 @@ exports.zValidateAddGuildToUser = void 0;
 const zod_1 = require("zod");
 const zAddGuildToUserSchema = zod_1.z.lazy(() => zod_1.z.object({
     guild: zod_1.z.object({
-        blizzard_id: zod_1.z.string(),
+        blizzard_guild_id: zod_1.z.string(),
         name: zod_1.z.string(),
         realm: zod_1.z.string(),
         license: zod_1.z.string(),

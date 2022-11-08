@@ -51,7 +51,7 @@ export async function registerGuild(req: Request, res: Response) {
 
     const iGuild = constructGuild(guildInformation);
     await dbStoreGuild(iGuild);
-    await dbStoreUserGuild(iGuild.blizzard_id, req.user?.id, 0);
+    await dbStoreUserGuild(iGuild.blizzard_guild_id, req.user?.id, 0);
 
     return res.status(200).json("Success");
   } catch (error: any) {

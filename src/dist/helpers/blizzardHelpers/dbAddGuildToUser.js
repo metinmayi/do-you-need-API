@@ -20,7 +20,7 @@ const database_1 = require("../../database/database");
 function dbAddGuildToUser(userID, guild, playerRank = 3) {
     return __awaiter(this, void 0, void 0, function* () {
         const SQL = "INSERT INTO user_guilds(blizzard_guild_id, user_id, user_rank) VALUES(?, ?, ?)";
-        yield database_1.pool.execute(SQL, [guild.blizzard_id, userID, playerRank]);
+        yield database_1.pool.execute(SQL, [guild.blizzard_guild_id, userID, playerRank]);
     });
 }
 exports.dbAddGuildToUser = dbAddGuildToUser;

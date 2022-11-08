@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.constructGuild = void 0;
 function constructGuild(guildInformation) {
     const guild = {
-        blizzard_id: guildInformation.id.toString(),
+        blizzard_guild_id: guildInformation.id.toString(),
         name: guildInformation.name,
         realm: guildInformation.realm.slug,
         license: "standard",

@@ -9,7 +9,7 @@ interface IAddGuildToUser {
 const zAddGuildToUserSchema: z.ZodType<IAddGuildToUser> = z.lazy(() =>
   z.object({
     guild: z.object({
-      blizzard_id: z.string(),
+      blizzard_guild_id: z.string(),
       name: z.string(),
       realm: z.string(),
       license: z.string(),

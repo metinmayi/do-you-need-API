@@ -11,7 +11,7 @@ export async function dbStoreGuild(guild: IGuild) {
   const SQL =
     "INSERT INTO guilds (blizzard_guild_id, name, realm, license, faction) VALUES (?, ?, ?, ?, ?)";
   const result = pool.execute(SQL, [
-    guild.blizzard_id,
+    guild.blizzard_guild_id,
     guild.name,
     guild.realm,
     guild.license,

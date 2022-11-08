@@ -15,11 +15,19 @@ const database_1 = require("../../database/database");
  * Adds a new character to the character table in the DB.
  * @param {ICharacter} character The character
  */
-function dbAddCharacter(character) {
+function dbAddCharacter(character, guildID) {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log(guildID);
         const { selected, name, charClass, role, blizzardId } = character;
-        const SQL = "INSERT INTO characters(selected, name, class, role, blizzard_id) VALUES(?,?,?,?,?) ON DUPLICATE KEY UPDATE name=name";
-        yield database_1.pool.execute(SQL, [selected, name, charClass, role, blizzardId]);
+        const SQL = "INSERT INTO characters(selected, name, class, role, character_id, blizzard_guild_id) VALUES(?,?,?,?,?, ?) ON DUPLICATE KEY UPDATE name=name";
+        yield database_1.pool.execute(SQL, [
+            selected,
+            name,
+            charClass,
+            role,
+            blizzardId,
+            guildID,
+        ]);
     });
 }
 exports.dbAddCharacter = dbAddCharacter;

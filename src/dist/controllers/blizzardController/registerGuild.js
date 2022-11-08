@@ -52,7 +52,7 @@ function registerGuild(req, res) {
             }
             const iGuild = (0, constructGuild_1.constructGuild)(guildInformation);
             yield (0, dbStoreGuild_1.dbStoreGuild)(iGuild);
-            yield (0, dbStoreUsersGuild_1.dbStoreUserGuild)(iGuild.blizzard_id, (_b = req.user) === null || _b === void 0 ? void 0 : _b.id, 0);
+            yield (0, dbStoreUsersGuild_1.dbStoreUserGuild)(iGuild.blizzard_guild_id, (_b = req.user) === null || _b === void 0 ? void 0 : _b.id, 0);
             return res.status(200).json("Success");
         }
         catch (error) {

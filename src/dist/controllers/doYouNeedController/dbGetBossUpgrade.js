@@ -19,7 +19,7 @@ const database_1 = require("../../database/database");
  */
 function dbGetBossUpgrade(guildID, bossName) {
     return __awaiter(this, void 0, void 0, function* () {
-        const SQL = `SELECT c.character_id as id, selected, boss_name, name, role, class, head, shoulder, chest, wrist, hands, waist, legs, feet, neck, back, finger, trinket, main_hand, one_hand, off_hand
+        const SQL = `SELECT c.character_id as id, selected, boss_name, name, role, class, back,chest,feet,finger,hands,head,legs,main_hand,neck,off_hand,one_hand,shoulder,trinket,waist,wrist
     FROM characters c
     JOIN boss_upgrades bu ON bu.character_id = c.character_id 
     WHERE c.blizzard_guild_id = ? and bu.boss_name = ?;`;

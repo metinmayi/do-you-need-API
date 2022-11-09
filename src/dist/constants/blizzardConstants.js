@@ -1,11 +1,18 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CLASS_NAME_TO_COLOR = exports.CLASS_ID_TO_NAME = exports.WOW_SCOPE = exports.WOW_REGION = exports.SYNC_URL = exports.REDIRECT_URI = exports.CHECK_TOKEN_URL = exports.GET_TOKEN_URL = exports.AUTHORIZE_URL = exports.BASE_URL = void 0;
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 /**
  * Base URL for the domain
  */
-// export const BASE_URL = "http://localhost:8000";
-exports.BASE_URL = "https://dynexperiment.herokuapp.com";
+exports.BASE_URL = process.env.ENVIRONMENT === "dev"
+    ? "http://localhost:8000"
+    : "https://dynexperiment.herokuapp.com";
+console.log(exports.BASE_URL);
 /**
  * API Endpoint for Authorization - Oauth 2.0
  */
@@ -25,7 +32,9 @@ exports.REDIRECT_URI = `${exports.BASE_URL}/blizzard/authenticateCallback`;
 /**
  * The URL to send back a user to after finishing blizzard authentication
  */
-exports.SYNC_URL = `https://doyouneed.netlify.app/synchronize`;
+exports.SYNC_URL = process.env.ENVIRONMENT === "dev"
+    ? "http://localhost:8000/synchronize"
+    : `https://doyouneed.netlify.app/synchronize`;
 /**
  * World of Warcraft Region
  */

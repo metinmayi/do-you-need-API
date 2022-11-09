@@ -34,10 +34,11 @@ app.use((0, express_session_1.default)({
     store,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24,
-        sameSite: "none",
-        secure: true,
+        sameSite: process.env.ENVIRONMENT === "dev" ? "lax" : "none",
+        secure: process.env.ENVIRONMENT === "dev" ? false : true,
     },
 }));
+console.log(process.env.ENVIRONMENT);
 app.use(passport_1.default.initialize());
 app.use(passport_1.default.session());
 // Routes

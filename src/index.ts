@@ -36,11 +36,12 @@ app.use(
     store,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24,
-      sameSite: "none",
-      secure: true,
+      sameSite: process.env.ENVIRONMENT === "dev" ? "lax" : "none",
+      secure: process.env.ENVIRONMENT === "dev" ? false : true,
     },
   })
 );
+console.log(process.env.ENVIRONMENT);
 app.use(passport.initialize());
 app.use(passport.session());
 

@@ -4,7 +4,8 @@ exports.CLASS_NAME_TO_COLOR = exports.CLASS_ID_TO_NAME = exports.WOW_SCOPE = exp
 /**
  * Base URL for the domain
  */
-exports.BASE_URL = "http://localhost:8000";
+// export const BASE_URL = "http://localhost:8000";
+exports.BASE_URL = "https://dynexperiment.herokuapp.com/";
 /**
  * API Endpoint for Authorization - Oauth 2.0
  */

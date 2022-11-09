@@ -13,7 +13,6 @@ const express_mysql_session_1 = __importDefault(require("express-mysql-session")
 const passport_1 = __importDefault(require("passport"));
 const BlizzardRouter_1 = __importDefault(require("./routes/BlizzardRouter"));
 const isAuthenticated_1 = require("./middleware/isAuthenticated");
-require("./mongoose/mongoose");
 const database_1 = require("./database/database");
 dotenv_1.default.config();
 const store = new express_mysql_session_1.default(database_1.DATABASE_OPTIONS, database_1.pool);
@@ -38,7 +37,6 @@ app.use((0, express_session_1.default)({
         secure: process.env.ENVIRONMENT === "dev" ? false : true,
     },
 }));
-console.log(process.env.ENVIRONMENT);
 app.use(passport_1.default.initialize());
 app.use(passport_1.default.session());
 // Routes

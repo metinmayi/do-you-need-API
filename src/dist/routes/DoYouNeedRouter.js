@@ -12,7 +12,6 @@ const addCharacterUpgrades_1 = require("../controllers/doYouNeedController/addCh
 const addGuildToUser_1 = require("../controllers/doYouNeedController/addGuildToUser");
 const deleteCharacterUpgrade_1 = require("../controllers/doYouNeedController/deleteCharacterUpgrade");
 const getCharacterUpgrades_1 = require("../controllers/doYouNeedController/getCharacterUpgrades");
-const getGuildCharacters_1 = require("../controllers/doYouNeedController/getGuildCharacters");
 const toggleCharacterUpgrade_1 = require("../controllers/doYouNeedController/toggleCharacterUpgrade");
 DoYouNeedRouter.get("/", (req, res) => {
     res.send("Reached DoYouNeedRouter");
@@ -37,8 +36,4 @@ DoYouNeedRouter.post("/toggleCharacterSelected", toggleCharacterUpgrade_1.toggle
  * Route for adding a guild to a user's guilds.
  */
 DoYouNeedRouter.post("/addGuildToUser", addGuildToUser_1.addGuildToUser);
-/**
- * Gets player information from a boss table
- */
-DoYouNeedRouter.post("/getGuildCharacters", getGuildCharacters_1.getGuildCharacterUpgrades);
 exports.default = DoYouNeedRouter;

@@ -1,6 +1,5 @@
 import { pool } from "../../database/database";
 import { IGuild } from "../../models/IGuild";
-import { UserModel } from "../../mongoose/schemas/UserSchema";
 
 /**
  * Inserts a guild to the list of player's guilds.

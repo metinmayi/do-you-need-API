@@ -8,7 +8,6 @@ import { addCharacterUpgrades } from "../controllers/doYouNeedController/addChar
 import { addGuildToUser } from "../controllers/doYouNeedController/addGuildToUser";
 import { deleteCharacterUpgrade } from "../controllers/doYouNeedController/deleteCharacterUpgrade";
 import { getCharacterUpgrades } from "../controllers/doYouNeedController/getCharacterUpgrades";
-import { getGuildCharacterUpgrades } from "../controllers/doYouNeedController/getGuildCharacters";
 import { toggleCharacterSelected } from "../controllers/doYouNeedController/toggleCharacterUpgrade";
 
 DoYouNeedRouter.get("/", (req: Request, res: Response) => {
@@ -40,8 +39,4 @@ DoYouNeedRouter.post("/toggleCharacterSelected", toggleCharacterSelected);
  */
 DoYouNeedRouter.post("/addGuildToUser", addGuildToUser);
 
-/**
- * Gets player information from a boss table
- */
-DoYouNeedRouter.post("/getGuildCharacters", getGuildCharacterUpgrades);
 export default DoYouNeedRouter;

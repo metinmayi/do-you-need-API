@@ -8,7 +8,6 @@ import MySQLSessionStore from "express-mysql-session";
 import passport from "passport";
 import BlizzardRouter from "./routes/BlizzardRouter";
 import { isAuthenticated } from "./middleware/isAuthenticated";
-import "./mongoose/mongoose";
 import { DATABASE_OPTIONS, pool } from "./database/database";
 
 dotenv.config();
@@ -41,7 +40,7 @@ app.use(
     },
   })
 );
-console.log(process.env.ENVIRONMENT);
+
 app.use(passport.initialize());
 app.use(passport.session());
 

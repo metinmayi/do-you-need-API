@@ -27,7 +27,7 @@ export const REDIRECT_URI = `${BASE_URL}/blizzard/authenticateCallback`;
 /**
  * The URL to send back a user to after finishing blizzard authentication
  */
-export const SYNC_URL = `${BASE_URL}/synchronize`;
+export const SYNC_URL = `https://doyouneed.netlify.app/synchronize`;
 /**
  * World of Warcraft Region
  */

@@ -1,3 +1,4 @@
+import { specRoles } from "../../constants/specRoles";
 import { ICharacter } from "../../models/doYouNeed/ICharacter";
 import { RaidbotsDroptimizer } from "../../models/raidbots/RaidbotsDroptimizer";
 
@@ -9,8 +10,7 @@ import { RaidbotsDroptimizer } from "../../models/raidbots/RaidbotsDroptimizer";
 export function constructCharacter(droptimizer: RaidbotsDroptimizer) {
   const character: ICharacter = {
     name: droptimizer.simbot.meta.player.toLowerCase(),
-    // Temporary solution
-    role: droptimizer.simbot.meta.role || "DPS",
+    role: specRoles[droptimizer.simbot.meta.spec] || "DPS",
     charClass: droptimizer.simbot.meta.charClass,
     blizzardId:
       droptimizer.simbot.meta.player.toLowerCase() +

@@ -10,6 +10,7 @@ const express_1 = __importDefault(require("express"));
 const DoYouNeedRouter = express_1.default.Router();
 const addCharacterUpgrades_1 = require("../controllers/doYouNeedController/addCharacterUpgrades");
 const addGuildToUser_1 = require("../controllers/doYouNeedController/addGuildToUser");
+const deleteCharacterUpgrade_1 = require("../controllers/doYouNeedController/deleteCharacterUpgrade");
 const getCharacterUpgrades_1 = require("../controllers/doYouNeedController/getCharacterUpgrades");
 const getGuildCharacters_1 = require("../controllers/doYouNeedController/getGuildCharacters");
 DoYouNeedRouter.get("/", (req, res) => {
@@ -23,6 +24,10 @@ DoYouNeedRouter.post("/addCharacterUpgrades", addCharacterUpgrades_1.addCharacte
  * Route for getting playerUpgrades from the database
  */
 DoYouNeedRouter.post("/getCharacterUpgrades", getCharacterUpgrades_1.getCharacterUpgrades);
+/**
+ * Route for removing a character upgrade
+ */
+DoYouNeedRouter.post("/deleteCharacterUpgrade", deleteCharacterUpgrade_1.deleteCharacterUpgrade);
 /**
  * Route for adding a guild to a user's guilds.
  */

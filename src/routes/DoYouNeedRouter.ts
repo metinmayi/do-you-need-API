@@ -6,6 +6,7 @@ const DoYouNeedRouter = express.Router();
 import { Request, Response } from "express";
 import { addCharacterUpgrades } from "../controllers/doYouNeedController/addCharacterUpgrades";
 import { addGuildToUser } from "../controllers/doYouNeedController/addGuildToUser";
+import { deleteCharacterUpgrade } from "../controllers/doYouNeedController/deleteCharacterUpgrade";
 import { getCharacterUpgrades } from "../controllers/doYouNeedController/getCharacterUpgrades";
 import { getGuildCharacterUpgrades } from "../controllers/doYouNeedController/getGuildCharacters";
 
@@ -23,6 +24,10 @@ DoYouNeedRouter.post("/addCharacterUpgrades", addCharacterUpgrades);
  */
 DoYouNeedRouter.post("/getCharacterUpgrades", getCharacterUpgrades);
 
+/**
+ * Route for removing a character upgrade
+ */
+DoYouNeedRouter.post("/deleteCharacterUpgrade", deleteCharacterUpgrade);
 /**
  * Route for adding a guild to a user's guilds.
  */

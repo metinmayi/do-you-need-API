@@ -9,8 +9,6 @@ export const BASE_URL =
     ? "http://localhost:8000"
     : "https://dynexperiment.herokuapp.com";
 
-console.log(BASE_URL);
-
 /**
  * API Endpoint for Authorization - Oauth 2.0
  */
@@ -36,7 +34,7 @@ export const REDIRECT_URI = `${BASE_URL}/blizzard/authenticateCallback`;
  */
 export const SYNC_URL =
   process.env.ENVIRONMENT === "dev"
-    ? "http://localhost:8000/synchronize"
+    ? "http://localhost:3000/synchronize"
     : `https://doyouneed.netlify.app/synchronize`;
 
 /**

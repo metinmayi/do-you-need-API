@@ -13,12 +13,12 @@
     "@types/express-mysql-session": "^2.1.3",
     "@types/node": "^18.0.0",
     "@types/passport-local": "^1.0.34",
-    "express-mysql-session": "^2.1.8",
     "nodemon": "^2.0.19",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.4"
   },
   "dependencies": {
+    "express-mysql-session": "^2.1.8",
     "@types/bcryptjs": "^2.4.2",
     "@types/express-session": "^1.17.5",
     "@types/passport": "^1.0.10",

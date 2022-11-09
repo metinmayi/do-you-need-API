@@ -1,5 +1,4 @@
 import { ICharacter } from "../../models/doYouNeed/ICharacter";
-import { ICharacterUpgrades } from "../../models/doYouNeed/ICharacterUpgrades";
 import { RaidbotsDroptimizer } from "../../models/raidbots/RaidbotsDroptimizer";
 
 /**
@@ -10,7 +9,6 @@ import { RaidbotsDroptimizer } from "../../models/raidbots/RaidbotsDroptimizer";
 export function constructCharacter(droptimizer: RaidbotsDroptimizer) {
   const character: ICharacter = {
     name: droptimizer.simbot.meta.player.toLowerCase(),
-    selected: 1,
     // Temporary solution
     role: droptimizer.simbot.meta.role || "DPS",
     charClass: droptimizer.simbot.meta.charClass,

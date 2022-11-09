@@ -9,7 +9,6 @@ exports.constructCharacter = void 0;
 function constructCharacter(droptimizer) {
     const character = {
         name: droptimizer.simbot.meta.player.toLowerCase(),
-        selected: 1,
         // Temporary solution
         role: droptimizer.simbot.meta.role || "DPS",
         charClass: droptimizer.simbot.meta.charClass,

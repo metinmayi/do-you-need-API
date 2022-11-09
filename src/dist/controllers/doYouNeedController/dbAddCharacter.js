@@ -17,16 +17,9 @@ const database_1 = require("../../database/database");
  */
 function dbAddCharacter(character, guildID) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { selected, name, charClass, role, blizzardId } = character;
-        const SQL = "INSERT INTO characters(selected, name, class, role, character_id, blizzard_guild_id) VALUES(?,?,?,?,?, ?) ON DUPLICATE KEY UPDATE name=name";
-        yield database_1.pool.execute(SQL, [
-            selected,
-            name,
-            charClass,
-            role,
-            blizzardId,
-            guildID,
-        ]);
+        const { name, charClass, role, blizzardId } = character;
+        const SQL = "INSERT INTO characters( name, class, role, character_id, blizzard_guild_id) VALUES(?,?,?,?, ?) ON DUPLICATE KEY UPDATE name=name";
+        yield database_1.pool.execute(SQL, [name, charClass, role, blizzardId, guildID]);
     });
 }
 exports.dbAddCharacter = dbAddCharacter;

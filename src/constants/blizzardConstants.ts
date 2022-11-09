@@ -2,7 +2,7 @@
  * Base URL for the domain
  */
 // export const BASE_URL = "http://localhost:8000";
-export const BASE_URL = "https://dynexperiment.herokuapp.com/";
+export const BASE_URL = "https://dynexperiment.herokuapp.com";
 
 /**
  * API Endpoint for Authorization - Oauth 2.0

@@ -15,6 +15,8 @@ dotenv.config();
 const store = new (MySQLSessionStore as any)(DATABASE_OPTIONS, pool);
 const app = express();
 
+app.set("trust proxy", 1);
+
 app.get("/", (req: Request, res: Response) => {
   res.sendStatus(200);
 });

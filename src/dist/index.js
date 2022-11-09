@@ -18,6 +18,7 @@ const database_1 = require("./database/database");
 dotenv_1.default.config();
 const store = new express_mysql_session_1.default(database_1.DATABASE_OPTIONS, database_1.pool);
 const app = (0, express_1.default)();
+app.set("trust proxy", 1);
 app.get("/", (req, res) => {
     res.sendStatus(200);
 });

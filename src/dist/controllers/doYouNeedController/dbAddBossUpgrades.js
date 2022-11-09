@@ -21,7 +21,7 @@ const IBossUpgrade_1 = require("../../models/IBossUpgrade");
 function dbAddBossUpgrades(characterID, bestUpgradesPerSlot, meanDPS) {
     return __awaiter(this, void 0, void 0, function* () {
         const [bossName, upgrades] = bestUpgradesPerSlot;
-        const SQL = "INSERT INTO boss_upgrades(boss_name, character_id, head, shoulder, chest, wrist, hands, waist, legs, feet, neck, back, finger, trinket, main_hand, one_hand, off_hand) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) AS new ON DUPLICATE KEY UPDATE boss_name=new.boss_name, character_id=new.character_id, head=new.head, shoulder=new.shoulder, chest=new.chest, wrist=new.wrist, hands=new.hands, waist=new.waist, legs=new.legs, feet=new.feet, neck=new.neck, back=new.back, finger=new.finger, trinket=new.trinket, main_hand=new.main_hand, one_hand=new.one_hand, off_hand=new.off_hand";
+        const SQL = "INSERT INTO boss_upgrades(boss_name, character_id, head, shoulder, chest, wrist, hands, waist, legs, feet, neck, back, finger, trinket, main_hand, one_hand, off_hand, selected) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) AS new ON DUPLICATE KEY UPDATE boss_name=new.boss_name, character_id=new.character_id, head=new.head, shoulder=new.shoulder, chest=new.chest, wrist=new.wrist, hands=new.hands, waist=new.waist, legs=new.legs, feet=new.feet, neck=new.neck, back=new.back, finger=new.finger, trinket=new.trinket, main_hand=new.main_hand, one_hand=new.one_hand, off_hand=new.off_hand, selected=new.selected";
         const defaultUpgrades = new IBossUpgrade_1.IBossUpgrade(bossName, characterID);
         const currentUpgrades = Object.fromEntries(upgrades);
         const mergedUpgrades = Object.assign(defaultUpgrades, currentUpgrades);
@@ -33,6 +33,7 @@ function dbAddBossUpgrades(characterID, bestUpgradesPerSlot, meanDPS) {
             const upgrade = Math.round(value);
             return `${percentageUpgrade}% (${upgrade})`;
         });
+        values.push(0);
         yield database_1.pool.execute(SQL, values);
     });
 }

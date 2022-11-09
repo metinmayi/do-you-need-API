@@ -13,6 +13,7 @@ const addGuildToUser_1 = require("../controllers/doYouNeedController/addGuildToU
 const deleteCharacterUpgrade_1 = require("../controllers/doYouNeedController/deleteCharacterUpgrade");
 const getCharacterUpgrades_1 = require("../controllers/doYouNeedController/getCharacterUpgrades");
 const getGuildCharacters_1 = require("../controllers/doYouNeedController/getGuildCharacters");
+const toggleCharacterUpgrade_1 = require("../controllers/doYouNeedController/toggleCharacterUpgrade");
 DoYouNeedRouter.get("/", (req, res) => {
     res.send("Reached DoYouNeedRouter");
 });
@@ -28,6 +29,10 @@ DoYouNeedRouter.post("/getCharacterUpgrades", getCharacterUpgrades_1.getCharacte
  * Route for removing a character upgrade
  */
 DoYouNeedRouter.post("/deleteCharacterUpgrade", deleteCharacterUpgrade_1.deleteCharacterUpgrade);
+/**
+ * Route for removing a character upgrade
+ */
+DoYouNeedRouter.post("/toggleCharacterSelected", toggleCharacterUpgrade_1.toggleCharacterSelected);
 /**
  * Route for adding a guild to a user's guilds.
  */

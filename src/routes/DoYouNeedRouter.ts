@@ -9,6 +9,7 @@ import { addGuildToUser } from "../controllers/doYouNeedController/addGuildToUse
 import { deleteCharacterUpgrade } from "../controllers/doYouNeedController/deleteCharacterUpgrade";
 import { getCharacterUpgrades } from "../controllers/doYouNeedController/getCharacterUpgrades";
 import { getGuildCharacterUpgrades } from "../controllers/doYouNeedController/getGuildCharacters";
+import { toggleCharacterSelected } from "../controllers/doYouNeedController/toggleCharacterUpgrade";
 
 DoYouNeedRouter.get("/", (req: Request, res: Response) => {
   res.send("Reached DoYouNeedRouter");
@@ -28,6 +29,12 @@ DoYouNeedRouter.post("/getCharacterUpgrades", getCharacterUpgrades);
  * Route for removing a character upgrade
  */
 DoYouNeedRouter.post("/deleteCharacterUpgrade", deleteCharacterUpgrade);
+
+/**
+ * Route for removing a character upgrade
+ */
+DoYouNeedRouter.post("/toggleCharacterSelected", toggleCharacterSelected);
+
 /**
  * Route for adding a guild to a user's guilds.
  */

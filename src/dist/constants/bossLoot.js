@@ -73,7 +73,7 @@ exports.bossLoot = {
         "finger",
         "trinket",
     ],
-    anduin_wrynn: ["chest", "neck", "ring", "ring", "trinket", "waist", "wrist"],
+    anduin_wrynn: ["chest", "neck", "ring", "trinket", "waist", "wrist"],
     lords_of_dread: [
         "back",
         "hands",

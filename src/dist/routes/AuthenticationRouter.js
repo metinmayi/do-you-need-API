@@ -24,9 +24,9 @@ AuthenticationRouter.post("/login", passport_1.default.authenticate("local", {
     failureRedirect: "badLogin",
 }));
 AuthenticationRouter.get("/isAuthenticated", (req, res, next) => {
-    if (req.isAuthenticated())
-        return res.status(200).json(req.user);
-    res.sendStatus(401);
+    if (!req.isAuthenticated())
+        return res.status(401);
+    res.redirect("goodLogin");
 });
 /**
  * Good Login

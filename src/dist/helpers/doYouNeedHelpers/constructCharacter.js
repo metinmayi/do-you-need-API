@@ -10,7 +10,6 @@ const specRoles_1 = require("../../constants/specRoles");
 function constructCharacter(droptimizer) {
     const character = {
         name: droptimizer.simbot.meta.player.toLowerCase(),
-        // Temporary solution
         role: specRoles_1.specRoles[droptimizer.simbot.meta.spec] || "DPS",
         charClass: droptimizer.simbot.meta.charClass,
         blizzardId: droptimizer.simbot.meta.player.toLowerCase() +

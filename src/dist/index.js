@@ -34,6 +34,7 @@ app.use((0, express_session_1.default)({
     cookie: {
         maxAge: 1000 * 60 * 60 * 24,
         sameSite: "none",
+        secure: true,
     },
 }));
 app.use(passport_1.default.initialize());

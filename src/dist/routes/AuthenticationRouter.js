@@ -11,6 +11,7 @@ require("../controllers/authenticationController/passport");
 const express_1 = __importDefault(require("express"));
 const goodLogin_1 = require("../controllers/authenticationController/goodLogin");
 const register_1 = require("../controllers/authenticationController/register");
+const logout_1 = require("../controllers/authenticationController/logout");
 const AuthenticationRouter = express_1.default.Router();
 /**
  * Register player
@@ -38,4 +39,5 @@ AuthenticationRouter.get("/goodLogin", goodLogin_1.goodLogin);
 AuthenticationRouter.get("/badLogin", (req, res, next) => {
     res.status(401).json({ message: "unauthorized" });
 });
+AuthenticationRouter.post("/logout", logout_1.logout);
 exports.default = AuthenticationRouter;

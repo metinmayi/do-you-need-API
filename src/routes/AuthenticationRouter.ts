@@ -6,6 +6,7 @@ import "../controllers/authenticationController/passport";
 import express from "express";
 import { goodLogin } from "../controllers/authenticationController/goodLogin";
 import { register } from "../controllers/authenticationController/register";
+import { logout } from "../controllers/authenticationController/logout";
 const AuthenticationRouter = express.Router();
 
 /**
@@ -40,5 +41,10 @@ AuthenticationRouter.get("/goodLogin", goodLogin);
 AuthenticationRouter.get("/badLogin", (req, res, next) => {
   res.status(401).json({ message: "unauthorized" });
 });
+
+/**
+ * Logout user from session
+ */
+AuthenticationRouter.post("/logout", logout);
 
 export default AuthenticationRouter;

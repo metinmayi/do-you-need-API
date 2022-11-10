@@ -46,7 +46,7 @@ async function registerGuild(req, res) {
     }
     catch (error) {
         res.sendStatus(500);
-        console.log(error);
+        console.log({ registerGuild: error });
     }
 }
 exports.registerGuild = registerGuild;

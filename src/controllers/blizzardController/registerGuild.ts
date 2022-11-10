@@ -56,6 +56,6 @@ export async function registerGuild(req: Request, res: Response) {
     return res.status(200).json("Success");
   } catch (error: any) {
     res.sendStatus(500);
-    console.log(error);
+    console.log({ registerGuild: error });
   }
 }

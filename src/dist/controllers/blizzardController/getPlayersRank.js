@@ -31,7 +31,7 @@ async function getPlayersRank(req, res) {
         res.status(200).json(response);
     }
     catch (error) {
-        console.log(error);
+        console.log({ getPLayersRank: error });
         res.status(500).send(error?.message);
     }
 }

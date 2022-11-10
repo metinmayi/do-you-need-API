@@ -13,7 +13,7 @@ const axios_1 = __importDefault(require("axios"));
  * @returns Information about the guild, received from Blizzard
  */
 async function getGuildInformation(realm, guildName, token) {
-    const formattedGuildName = guildName.replaceAll(" ", "%20");
+    const formattedGuildName = guildName.replaceAll(" ", "-");
     const response = await (0, axios_1.default)(`https://eu.api.blizzard.com/data/wow/guild/${realm}/${formattedGuildName.toLowerCase()}?namespace=profile-eu&locale=en_EU&access_token=${token}`);
     const guildInformation = response.data;
     return guildInformation;

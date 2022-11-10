@@ -19,8 +19,11 @@ const register = async (req, res) => {
         return res.status(200).send("Registration Complete");
     }
     catch (error) {
-        console.log("register_MYSQL_DEPRECATED" + error.sqlMessage);
-        res.status(500).send(error.sqlMessage || "Failed to query database");
+        console.log("register" + error.sqlMessage);
+        const status = error.message.includes("username") || error.message.includes("email")
+            ? 403
+            : 500;
+        res.sendStatus(status);
     }
 };
 exports.register = register;

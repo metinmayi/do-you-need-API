@@ -21,8 +21,12 @@ export const register = async (req: Request, res: Response) => {
     await pool.execute(sql, userValues);
     return res.status(200).send("Registration Complete");
   } catch (error: any) {
-    console.log("register_MYSQL_DEPRECATED" + error.sqlMessage);
-    res.status(500).send(error.sqlMessage || "Failed to query database");
+    console.log("register" + error.sqlMessage);
+    const status =
+      error.message.includes("username") || error.message.includes("email")
+        ? 403
+        : 500;
+    res.sendStatus(status);
   }
 };
 

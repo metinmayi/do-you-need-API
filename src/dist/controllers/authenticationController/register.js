@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -17,31 +8,31 @@ const registrationValidation_1 = require("../../validations/authenticationValida
 const database_1 = require("../../database/database");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const sql = "INSERT INTO users(username, password, email) VALUES (?, ?, ?)";
-const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const register = async (req, res) => {
     const isValid = (0, registrationValidation_1.registrationValidation)(req);
     if (!isValid.success) {
         return res.status(400).send(isValid.message);
     }
-    const userValues = yield getSqlValues(req);
+    const userValues = await getSqlValues(req);
     try {
-        yield database_1.pool.execute(sql, userValues);
+        await database_1.pool.execute(sql, userValues);
         return res.status(200).send("Registration Complete");
     }
     catch (error) {
         console.log("register_MYSQL_DEPRECATED" + error.sqlMessage);
         res.status(500).send(error.sqlMessage || "Failed to query database");
     }
-});
+};
 exports.register = register;
-const getSqlValues = (req) => __awaiter(void 0, void 0, void 0, function* () {
-    const hashedPassword = yield getHashedPassword(req.body.password);
+const getSqlValues = async (req) => {
+    const hashedPassword = await getHashedPassword(req.body.password);
     const name = req.body.username.toLowerCase();
     const password = hashedPassword;
     const email = req.body.email.toLowerCase();
     return [name, password, email];
-});
-const getHashedPassword = (password) => __awaiter(void 0, void 0, void 0, function* () {
-    const salt = yield bcryptjs_1.default.genSalt(10);
-    const hashedPassword = yield bcryptjs_1.default.hash(password, salt);
+};
+const getHashedPassword = async (password) => {
+    const salt = await bcryptjs_1.default.genSalt(10);
+    const hashedPassword = await bcryptjs_1.default.hash(password, salt);
     return hashedPassword;
-});
+};

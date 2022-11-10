@@ -13,6 +13,7 @@ export async function getGuildInformation(
   guildName: string,
   token: string
 ) {
+  const formattedGuildName = guildName.replaceAll(" ", "%20");
   const response = await axios(
     `https://eu.api.blizzard.com/data/wow/guild/${realm}/${guildName.toLowerCase()}?namespace=profile-eu&locale=en_EU&access_token=${token}`
   );

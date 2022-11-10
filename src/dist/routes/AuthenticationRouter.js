@@ -39,5 +39,8 @@ AuthenticationRouter.get("/goodLogin", goodLogin_1.goodLogin);
 AuthenticationRouter.get("/badLogin", (req, res, next) => {
     res.status(401).json({ message: "unauthorized" });
 });
+/**
+ * Logout user from session
+ */
 AuthenticationRouter.post("/logout", logout_1.logout);
 exports.default = AuthenticationRouter;

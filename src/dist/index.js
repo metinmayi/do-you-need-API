@@ -19,7 +19,8 @@ const store = new express_mysql_session_1.default(database_1.DATABASE_OPTIONS, d
 const app = (0, express_1.default)();
 app.set("trust proxy", 1);
 app.get("/", (req, res) => {
-    res.sendStatus(200);
+    console.log("ping");
+    res.send("Tjena Dennis");
 });
 app.use((0, cors_1.default)({
     credentials: true,
@@ -33,8 +34,8 @@ app.use((0, express_session_1.default)({
     store,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24,
-        sameSite: process.env.ENVIRONMENT === "dev" ? "lax" : "none",
-        secure: process.env.ENVIRONMENT === "dev" ? false : true,
+        sameSite: process.env.ENVIRONMENT === "dev" ? "lax" : "strict",
+        secure: process.env.ENVIRONMENT === "dev" ? false : false,
     },
 }));
 app.use(passport_1.default.initialize());

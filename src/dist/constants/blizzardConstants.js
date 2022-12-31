@@ -9,9 +9,7 @@ dotenv_1.default.config();
 /**
  * Base URL for the domain
  */
-exports.BASE_URL = process.env.ENVIRONMENT === "dev"
-    ? "http://localhost:8000"
-    : "https://dynexperiment.herokuapp.com";
+exports.BASE_URL = "http://188.149.186.0:8000";
 /**
  * API Endpoint for Authorization - Oauth 2.0
  */
@@ -31,9 +29,7 @@ exports.REDIRECT_URI = `${exports.BASE_URL}/blizzard/authenticateCallback`;
 /**
  * The URL to send back a user to after finishing blizzard authentication
  */
-exports.SYNC_URL = process.env.ENVIRONMENT === "dev"
-    ? "http://localhost:3000/synchronize"
-    : `https://doyouneed.netlify.app/synchronize`;
+exports.SYNC_URL = "http://188.149.186.0:3000/synchronize";
 /**
  * World of Warcraft Region
  */

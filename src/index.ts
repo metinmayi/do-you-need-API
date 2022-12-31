@@ -16,9 +16,7 @@ const app = express();
 
 app.set("trust proxy", 1);
 
-app.get("/", (req: Request, res: Response) => {
-  res.sendStatus(200);
-});
+app.get("/", (req: Request, res: Response) => {});
 
 app.use(
   cors({
@@ -35,8 +33,8 @@ app.use(
     store,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24,
-      sameSite: process.env.ENVIRONMENT === "dev" ? "lax" : "none",
-      secure: process.env.ENVIRONMENT === "dev" ? false : true,
+      sameSite: process.env.ENVIRONMENT === "dev" ? "lax" : "strict",
+      secure: process.env.ENVIRONMENT === "dev" ? false : false,
     },
   })
 );
@@ -48,6 +46,7 @@ app.use(passport.session());
 app.use("/doyouneed", DoYouNeedRouter);
 app.use("/authentication", AuthenticationRouter);
 app.use("/blizzard", isAuthenticated, BlizzardRouter);
+
 const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);

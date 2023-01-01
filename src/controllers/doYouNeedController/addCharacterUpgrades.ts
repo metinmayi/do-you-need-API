@@ -29,7 +29,7 @@ export const addCharacterUpgrades = async (req: Request, res: Response) => {
 
     const isValidInstance = validateInstanceAndDifficulty(droptimizer);
     if (!isValidInstance) {
-      return res.send(400).json("Invalid instance and/or difficulty");
+      return res.status(400).json("Invalid instance and/or difficulty");
     }
 
     const character = constructCharacter(droptimizer);

@@ -15,7 +15,7 @@ export function constructCharacter(droptimizer: RaidbotsDroptimizer) {
     blizzardId:
       droptimizer.simbot.meta.player.toLowerCase() +
       "-" +
-      droptimizer.simbot.meta.rawFormData.armory.realm,
+      droptimizer.simbot.meta.rawFormData.character.realm,
   };
 
   return character;

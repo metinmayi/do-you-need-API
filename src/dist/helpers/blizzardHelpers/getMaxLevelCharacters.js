@@ -11,7 +11,7 @@ const getMaxLevelCharacters = (accounts) => {
     const characters = accounts
         .map((account) => account.characters)
         .flat()
-        .filter((character) => character.level === 60);
+        .filter((character) => character.level === 70);
     const characterlist = [];
     const maxLevel = characters.reduce((a, b) => {
         const playerClass = constants_1.CLASS_ID_TO_NAME[b.playable_class.id];

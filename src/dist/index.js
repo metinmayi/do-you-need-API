@@ -18,10 +18,7 @@ dotenv_1.default.config();
 const store = new express_mysql_session_1.default(database_1.DATABASE_OPTIONS, database_1.pool);
 const app = (0, express_1.default)();
 app.set("trust proxy", 1);
-app.get("/", (req, res) => {
-    console.log("ping");
-    res.send("Tjena Dennis");
-});
+app.get("/", (req, res) => { });
 app.use((0, cors_1.default)({
     credentials: true,
     origin: (origin, callback) => callback(null, true),

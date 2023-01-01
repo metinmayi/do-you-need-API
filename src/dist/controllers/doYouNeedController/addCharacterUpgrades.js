@@ -19,6 +19,7 @@ const dbAddCharacter_1 = require("./dbAddCharacter");
  * @returns void
  */
 const addCharacterUpgrades = async (req, res) => {
+    debugger;
     const validation = (0, addCharacterUpgradeValidation_1.zAddCharacterUpgradeValidation)(req.body);
     if (!validation.success) {
         return res.status(400).json(validation.error.message);
@@ -28,7 +29,7 @@ const addCharacterUpgrades = async (req, res) => {
         const droptimizer = await (0, axios_1.default)(`${validation.data.raidbotsURL}/data.json`).then((res) => res.data);
         const isValidInstance = (0, validateInstanceAndDifficulty_1.validateInstanceAndDifficulty)(droptimizer);
         if (!isValidInstance) {
-            return res.send(400).json("Invalid instance and/or difficulty");
+            return res.status(400).json("Invalid instance and/or difficulty");
         }
         const character = (0, constructCharacter_1.constructCharacter)(droptimizer);
         await (0, dbAddCharacter_1.dbAddCharacter)(character, validation.data.guild.blizzard_guild_id);

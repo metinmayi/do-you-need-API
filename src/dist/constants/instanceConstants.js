@@ -4,11 +4,11 @@ exports.isIBossName = exports.IdToBoss = exports.RaidDifficulty = exports.RaidId
 /**
  * Current raid ID
  */
-exports.RaidId = 1195;
+exports.RaidId = 1200;
 /**
  * Supported Raid Difficulty
  */
-exports.RaidDifficulty = "raid-mythic-fated";
+exports.RaidDifficulty = "raid-mythic";
 /**
  * Give ID, get bossname
  */

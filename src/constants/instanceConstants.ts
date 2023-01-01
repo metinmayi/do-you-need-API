@@ -1,12 +1,12 @@
 /**
  * Current raid ID
  */
-export const RaidId = 1195 as const;
+export const RaidId = 1200 as const;
 
 /**
  * Supported Raid Difficulty
  */
-export const RaidDifficulty = "raid-mythic-fated" as const;
+export const RaidDifficulty = "raid-mythic" as const;
 
 /**
  * Give ID, get bossname

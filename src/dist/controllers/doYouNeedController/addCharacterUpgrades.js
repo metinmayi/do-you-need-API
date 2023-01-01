@@ -19,7 +19,6 @@ const dbAddCharacter_1 = require("./dbAddCharacter");
  * @returns void
  */
 const addCharacterUpgrades = async (req, res) => {
-    debugger;
     const validation = (0, addCharacterUpgradeValidation_1.zAddCharacterUpgradeValidation)(req.body);
     if (!validation.success) {
         return res.status(400).json(validation.error.message);

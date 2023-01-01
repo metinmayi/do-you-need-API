@@ -11,7 +11,7 @@ export const getMaxLevelCharacters = (accounts: WowAccount[]) => {
   const characters = accounts
     .map((account) => account.characters)
     .flat()
-    .filter((character) => character.level === 60);
+    .filter((character) => character.level === 70);
 
   const characterlist: ReturnedCharacter[] = [];
   const maxLevel = characters.reduce((a, b) => {

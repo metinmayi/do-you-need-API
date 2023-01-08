@@ -8,7 +8,6 @@ const specRoles_1 = require("../../constants/specRoles");
  * @returns {ICharacter}
  */
 function constructCharacter(droptimizer) {
-    debugger;
     const character = {
         name: droptimizer.simbot.meta.player.toLowerCase(),
         role: specRoles_1.specRoles[droptimizer.simbot.meta.spec] || "DPS",

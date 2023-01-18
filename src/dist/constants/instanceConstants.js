@@ -19,6 +19,7 @@ exports.IdToBoss = {
     2491: "kurog_grimtotem",
     2493: "broodkeeper_diurna",
     2499: "raszageth",
+    2500: "terros",
     2502: "dathea",
 };
 /**
@@ -32,6 +33,7 @@ const BOSS_NAMES = [
     "raszageth",
     "the_primal_council",
     "dathea",
+    "terros",
 ];
 /**
  * Type predicate to check if the string is a IBossName

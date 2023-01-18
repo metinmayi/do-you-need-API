@@ -18,6 +18,7 @@ export const IdToBoss: Record<number, string> = {
   2491: "kurog_grimtotem",
   2493: "broodkeeper_diurna",
   2499: "raszageth",
+  2500: "terros",
   2502: "dathea",
 } as const;
 
@@ -32,6 +33,7 @@ const BOSS_NAMES = [
   "raszageth",
   "the_primal_council",
   "dathea",
+  "terros",
 ] as const;
 
 /**

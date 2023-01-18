@@ -15,16 +15,19 @@ const register = async (req, res) => {
     }
     const userValues = await getSqlValues(req);
     try {
+        debugger;
         await database_1.pool.execute(sql, userValues);
         return res.status(200).send("Registration Complete");
     }
     catch (error) {
         console.log("register" + error.sqlMessage);
-        const status = error.message.includes("username") || error.message.includes("email")
-            ? 403
-            : 500;
-        res.sendStatus(status);
+        if (error.sqlMessage.includes("users.username")) {
+            return res.status(403).send("Username is already in use.");
+        }
+        if (error.sqlMessage.includes("users.email"))
+            return res.status(403).send("Email is already in use.");
     }
+    res.sendStatus(500);
 };
 exports.register = register;
 const getSqlValues = async (req) => {

@@ -15,7 +15,6 @@ const register = async (req, res) => {
     }
     const userValues = await getSqlValues(req);
     try {
-        debugger;
         await database_1.pool.execute(sql, userValues);
         return res.status(200).send("Registration Complete");
     }

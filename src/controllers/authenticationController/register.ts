@@ -18,7 +18,6 @@ export const register = async (req: Request, res: Response) => {
 
   const userValues = await getSqlValues(req);
   try {
-    debugger;
     await pool.execute(sql, userValues);
     return res.status(200).send("Registration Complete");
   } catch (error: any) {

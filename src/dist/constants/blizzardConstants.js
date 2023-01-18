@@ -9,7 +9,7 @@ dotenv_1.default.config();
 /**
  * Base URL for the domain
  */
-exports.BASE_URL = "http://188.149.186.0:8000";
+exports.BASE_URL = "http://localhost:8000";
 /**
  * API Endpoint for Authorization - Oauth 2.0
  */
@@ -29,7 +29,7 @@ exports.REDIRECT_URI = `${exports.BASE_URL}/blizzard/authenticateCallback`;
 /**
  * The URL to send back a user to after finishing blizzard authentication
  */
-exports.SYNC_URL = "http://188.149.186.0:3000/synchronize";
+exports.SYNC_URL = "http://localhost:3000/synchronize";
 /**
  * World of Warcraft Region
  */
